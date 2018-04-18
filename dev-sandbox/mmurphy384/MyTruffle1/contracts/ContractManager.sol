@@ -4,17 +4,20 @@ pragma solidity ^0.4.19;
 contract ContractManager {
 
     address[] public contracts;
+    uint counter;
 
-    function getContractCount() public constant returns(uint) {
-        return contracts.length;
+    function ContractManager() public {
+        counter = 0;
     }
 
-    function testShouldReturn99() public pure returns(uint) {
-        return 99;
+    function getContractCount() public constant returns(uint) {
+        //return contracts.length;
+        return counter;
     }
 
     // deploy a new contract
     function newContract(string _agencyName) public returns(address)  {
+        counter++; 
         MicroCredentialContract c = new MicroCredentialContract(msg.sender,_agencyName);
         contracts.push(c);
         return c;
@@ -35,7 +38,7 @@ contract MicroCredentialContract {
     }
     
     // contructor
-    function MicroCredentialContract(address _owner, string _agencyName) public {
+    function MicroCredentialContract(address _owner, string _agencyName)  public {
         owner = _owner;
         agencyName = _agencyName;
     }

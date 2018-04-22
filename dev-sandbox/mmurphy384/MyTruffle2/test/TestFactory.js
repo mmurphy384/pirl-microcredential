@@ -15,10 +15,6 @@ contract('Factory', function(accounts) {
 			console.log('######### Log: Contract Address = ' + result.toString());
 			assert.equal(result.valueOf().length, 42, "A valid contract was received");
 			var _app = App.at(result);
-			return _app.getOwner.call();
-		}).then(function (result) {
-			console.log('######### Log: Owner = ' + result.toString());
-			assert.equal(result.toString(),accounts[0].toString(),"The owner is valid");
 		});
 	});
 })

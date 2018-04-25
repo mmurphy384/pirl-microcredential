@@ -20,16 +20,23 @@ contract('Factory', function(accounts) {
 	});
 	
 	it("should add a credential and retrieve it", function() {
+		var name = 'Classroom Management';
+		var code = 'clm-0k12-v1';
+		var requirements = 'Submit a bunch of stuff';
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
-			return _instance.createCredential('Classroom Management','clm-0k12-v1','Submit a bunch of stuff',{from:accounts[9]});
+			return _instance.createCredential(name,code,requirements,{from:accounts[9]});
 		}).then(function (result) {
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getCredentialCount.call();
 		}).then(function (result) {
 			console.log('######### Log: Num Credentials = ' + result.toNumber().toString());
 			assert.isAbove(result.toNumber(),0,'1 or more credentials defined');
-
+			return _instance.getCredential.call(0);
+		}).then(function (results) {
+			assert.equal(results[0], name, "The returned contract name is valid");
+			assert.equal(results[1], code, "The returned contract code is valid");
+			assert.equal(results[2], requirements, "The returned contract requirements is valid");
 		})
 	});
 })

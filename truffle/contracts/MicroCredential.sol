@@ -18,9 +18,9 @@ contract MicroCredential  {
 
     //the type of credential, that the agency can define
     struct Credential {
-        bytes32 name;
-        bytes32 code;
-        bytes32 requirements;
+        string name;
+        string code;
+        string requirements;
         bool active;
     }
 
@@ -69,7 +69,7 @@ contract MicroCredential  {
     }
 
     //the agency creates a type of credential
-    function createCredential(bytes32 name, bytes32 code, bytes32 requirements) public onlyOwner returns (bool){
+    function createCredential(string name, string code, string requirements) public onlyOwner returns (bool){
         Credential memory cred = Credential(name,code,requirements,true);
         credentialList.push(cred);
         return true;
@@ -77,6 +77,11 @@ contract MicroCredential  {
 
     function getCredentialCount() public view returns (uint) {
         return credentialList.length;
+    }
+
+    function getCredential(uint _index) public view returns (string name, string code, string requirements) {
+        require(_index<credentialList.length);
+        return (credentialList[_index].name, credentialList[_index].code, credentialList[_index].requirements); 
     }
 
     //option to disable a credential

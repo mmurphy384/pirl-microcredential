@@ -3,7 +3,7 @@ var MicroCredential = artifacts.require("./MicroCredential.sol");
 contract('Factory', function(accounts) {
 	
 	var _instance;
-	
+
 	it("should create a contract and verify that the owner is set properly", function() {
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
@@ -50,7 +50,12 @@ contract('Factory', function(accounts) {
 			assert.equal(results[2], cred1.requirements, "The returned contract requirements is valid");
 			return _instance.getCredentialList.call();
 		}).then(function (results) {
-			console.log('######### Log: Num getCredentialList.name = ' + results[0]);
+			console.log('######### Log: web3.toAscii(results[0]) = ' + web3.toAscii(results[0]));
+			// These aren't working because the asckii version looks like 
+			// 'Classroom Management\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'
+			//assert.equal(web3.toAscii(results[0]), cred1.name, "The returned contract name is valid");
+			//assert.equal(web3.toAscii(results[1]), cred2.name, "The returned contract name is valid");
+			
 			//console.log('######### Log: Num getCredentialList.code = ' + results[1]);
 			//console.log('######### Log: Num getCredentialList.requirements = ' + results[2]);
 		})

@@ -84,6 +84,15 @@ contract MicroCredential  {
         return (credentialList[_index].name, credentialList[_index].code, credentialList[_index].requirements); 
     }
 
+    function getCredentialList() public constant returns (bytes32[]) {
+        require(credentialList.length > 0);
+        bytes32[] memory  names = new bytes32[](credentialList.length-1);
+        for (uint i = 0; i < credentialList.length-1; i++) {
+            names[i] = stringToBytes32(credentialList[i].name);
+        }
+        return (names);
+    }
+
     //option to disable a credential
     function disableCredential(uint cred) public onlyOwner returns (bool){
         require(cred<credentialList.length);
@@ -114,5 +123,15 @@ contract MicroCredential  {
         credentials[index].timeApproved = block.timestamp;
         return true;
     }
+
+    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+
+        assembly {result := mload(add(source, 32))}
+    }
+
 
 }

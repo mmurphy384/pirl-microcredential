@@ -19,24 +19,40 @@ contract('Factory', function(accounts) {
 		})
 	});
 	
-	it("should add a credential and retrieve it", function() {
-		var name = 'Classroom Management';
-		var code = 'clm-0k12-v1';
-		var requirements = 'Submit a bunch of stuff';
+	it("should add two credentials and retrieve them", function() {
+		var cred1 = {
+			"name":"Classroom Management",
+			"code":"clm-0k12-v1",
+			"requirements":"Submit a bunch of stuff"
+		}
+		var cred2 = {
+			"name":"Differentiated Instruction",
+			"code":"dif-0912-v4",
+			"requirements":"Stuff for Differentiated Instuction"
+		}
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
-			return _instance.createCredential(name,code,requirements,{from:accounts[9]});
+			return _instance.createCredential(cred1.name,cred1.code,cred1.requirements,{from:accounts[9]});
 		}).then(function (result) {
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
+			return _instance.createCredential(cred2.name,cred2.code,cred2.requirements,{from:accounts[9]});
+		}).then(function (result) {
 			return _instance.getCredentialCount.call();
 		}).then(function (result) {
 			console.log('######### Log: Num Credentials = ' + result.toNumber().toString());
-			assert.isAbove(result.toNumber(),0,'1 or more credentials defined');
+			assert.equal(result.toNumber(),2,'2 credentials defined');
 			return _instance.getCredential.call(0);
 		}).then(function (results) {
-			assert.equal(results[0], name, "The returned contract name is valid");
-			assert.equal(results[1], code, "The returned contract code is valid");
-			assert.equal(results[2], requirements, "The returned contract requirements is valid");
+			console.log('######### Log: Credentials.name = ' + results[0].toString());
+			console.log('######### Log: Credential.code = ' + results[1].toString());
+			assert.equal(results[0], cred1.name, "The returned contract name is valid");
+			assert.equal(results[1], cred1.code, "The returned contract code is valid");
+			assert.equal(results[2], cred1.requirements, "The returned contract requirements is valid");
+			return _instance.getCredentialList.call();
+		}).then(function (results) {
+			console.log('######### Log: Num getCredentialList.name = ' + results[0]);
+			//console.log('######### Log: Num getCredentialList.code = ' + results[1]);
+			//console.log('######### Log: Num getCredentialList.requirements = ' + results[2]);
 		})
 	});
 })

@@ -1,9 +1,9 @@
 # pirl-microcredential
 
 ## Background Information
-In short, a Micro Crenential is a small "certificate" (or badge) that is awarded to an employee, class participant, project participant after they have demonstrated mastery of a specific skill. Those recipients can then showcase their badges on their resume, social media profiles, etc.  This is a useful smart-contract application because it facilitates the process by wich a person can submit an application to a qualified agent (perhaps a "best practice" authority) and receive approval.  The application is often comprised of PDF files, images and other data that makes it very well suited for Pirls content and file storage capabilities.
+In short, a Micro Crenential is a small "certificate" (or badge) that is awarded to an employee, class participant, project participant after they have demonstrated mastery of a specific skill. Those recipients can then showcase their badges on their resume, social media profiles, etc.  This concept is a useful smart-contract application because it facilitates the process by which a person can submit an application to a qualified agent (perhaps a "best practice" authority) and receive approval.  The blockchain provides publicly accessible and transparant access to the microcredential and underlying support files.  Once approved, it can't be removed. The application is often comprised of PDF files, images and other data that makes it very well suited for Pirl's content and file storage capabilities.
 
-To understand the concept, consider the following exmple.  If we examine how teachers are rated in the typical student education system (primary and secondary education), we might create something that looks like this:
+To understand the concept, consider the following example.  If we examine how teachers are rated in the typical student education system (primary and secondary education), we might create tool that facilitate the following use case:
 
 A school district might create a micro-credential specification for "Classroom Management" that would require the teacher to:
 * Attend 2 particular professional development classes.
@@ -13,7 +13,7 @@ A school district might create a micro-credential specification for "Classroom M
 
 The teacher would complete these items and submit them for approval, within the district.  The district would review/award the teacher the micro-credential for use and display within the district.
 
-The glaring problem in all of this is that every district creates their own standards for what it means to obtain the "Classroom Management" micro-credential.  The "Classroom Management" micro credential is of very little value to the teacher, outside of their home district.  It would be great if they could receive an endorsement/approval from a qualified agency that would give their micro credential more merit.
+The glaring problem in all of this is that every district creates their own standards for what it means to obtain the "Classroom Management" micro credential.  The "Classroom Management" micro credential is of very little value to the teacher, outside of their home district.  It would be great if they could receive an endorsement/approval from a qualified agency that would give their micro credential more merit.
 
 Fortunately, there are certain agencies within the student education market that espouse themselves as the best-practice authority on certain subjects.  For example, a Teacher's Union might release their own best-practice standards for "Classroom Management".  A teacher may wish to submit their district-approved Micro Credential to one of these agencies for a more pertinent review/endorsement.  If approved, the teacher will have a link to a publically accessible badge or a certificate that will acknowledge the completion of the micro-credential.
 
@@ -35,7 +35,7 @@ Fortunately, there is a specification that outlines how these micro-credentials 
 </root>
 ```
 
-This smart contract will be instantiated and owned by the authorizing agent (The "Teachers Union" in our example).  Teachers will register their account with the contract and submit one or more micro-credential requests.  The authorizing agency will then review the work and see how it aligns to their best-practice specifications.  Once approved, the user will have a link to a badge that they can share with anyone in the world.
+This smart contract will be instantiated and owned by the authorizing agent (The "Teachers Union" in our example).  Teachers will register their account with the contract and submit one or more micro-credential requests.  The authorizing agency will then review the work to see how well it aligns to their best-practice specifications.  Once approved, the user will have a link to a badge that they can share with anyone in the world.
 
 
 ## Proposed Contract Files

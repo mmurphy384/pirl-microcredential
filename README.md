@@ -11,13 +11,13 @@ A school district might create a micro-credential specification for "Classroom M
 * Obtain a peer review/classroom observation from a fellow teacher.
 * Write a summary of how the changes impacted behavior in the classroom.
 
-The teacher would complete these items and submit them for approval, within the district.  The district would revew/award the teacher the micro-credential for use and display within the district.
+The teacher would complete these items and submit them for approval, within the district.  The district would review/award the teacher the micro-credential for use and display within the district.
 
 The glaring problem in all of this is that every district creates their own standards for what it means to obtain the "Classroom Management" micro-credential.  The "Classroom Management" micro credential is of very little value to the teacher, outside of their home district.  It would be great if they could receive an endorsement/approval from a qualified agency that would give their micro credential more merit.
 
-Fortunately, there are certain agencies within the student education market that espouse themselves as the best-practice authority on certain practices.  For example, a Teacher's Union might release their own best-practice standards for "Classroom Management".  A teacher may wish to submit their district-approved Micro Credential to one of these agencies for a more pertinent review/endorsement.  If approved, the teacher will have a link to a publically accessible badge or a certificate that will acknowledge the completion of their micro-credential.
+Fortunately, there are certain agencies within the student education market that espouse themselves as the best-practice authority on certain subjects.  For example, a Teacher's Union might release their own best-practice standards for "Classroom Management".  A teacher may wish to submit their district-approved Micro Credential to one of these agencies for a more pertinent review/endorsement.  If approved, the teacher will have a link to a publically accessible badge or a certificate that will acknowledge the completion of the micro-credential.
 
-Fortunately, there is a specification that outlines how these micro-credentials are organized in a standardized way.  A simple XML file is use to define the requirements for the micro-credential.  In a simplified manner, this looks like:
+Fortunately, there is a specification that outlines how these micro-credentials are organized.  A simple XML file is used to define the requirements for the micro-credential.  In a simplified manner, this might look like:
 
 ```xml
 <root>
@@ -51,6 +51,7 @@ TO BE COMPLETED
 * Build Test Suite for the other owner configuration features (add credential, edit credential)
 * Build Test Sutie for end-user features (add account, edit account)
 * Build Test Suite for Micro Credential Submission process (submit credential, upload file, delete file)
+* More to come
 
 ## Team
   * @CableGod - Developer

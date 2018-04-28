@@ -3,7 +3,7 @@
 ## Background Information
 In short, a Micro Crenential is a small "certificate" (or badge) that is awarded to an employee, class participant, project participant after they have demonstrated mastery of a specific skill. Those recipients can then showcase their badges on their resume, social media profiles, etc.  This is a useful smart-contract application because it facilitates the process by wich a person can submit an application to a qualified agent (perhaps a "best practice" authority) and receive approval.  The application is often comprised of PDF files, images and other data that makes it very well suited for Pirls content and file storage capabilities.
 
-To understand the concept, consider the following exmple.  If we take student education (primary and secondary education), the use case might be as follows:
+To understand the concept, consider the following exmple.  If we examine how teachers are rated in the typical student education system (primary and secondary education), we might create something that looks like this:
 
 A school district might create a micro-credential specification for "Classroom Management" that would require the teacher to:
 * Attend 2 particular professional development classes.

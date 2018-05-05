@@ -2,6 +2,23 @@ var MicroCredential = artifacts.require("./MicroCredential.sol");
 
 contract('Factory', function(accounts) {
 	
+
+	function toAscii(hex) {
+		var str = '',
+			i = 0,
+			l = hex.length;
+		if (hex.substring(0, 2) === '0x') {
+			i = 2;
+		}
+		for (; i < l; i+=2) {
+			var code = parseInt(hex.substr(i, 2), 16);
+			if (code === 0) continue; // this is added
+			str += String.fromCharCode(code);
+		}
+		return str;
+	};
+
+
 	var _instance;
 
 	it("should create a contract and verify that the owner is set properly", function() {
@@ -39,23 +56,32 @@ contract('Factory', function(accounts) {
 		}).then(function (result) {
 			return _instance.getCredentialCount.call();
 		}).then(function (result) {
-			console.log('######### Log: Num Credentials = ' + result.toNumber().toString());
+			console.log('######### Log: getCredentialCount() = ' + result.toNumber().toString());
 			assert.equal(result.toNumber(),2,'2 credentials defined');
 			return _instance.getCredential.call(0);
 		}).then(function (results) {
-			console.log('######### Log: Credentials.name = ' + results[0].toString());
-			console.log('######### Log: Credential.code = ' + results[1].toString());
+			console.log('######### Log: Credentials[0].name = ' + results[0].toString());
+			console.log('######### Log: Credential[0].code = ' + results[1].toString());
 			assert.equal(results[0], cred1.name, "The returned contract name is valid");
 			assert.equal(results[1], cred1.code, "The returned contract code is valid");
 			assert.equal(results[2], cred1.requirements, "The returned contract requirements is valid");
+			return _instance.getCredential.call(1);
+		}).then(function (results) {
+			console.log('######### Log: Credentials[1].name = ' + results[0].toString());
+			console.log('######### Log: Credential[1].code = ' + results[1].toString());
+			assert.equal(results[0], cred2.name, "The returned contract name is valid");
+			assert.equal(results[1], cred2.code, "The returned contract code is valid");
+			assert.equal(results[2], cred2.requirements, "The returned contract requirements is valid");
+			return _instance.getCredentialCount.call();
+		}).then(function (result) {
+			console.log('######### Log: getCredentialCount() = ' + result.toNumber().toString());
+			assert.equal(result.toNumber(),2,'2 credentials defined');
 			return _instance.getCredentialList.call();
 		}).then(function (results) {
-			console.log('######### Log: web3.toAscii(results[0]) = ' + web3.toAscii(results[0]));
-			// These aren't working because the asckii version looks like 
-			// 'Classroom Management\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'
-			//assert.equal(web3.toAscii(results[0]), cred1.name, "The returned contract name is valid");
-			//assert.equal(web3.toAscii(results[1]), cred2.name, "The returned contract name is valid");
-			
+			console.log('######### Log: toAscii(results[0][0]) = ' +  String(results[0]));
+			console.log('######### Log: results.length = ' +  results[0][1].length);
+			assert.equal(toAscii(results[0]), cred1.name, "The returned contract name is valid");
+			//assert.equal(toAscii(results[1]), cred2.name, "The returned contract name is valid");
 			//console.log('######### Log: Num getCredentialList.code = ' + results[1]);
 			//console.log('######### Log: Num getCredentialList.requirements = ' + results[2]);
 		})

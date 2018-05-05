@@ -85,9 +85,9 @@ contract MicroCredential  {
     }
 
     function getCredentialList() public constant returns (bytes32[]) {
-        require(credentialList.length > 0);
-        bytes32[] memory  names = new bytes32[](credentialList.length-1);
-        for (uint i = 0; i < credentialList.length-1; i++) {
+        require(credentialList.length >= 0);
+        bytes32[] memory  names = new bytes32[](credentialList.length);
+        for (uint i = 0; i <= credentialList.length-1; i++) {
             names[i] = stringToBytes32(credentialList[i].name);
         }
         return (names);

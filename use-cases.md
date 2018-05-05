@@ -67,7 +67,7 @@ Background:  The contract will be instantiated by the agency/organization that w
 ## Teacher Browses Their "Educator Dashboard"
   * It is assumed that the teacher has some Pirl and has configured Meta Mask (or equivalent tool) in their browser.
   * Teacher visits ETS website and follows link to the Micro-Credentail-Review center.
-  * The dashboard shows the teacher the following info:
+  * The dashboard  shows the teacher the following info:
     * Add new Credential button
     * Some kind of panel/grid shows:
       * Their current list of 'in-progress' micro-credentails which has a 'delete' button.

@@ -2,7 +2,6 @@ var MicroCredential = artifacts.require("./MicroCredential.sol");
 
 contract('MicroCredential', function(accounts) {
 	
-
 	function toAscii(hex) {
 		var str = '',
 			i = 0,
@@ -44,17 +43,19 @@ contract('MicroCredential', function(accounts) {
 	});
 	
 	it("should send a small amount of Pirl to the contract and verify that it was received", function() {
+		var amountToSend = 10;
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 			console.log('######### Log: getBalance = ' + result.toNumber());
-			return _instance.sendTransaction({from:accounts[9], value:10});
+			return _instance.sendTransaction({from:accounts[9], value:amountToSend});
 		}).then(function (result) {
-			console.log('######### Log: SendTransaction Result = ' + result);
+			console.log('######### Log: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 			console.log('######### Log: getBalance after Send = ' + result.toNumber());
+			assert.equal(result.toNumber(),amountToSend,"The contract balance is correct");
 		});
 	});
 

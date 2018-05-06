@@ -39,6 +39,7 @@ contract MicroCredential is Ownable {
         agency.isActive = true;
     }
 
+    // Purpose  : Get the agency basic info
     function getAgencyInfo() view public returns (bytes32, bytes32, bytes32, int, bool) {
         return (agency.name, agency.website, agency.email, agency.perReviewFeeInPirl, agency.isActive);
     }

@@ -4,6 +4,7 @@ import "./ownable.sol";
 
 contract MicroCredential is Ownable {
 
+    // variables and such
     Agency private agency;
 
     struct Agency {
@@ -14,13 +15,23 @@ contract MicroCredential is Ownable {
         bool isActive;
     }
 
+    // Events
+    event Deposit(address _from, uint value);
+
 
     // What would I do in a constructor?
-    
+    //
 
 
-    // Sets the contract owners contact info
-    function SetAgencyInfo(bytes32 _name, bytes32 _website, bytes32 _email, int _perReviewFeeInPirl) public onlyOwner {
+    // Purpose  : Fallback Function
+    function() public payable {
+        if (msg.value > 0)
+            emit Deposit(msg.sender, msg.value);
+    }
+
+    // Purpose  : Set the agency basic info
+    function setAgencyInfo(bytes32 _name, bytes32 _website, bytes32 _email, int _perReviewFeeInPirl) 
+        public onlyOwner {
         agency.name = _name;
         agency.website = _website;
         agency.email = _email;
@@ -28,20 +39,34 @@ contract MicroCredential is Ownable {
         agency.isActive = true;
     }
 
-    // We might do more stuff when an agency goes inactive (return fees, etc)
-    function SetAgencyInactive() public onlyOwner {
-        agency.isActive = false;
-    }
-
-    // We might do more stuff when an agency becomes active again
-    function SetAgencyActive() public onlyOwner {
-        agency.isActive = false;
-    }
-
-    function GetAgencyInfo() view public returns (bytes32, bytes32, bytes32, int, bool) {
+    function getAgencyInfo() view public returns (bytes32, bytes32, bytes32, int, bool) {
         return (agency.name, agency.website, agency.email, agency.perReviewFeeInPirl, agency.isActive);
     }
 
+    // Purpose  : To Make the contract inactive
+    // To Do    : In the future, this might do additional things
+    //            such as return fees, clear statuses, etc.
+    function setAgencyInactive() public onlyOwner {
+        agency.isActive = false;
+    }
 
+    // Purpose  : Used when an agency becomes active again
+    // To Do    : To be determined
+    function setAgencyActive() public onlyOwner {
+        agency.isActive = false;
+    }
+
+    // Purpose  : Get the contract balance
+    function getContractBalance() public view onlyOwner returns (uint) {
+        return address(this).balance;
+    }
+
+    // external functions
+
+    // public functions
+
+    // internal functions
+
+    // private functions
 
 }

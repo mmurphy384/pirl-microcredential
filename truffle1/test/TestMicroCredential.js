@@ -18,7 +18,6 @@ contract('MicroCredential', function(accounts) {
 		return str;
 	};
 
-
 	var _instance;
 	var _agency = {
 		"name":"Acme MicroCredentials",
@@ -30,17 +29,32 @@ contract('MicroCredential', function(accounts) {
 	it("should create a contract and verify that the owner is set properly", function() {
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
-			return _instance.SetAgencyInfo(_agency.name, _agency.website, _agency.email, _agency.perReviewFeeInPirl);
+			return _instance.setAgencyInfo(_agency.name, _agency.website, _agency.email, _agency.perReviewFeeInPirl);
 		}).then(function (result) {
 			console.log('######### Log: txReceipt = ' + result);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
-			return _instance.GetAgencyInfo.call();
+			return _instance.getAgencyInfo.call();
 		}).then(function (result) {
 			console.log('######### Log: agency[0] = ' + toAscii(result[0]));
 			assert.equal(toAscii(result[0]),_agency.name,"The agency name is correct");
 			assert.equal(toAscii(result[1]),_agency.website,"The agency website is correct");
 			assert.equal(toAscii(result[2]),_agency.email,"The agency email is correct");
 			assert.equal(result[3].toNumber(),_agency.perReviewFeeInPirl,"The agency perReviewFeeInPirl is correct");
+		});
+	});
+	
+	it("should send a small amount of Pirl to the contract and verify that it was received", function() {
+		return MicroCredential.deployed().then(function(instance) {
+			_instance = MicroCredential.at(instance.address);
+			return _instance.getContractBalance();
+		}).then(function (result) {
+			console.log('######### Log: getBalance = ' + result.toNumber());
+			return _instance.sendTransaction({from:accounts[9], value:10});
+		}).then(function (result) {
+			console.log('######### Log: SendTransaction Result = ' + result);
+			return _instance.getContractBalance();
+		}).then(function (result) {
+			console.log('######### Log: getBalance after Send = ' + result.toNumber());
 		});
 	});
 

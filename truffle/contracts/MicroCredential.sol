@@ -15,8 +15,8 @@ contract MicroCredential is Ownable {
     event Deposit(address _from, uint value);
 
 
-    // What would I do in a constructor?
-    //
+    // What would I do in a constructor.  I still don't
+    // have a good purpose for this (yet)
 
 
     // Purpose  : Fallback Function
@@ -25,7 +25,8 @@ contract MicroCredential is Ownable {
             emit Deposit(msg.sender, msg.value);
     }
 
-    // Purpose  : Set the agency basic info
+    // Purpose  : Set the agency basic info.  This is essentially the contract owner.  This info
+    //            will be displayed on whatever page we show to consumers.
     function setAgencyInfo(bytes32 _agencyName, bytes32 _website, bytes32 _email, int _perReviewFeeInPirl) 
         public onlyOwner {
         agencyName = _agencyName;
@@ -48,7 +49,8 @@ contract MicroCredential is Ownable {
     }
 
     // Purpose  : Used when an agency becomes active again
-    // To Do    : To be determined
+    // To Do    : This will probably have to clear some queues, 
+    //            reset credential statii, etc.
     function setAgencyActive() public onlyOwner {
         isActive = false;
     }
@@ -57,10 +59,6 @@ contract MicroCredential is Ownable {
     function getContractBalance() public view returns (uint) {
         return address(this).balance;
     }
-
-    // external functions
-
-    // public functions
 
     // internal functions
 

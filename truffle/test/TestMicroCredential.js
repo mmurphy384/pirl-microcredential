@@ -30,7 +30,7 @@ contract('MicroCredential', function(accounts) {
 			_instance = MicroCredential.at(instance.address);
 			return _instance.setAgencyInfo(_agency.name, _agency.website, _agency.email, _agency.perReviewFeeInPirl);
 		}).then(function (result) {
-			console.log('######### Log: txReceipt = ' + result);
+			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call();
 		}).then(function (result) {

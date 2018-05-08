@@ -13,22 +13,35 @@ contract MicroCredential is Ownable {
 
     // Events
     event Deposit(address _from, uint value);
-
-
-    // What would I do in a constructor.  I still don't
-    // have a good purpose for this (yet)
+    event Withdraw(address _to, uint _amount);
+    event Balance(uint _remainingBalance);
+    // What would I do in a constructor.  
+    // Still don't have a good purpose for this.
 
 
     // Purpose  : Fallback Function
     function() public payable {
-        if (msg.value > 0)
+        if (msg.value > 0) {
             emit Deposit(msg.sender, msg.value);
+            emit Balance(address(this).balance);
+        }
     }
 
-    // Purpose  : Set the agency basic info.  This is essentially the contract owner.  This info
-    //            will be displayed on whatever page we show to consumers.
+    // Purpose  : For the owner to withdraw some funds.
+    function withdraw(uint _amount) public onlyOwner {
+        require(address(this).balance > 0);
+        require(_amount > 0);
+        require(address(this).balance >= _amount);
+        address(msg.sender).transfer(_amount);
+        emit Withdraw(msg.sender, _amount);
+        emit Balance(address(this).balance);
+    }
+
+    // Purpose  : Set the agency basic info.  This is essentially the contract owner.  
     function setAgencyInfo(bytes32 _agencyName, bytes32 _website, bytes32 _email, int _perReviewFeeInPirl) 
         public onlyOwner {
+        require(_agencyName.length > 0);
+        require(_perReviewFeeInPirl > 0);
         agencyName = _agencyName;
         website = _website;
         email = _email;
@@ -41,11 +54,11 @@ contract MicroCredential is Ownable {
         return (agencyName, website, email, perReviewFeeInPirl, isActive);
     }
 
-    // Purpose  : To Make the contract inactive
-    // To Do    : In the future, this might do additional things
-    //            such as return fees, clear statuses, etc.
+    // Purpose  : To Make the contract inactive and return funds to owner
     function setAgencyInactive() public onlyOwner {
+        require(isActive);
         isActive = false;
+        withdraw(address(this).balance);
     }
 
     // Purpose  : Used when an agency becomes active again

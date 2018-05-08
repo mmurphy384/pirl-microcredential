@@ -44,6 +44,7 @@ contract('MicroCredential', function(accounts) {
 	
 	it("should send a small amount of Pirl to the contract and verify that it was received", function() {
 		var amountToSend = 10;
+		var amountToWithDraw = 5;
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
 			return _instance.getContractBalance();
@@ -56,6 +57,13 @@ contract('MicroCredential', function(accounts) {
 		}).then(function (result) {
 			console.log('######### Log: getBalance after Send = ' + result.toNumber());
 			assert.equal(result.toNumber(),amountToSend,"The contract balance is correct");
+			return _instance.withdraw(amountToWithDraw);
+		}).then(function (result) {
+			console.log('######### Log: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
+			return _instance.getContractBalance();			
+		}).then(function (result) {
+			console.log('######### Log: getBalance after Withdrawal = ' + result.toNumber());
+			assert.equal(result.toNumber(),amountToSend-amountToWithDraw,"The contract balance is correct after withdrawal");
 		});
 	});
 

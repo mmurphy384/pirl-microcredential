@@ -1,8 +1,9 @@
 pragma solidity ^0.4.19;
 
-import "./ownable.sol";
+import "./Ownable.sol";
+import "./Credentials.sol";
 
-contract MicroCredential is Ownable {
+contract MicroCredential is Ownable,Credentials {
 
     // variables and such
     bytes32 agencyName;
@@ -15,9 +16,9 @@ contract MicroCredential is Ownable {
     event Deposit(address _from, uint value);
     event Withdraw(address _to, uint _amount);
     event Balance(uint _remainingBalance);
+
     // What would I do in a constructor.  
     // Still don't have a good purpose for this.
-
 
     // Purpose  : Fallback Function
     function() public payable {

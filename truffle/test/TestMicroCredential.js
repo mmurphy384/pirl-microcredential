@@ -45,25 +45,39 @@ contract('MicroCredential', function(accounts) {
 	it("should send a small amount of Pirl to the contract and verify that it was received", function() {
 		var amountToSend = 10;
 		var amountToWithDraw = 5;
+		var balanceStart = 0;
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 			console.log('######### Log: getBalance = ' + result.toNumber());
+			balanceStart = web3.fromWei(web3.eth.getBalance(accounts[9]),'ether').toNumber();
 			return _instance.sendTransaction({from:accounts[9], value:amountToSend});
 		}).then(function (result) {
 			console.log('######### Log: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 			console.log('######### Log: getBalance after Send = ' + result.toNumber());
+			var currentBalance = web3.fromWei(web3.eth.getBalance(accounts[9]),'ether').toNumber();
+			assert.isBelow(1,(balanceStart-amountToSend),"The accounts[9] balance is correct");
 			assert.equal(result.toNumber(),amountToSend,"The contract balance is correct");
+			balanceStart = currentBalance;
 			return _instance.withdraw(amountToWithDraw);
 		}).then(function (result) {
 			console.log('######### Log: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
 			return _instance.getContractBalance();			
 		}).then(function (result) {
 			console.log('######### Log: getBalance after Withdrawal = ' + result.toNumber());
+			var currentBalance = web3.fromWei(web3.eth.getBalance(accounts[9]),'ether').toNumber();
+			assert.isBelow(1,(balanceStart+amountToWithDraw),"The accounts[9] balance is correct after the withdrawal");
 			assert.equal(result.toNumber(),amountToSend-amountToWithDraw,"The contract balance is correct after withdrawal");
+			return _instance.setAgencyInactive();
+		}).then(function (result) {
+			console.log('######### Log: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
+			return _instance.getContractBalance();			
+		}).then(function (result) {
+			console.log('######### Log: getBalance after Inactive = ' + result.toNumber());
+			assert.equal(result.toNumber(),0,"The contract is inactive and all Pirl has been withdrawn");
 		});
 	});
 

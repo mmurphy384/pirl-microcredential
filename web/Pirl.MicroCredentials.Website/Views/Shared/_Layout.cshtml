@@ -12,7 +12,7 @@
 
 <div class="container body-content">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        @Html.ActionLink("MicroCredentials", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,16 +25,13 @@
                 <li class="nav-item">
                     @Html.ActionLink("Home", "Index", "Home", new { area = "" },  new { @class = "nav-link" })
                 </li>
-                <li class="nav-item">
-                    @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "nav-link" })
-                </li>
             </ul>
         </div>
     </nav>
     @RenderBody()
     <hr/>
     <footer>
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <p>&copy; @DateTime.Now.Year - MicroCredentials</p>
     </footer>
 </div>
 

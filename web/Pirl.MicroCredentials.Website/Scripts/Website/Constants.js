@@ -1,0 +1,2 @@
+﻿var MICROCREDENTIALS = this.MICROCREDENTIALS || {};
+MICROCREDENTIALS.constants = this.MICROCREDENTIALS.constants || {};

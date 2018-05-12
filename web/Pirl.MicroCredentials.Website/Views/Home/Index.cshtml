@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="container">
+    <p>
+        Welcome to MicroCredentials
+    </p>
+</div>
+
+
+<br />
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/HomeViewModel.js")"></script>
+
+    <script>
+        $(function (viewModel) {
+            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+            if (typeof web3 !== 'undefined') {
+                // Use Mist/MetaMask's provider
+                web3js = new Web3(web3.currentProvider);
+            } else {
+                console.log('No web3? You should consider trying MetaMask!')
+            }
+        }(MICROCREDENTIALS.homeViewModel));
+    </script>
+}
+
+

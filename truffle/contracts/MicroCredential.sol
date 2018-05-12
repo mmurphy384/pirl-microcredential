@@ -52,10 +52,9 @@ contract MicroCredential is Ownable,Credentials {
     }
 
     // Purpose  : Set the agency basic info.  Can only by done by the agency owner 
-    function updateAgencyInfo(bytes32 _agencyName, bytes32 _website, bytes32 _email, int _perReviewFeeInPirl) 
+    function updateAgencyInfo(bytes32 _agencyName, bytes32 _website, bytes32 _email) 
         public onlyAgencyOwner {
         require(_agencyName.length > 0);
-        require(_perReviewFeeInPirl > 0);
         uint id = agencyIdByAddress[msg.sender];
         require(agencies[id].agencyName.length > 1);
         

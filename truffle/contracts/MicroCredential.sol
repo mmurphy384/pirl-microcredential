@@ -2,8 +2,9 @@ pragma solidity ^0.4.19;
 
 import "./Ownable.sol";
 import "./Credentials.sol";
+import "./Users.sol";
 
-contract MicroCredential is Ownable,Credentials {
+contract MicroCredential is Ownable,Credentials,Users {
 
     // Events
     event Deposit(address _from, uint value);

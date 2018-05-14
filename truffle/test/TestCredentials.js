@@ -38,11 +38,11 @@ contract('MicroCredential', function(accounts) {
 		}
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
-			return _instance.setAgencyInfo(_agency.name, _agency.website, _agency.email, _agency.perReviewFeeInPirl);
+			return _instance.registerAgency(_agency.name, _agency.website, _agency.email, {from:accounts[1]});
 		}).then(function (result) {
 			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
-			return _instance.getAgencyInfo.call();
+			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
 			console.log('######### Log: agency[0] = ' + toAscii(result[0]));
 			return _instance.addCredential(cred1.name, cred1.url, cred1.fee,{from:accounts[9]});

@@ -3,8 +3,23 @@
 }
 
 <div class="container">
-    <p>
+    <h4>
         Welcome to MicroCredentials
+    </h4>
+    
+    <p data-bind="visible: metaMaskInstalled()" style="display: none;">
+        Not currently a member? Please click the relevent registration button below to start using the MicroCredential system.
+        <br /><br />
+        <button type="button" class="btn btn-primary btn-lg" data-bind="click: routeToAgencyRegister">Register as an Agency</button>
+        <button type="button" class="btn btn-primary btn-lg" data-bind="click: routeToUserRegister">Register as an End User</button>
+        <br /><br />
+        If you already a member click the login button below to start using the system
+        <br /><br />
+        <button type="button" class="btn btn-primary btn-lg">Login</button>
+    </p>
+    
+    <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
+        To use MicroCredentials you require the MetaMask chrome extension to be installed.
     </p>
 </div>
 
@@ -22,9 +37,12 @@
             if (typeof web3 !== 'undefined') {
                 // Use Mist/MetaMask's provider
                 web3js = new Web3(web3.currentProvider);
+                viewModel.metaMaskActive();
             } else {
-                console.log('No web3? You should consider trying MetaMask!')
+                console.log('No web3? You should consider trying MetaMask!');
             }
+
+            ko.applyBindings(viewModel);
         }(MICROCREDENTIALS.homeViewModel));
     </script>
 }

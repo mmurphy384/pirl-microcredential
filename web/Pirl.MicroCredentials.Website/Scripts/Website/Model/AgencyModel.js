@@ -11,18 +11,18 @@ MICROCREDENTIALS.agencyModel = (function (ko) {
 
         self.id = ko.observable(data.id);
         self.name = ko.observable(data.name);
-        self.contactFirstName = ko.observable(data.firstName);
-        self.contactlastName = ko.observable(data.lastName);
+        self.contactFirstName = ko.observable(data.contactFirstName);
+        self.contactLastName = ko.observable(data.contactLastName);
 
         self.id.contactFullName = ko.computed(function () {
-            return self.contactlastName() + ", " + self.contactFirstName();
+            return self.contactLastName() + ", " + self.contactFirstName();
         });
 
         self.updateModel = function (updateData) {
             self.id(updateData.id);
             self.name(data.name);
             self.contactFirstName(data.contactFirstName);
-            self.contactlastName(data.contactlastName);
+            self.contactLastName(data.contactLastName);
         };
 
         self.toJson = function () {

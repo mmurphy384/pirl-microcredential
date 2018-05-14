@@ -5,8 +5,8 @@ import "./myutils.sol";
 contract Users is MyUtils {
 
     // Events
-    event NewUser(uint id, bytes32 name, bytes32 email, address userAddress);
-    event UpdateUser(uint id, bytes32 name, bytes32 email, address userAddress);
+    event NewUser(uint id, string firstName, string lastName, string email, address userAddress);
+    event UpdateUser(uint id, string firstName, string lastName, string email, address userAddress);
 
 
     //  Make sure the address resolves a valid contract
@@ -37,7 +37,7 @@ contract Users is MyUtils {
         id = users.push(User(stringToBytes32(_firstName), stringToBytes32(_lastName),stringToBytes32(_email), true))-1;
         userIdByEmail[stringToBytes32(_email)] = id;
         userIdByAddress[msg.sender] = id;
-        emit NewUser(id, _firstName + ' ' + lastName, email, msg.sender)
+        emit NewUser(id, _firstName,_lastName, _email, msg.sender);
     }
 
     // Purpose  : To update user about a person
@@ -49,7 +49,7 @@ contract Users is MyUtils {
         users[id].lastName = stringToBytes32(_lastName);
         users[id].email = stringToBytes32(_email);
         userIdByEmail[stringToBytes32(_email)] = id;
-        emit UpdateUser(id, _firstName + ' ' + lastName, email, msg.sender)
+        emit UpdateUser(id, _firstName, _lastName, _email, msg.sender);
     }
 
     // Purpose  : To retrieve a users id via email

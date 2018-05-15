@@ -85,6 +85,13 @@ contract MicroCredential is Ownable,Credentials,Users {
         return (agencies[id].agencyName, agencies[id].website, agencies[id].email,agencies[id].isActive);
     }
 
+    // Purpose  : Get the agency basic info
+    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bool) {
+        uint id = agencyIdByAddress[_address];
+        require(agencies[id].agencyName.length > 1);
+        return (agencies[id].agencyName, agencies[id].website, agencies[id].email,agencies[id].isActive);
+    }
+
     // Purpose  : To Make the contract inactive and return funds to owner
     function setAgencyInactive() public onlyAgencyOwner {
         uint id = agencyIdByAddress[msg.sender];

@@ -35,7 +35,13 @@ contract('MicroCredential', function(accounts) {
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
-			console.log('######### Log: agency[0] = ' + toAscii(result[0]));
+			console.log('######### Log: getAgencyInfo(' + _agency.name + ') = ' + toAscii(result[0]));
+			assert.equal(toAscii(result[0]),_agency.name,"The agency name is correct");
+			assert.equal(toAscii(result[1]),_agency.website,"The agency website is correct");
+			assert.equal(toAscii(result[2]),_agency.email,"The agency email is correct");
+			return _instance.getAgencyInfoByAddress.call(accounts[1]);
+		}).then(function (result) {
+			console.log('######### Log: getAgencyInfoByAddress(' + accounts[1] + ') = ' + toAscii(result[0]));
 			assert.equal(toAscii(result[0]),_agency.name,"The agency name is correct");
 			assert.equal(toAscii(result[1]),_agency.website,"The agency website is correct");
 			assert.equal(toAscii(result[2]),_agency.email,"The agency email is correct");

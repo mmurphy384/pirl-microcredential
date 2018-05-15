@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
 using CommonServiceLocator;
+using Pirl.MicroCredentials.Core.Contracts;
+using Pirl.MicroCredentials.Core.Contracts.Interfaces;
 using Pirl.MicroCredentials.Core.Models;
 using Pirl.MicroCredentials.Core.Models.Interfaces;
 using Pirl.MicroCredentials.Core.Repositories.Interfaces;
@@ -35,6 +37,10 @@ namespace Pirl.MicroCredentials
             //Service Locator
             var serviceLocator = new UnityServiceLocator(container);
             container.RegisterInstance<IServiceLocator>(serviceLocator);
+
+            //Contracts
+            container.RegisterType<IMicroCredentialContract, MicroCredentialContract>();
+            container.RegisterType<IUserContract, UserContract>();
 
             //Repositories
             container.RegisterType<IAgencyRepository, AgencyRepository>();

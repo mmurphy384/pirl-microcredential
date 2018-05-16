@@ -21,8 +21,9 @@ contract('MicroCredential', function(accounts) {
 	var _agency = {
 		"name":"Credential Test",
 		"website":"www.micro-credentials-r-us.io",
-		"email":"mmurphy384@yahoo.com",
-		"perReviewFeeInPirl":25
+		"firstName":"Mike",
+		"lastName":"Murphy",
+		"email":"mmurphy384@yahoo.com"
 	}
 
 	it("should create a contract, add 2 credentails, retrieve 1, retrieve both.", function() {
@@ -38,7 +39,7 @@ contract('MicroCredential', function(accounts) {
 		}
 		return MicroCredential.deployed().then(function(instance) {
 			_instance = MicroCredential.at(instance.address);
-			return _instance.registerAgency(_agency.name, _agency.website, _agency.email, {from:accounts[1]});
+			return _instance.registerAgency(_agency.name, _agency.website, _agency.firstName, _agency.lastName, _agency.email, {from:accounts[1]});
 		}).then(function (result) {
 			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');

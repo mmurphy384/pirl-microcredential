@@ -22,6 +22,8 @@ contract MicroCredential is Ownable,Credentials,Users {
     struct Agency {
         bytes32 agencyName;
         bytes32 website;
+        bytes32 firstName;
+        bytes32 lastName;
         bytes32 email;
         bool isActive;
     }
@@ -53,43 +55,64 @@ contract MicroCredential is Ownable,Credentials,Users {
     }
 
     // Purpose  : Set the agency basic info.  Can only by done by the agency owner 
-    function updateAgencyInfo(bytes32 _agencyName, bytes32 _website, bytes32 _email) 
+    function updateAgencyInfo(string _agencyName, string _website, string _firstName, string _lastName, string _email) 
         public onlyAgencyOwner {
-        require(_agencyName.length > 0);
+        //require(_agencyName.length > 0);
         uint id = agencyIdByAddress[msg.sender];
         require(agencies[id].agencyName.length > 1);
-        
-        agencies[id].agencyName = _agencyName;
-        agencies[id].website = _website;
-        agencies[id].email = _email;
+        agencies[id].agencyName = stringToBytes32(_agencyName);
+        agencies[id].website = stringToBytes32(_website);
+        agencies[id].firstName = stringToBytes32(_firstName);
+        agencies[id].lastName = stringToBytes32(_lastName);
+        agencies[id].email = stringToBytes32(_email);
         agencies[id].isActive = true;
     }
 
     // Purpose  : Need an 'iniitalize' because the first time, because it's public and payable.
     //          : It needs to be payable or people will create these willy nilly.
-    function registerAgency(string _agencyName, string _website, string _email) 
+    function registerAgency(string _agencyName, string _website, string _firstName, string _lastName, string _email) 
         public payable { 
         require(utfStringLength(_agencyName) > 0);
         require(agencyIdByName[stringToBytes32(_agencyName)] == 0);
         uint id = 0;
-        id = agencies.push(Agency(stringToBytes32(_agencyName), stringToBytes32(_website),stringToBytes32(_email),true))-1;
+
+        id = agencies.push(Agency(
+            stringToBytes32(_agencyName), 
+            stringToBytes32(_website),
+            stringToBytes32(_firstName),
+            stringToBytes32(_lastName),
+            stringToBytes32(_email),true)
+            )-1;
+
         agencyIdByName[stringToBytes32(_agencyName)] = id;
         agencyIdByAddress[msg.sender] = id;
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bool) {
+    function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool) {
         require(utfStringLength(_agencyName) > 0);
         uint id = agencyIdByName[stringToBytes32(_agencyName)];
         require(agencies[id].agencyName.length > 1);
-        return (agencies[id].agencyName, agencies[id].website, agencies[id].email,agencies[id].isActive);
+        return (
+            agencies[id].agencyName, 
+            agencies[id].website, 
+            agencies[id].firstName, 
+            agencies[id].lastName, 
+            agencies[id].email,
+            agencies[id].isActive);
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bool) {
+    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool) {
         uint id = agencyIdByAddress[_address];
         require(agencies[id].agencyName.length > 1);
-        return (agencies[id].agencyName, agencies[id].website, agencies[id].email,agencies[id].isActive);
+        return (
+            agencies[id].agencyName, 
+            agencies[id].website, 
+            agencies[id].firstName, 
+            agencies[id].lastName, 
+            agencies[id].email,
+            agencies[id].isActive);
     }
 
     // Purpose  : To Make the contract inactive and return funds to owner

@@ -44,6 +44,6 @@
   * The End User has either "logged in" or has just created an account.
   * As this page loads, it always calls:
     * _instance.getUserByAddress(MetaMaskAddress)
-    * _instance.getIdByAddress({from: MetaMaskAddress})
+    * _instance.getIdByAddress(MetaMaskAddress)
     * Note:  I can't see a reason to store these as session variables.  We'll juse reload them eachtime on every "internal" page load.
   * The page loads and shows feature to pick an agency, browse credential requirements, upload files, submit a micro-credential.

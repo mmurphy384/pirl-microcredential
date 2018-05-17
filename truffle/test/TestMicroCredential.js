@@ -21,15 +21,16 @@ contract('MicroCredential', function(accounts) {
 	var _agency = {
 		"name":"Acme MicroCredentials",
 		"website":"www.micro-credentials-r-us.io",
-		"email":"mmurphy384@yahoo.com",
-		"perReviewFeeInPirl":25
+		"firstName":"Mike",
+		"lastName":"Murphy",
+		"email":"mmurphy384@yahoo.com"
 	}
 
 	 it("should create a contract, add an agency and verify it was added, set it inactive", function() {
 		 return MicroCredential.deployed().then(function(instance) {
 			 _instance = MicroCredential.at(instance.address);
 			 console.log('######### Log: Starting Tests for MicroCredential');
-	 		return _instance.registerAgency(_agency.name, _agency.website, _agency.email,{from:accounts[1]});
+	 		return _instance.registerAgency(_agency.name, _agency.website, _agency.firstName, _agency.lastName, _agency.email, {from:accounts[1]});
 		}).then(function (result) {
 			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
@@ -38,14 +39,18 @@ contract('MicroCredential', function(accounts) {
 			console.log('######### Log: getAgencyInfo(' + _agency.name + ') = ' + toAscii(result[0]));
 			assert.equal(toAscii(result[0]),_agency.name,"The agency name is correct");
 			assert.equal(toAscii(result[1]),_agency.website,"The agency website is correct");
-			assert.equal(toAscii(result[2]),_agency.email,"The agency email is correct");
+			assert.equal(toAscii(result[2]),_agency.firstName,"The agency firstName is correct");
+			assert.equal(toAscii(result[3]),_agency.lastName,"The agency lastName is correct");
+			assert.equal(toAscii(result[4]),_agency.email,"The agency email is correct");
 			return _instance.getAgencyInfoByAddress.call(accounts[1]);
 		}).then(function (result) {
 			console.log('######### Log: getAgencyInfoByAddress(' + accounts[1] + ') = ' + toAscii(result[0]));
 			assert.equal(toAscii(result[0]),_agency.name,"The agency name is correct");
 			assert.equal(toAscii(result[1]),_agency.website,"The agency website is correct");
-			assert.equal(toAscii(result[2]),_agency.email,"The agency email is correct");
-			return _instance.updateAgencyInfo(_agency.name,'https://pirl.io', _agency.email,{from:accounts[1]});
+			assert.equal(toAscii(result[2]),_agency.firstName,"The agency firstName is correct");
+			assert.equal(toAscii(result[3]),_agency.lastName,"The agency lastName is correct");
+			assert.equal(toAscii(result[4]),_agency.email,"The agency email is correct");
+			return _instance.updateAgencyInfo(_agency.name,'https://pirl.io', _agency.firstName, _agency.lastName, _agency.email,{from:accounts[1]});
 		}).then(function (result) {
 			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
@@ -59,15 +64,15 @@ contract('MicroCredential', function(accounts) {
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
-			console.log('######### Log: agency[3] IsActive = ' + result[3]);
-			assert.equal(result[3],false,"The agency name is inactive");
+			console.log('######### Log: agency[3] IsActive = ' + result[5]);
+			assert.equal(result[5],false,"The agency name is inactive");
 			return _instance.setAgencyActive({from:accounts[1]})
 		}).then(function (result) {
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
-			console.log('######### Log: agency[3] IsActive = ' + result[3]);
-			assert.equal(result[3],true,"The agency name is active again.  All is good in the world");
+			console.log('######### Log: agency[3] IsActive = ' + result[5]);
+			assert.equal(result[5],true,"The agency name is active again.  All is good in the world");
 		});
 	});
 	

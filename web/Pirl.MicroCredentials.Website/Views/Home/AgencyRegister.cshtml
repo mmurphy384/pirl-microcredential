@@ -10,27 +10,51 @@
     </h4>
     
     <div data-bind="visible: metaMaskInstalled()" style="display: none;">
-        <br/>
-        <form id="AgencyRegistrationForm" data-bind="with: registerFormModel">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name, new {@class = "col-md-3"})
-                @Html.TextBoxFor(m => m.Name, new {data_bind = "value: name", @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.Name)
+        <br />
+        <div data-bind="visible: !registrationSuccessful()" style="display: none;">
+            <div class="bs-callout bs-callout-danger" style="display: none;" data-bind="visible: error() != undefined">
+                <h4 data-bind="text: errorTitle"></h4>
+                <p id="ErrorMessage" data-bind="text: error"></p>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ContactFirstName, new {@class = "col-md-3"})
-                @Html.TextBoxFor(m => m.ContactFirstName, new {data_bind = "value: contactFirstName", @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.ContactFirstName)
+            <form id="AgencyRegistrationForm" data-bind="with: registerFormModel">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AgencyName, new { @class = "col-md-3" })
+                    @Html.TextBoxFor(m => m.AgencyName, new { data_bind = "value: agencyName", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgencyName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3" })
+                    @Html.TextBoxFor(m => m.FirstName, new { data_bind = "value: firstName", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-3" })
+                    @Html.TextBoxFor(m => m.LastName, new { data_bind = "value: lastName", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-3" })
+                    @Html.TextBoxFor(m => m.Email, new { data_bind = "value: email", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Website, new { @class = "col-md-3" })
+                    @Html.TextBoxFor(m => m.Website, new { data_bind = "value: website", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Website)
+                </div>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.processRegistration, disable: $root.isRegistering">Register</button>
+            </form>
+        </div>
+        <div data-bind="visible: registrationSuccessful" style="display: none;">
+            <div class="bs-callout bs-callout-success">
+                <h4>Registration Successful</h4>
+                <p>Your agency is now registered with MicroCredentails. Please use the button below to launch the dashboard and start using the system.</p>
+                <br/>
+                <button type="button" class="btn btn-primary btn-lg">Agency Dashboard</button>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ContactLastName, new {@class = "col-md-3"})
-                @Html.TextBoxFor(m => m.ContactLastName, new {data_bind = "value: contactLastName", @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.ContactLastName)
-            </div>
-            <button type="button" class="btn btn-primary" data-bind="click: $root.processRegistration">Register</button>
-        </form>
+        </div>
     </div>
-    
+
     <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
         To use MicroCredentials you require the MetaMask chrome extension to be installed.
     </p>

@@ -2,14 +2,17 @@
 
 var MICROCREDENTIALS = this.MICROCREDENTIALS || {};
 
-MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, commonApi, ko) {
+MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, microCredentialContract, commonApi, ko) {
     "use strict";
 
     //Varibles
     var registerFormModel = ko.observable(new agencyModel.Agency()),
         success = ko.observable(undefined),
         error = ko.observable(undefined),
-        metaMaskInstalled = ko.observable(false);
+        errorTitle = ko.observable(undefined),
+        metaMaskInstalled = ko.observable(false),
+        isRegistering = ko.observable(false),
+        registrationSuccessful = ko.observable(false);
 
     //Public Functions
     function metaMaskActive() {
@@ -20,7 +23,32 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, commonApi, ko
         var formVaild = commonApi.validateForm("#AgencyRegistrationForm");
         
         if (formVaild) {
-            alert("Call Contract");
+            isRegistering(true);
+
+            var agency = registerFormModel();
+            var agencyContract = web3.eth.contract(microCredentialContract.microCredentialContractAbi).at(microCredentialContract.microCredentialContractAddress);
+
+            agencyContract.registerAgency.estimateGas(agency.agencyName(), agency.website(), agency.firstName(), agency.lastName(), agency.email(),
+                function (errorMessage, result) {
+                    if (!errorMessage) {
+                        agencyContract.registerAgency(agency.agencyName(), agency.website(), agency.firstName(),agency.lastName(), agency.email(),
+                            function (errorMessage, result) {
+                                if (!errorMessage) {
+                                    registrationSuccessful(true);
+                                } else {
+                                    errorTitle("Error Registering Agency");
+                                    error("There was an error registering your agency. Please confirm that your accepted the MetaMask transaction and had enough PIRL to cover the transaction fees.");
+
+                                    isRegistering(false);
+                                }
+                            });
+                    } else {
+                        errorTitle("Error Registering Agency");
+                        error("There was an error registering your agency. Please confirm your logged into MetaMask with your account.");
+
+                        isRegistering(false);
+                    }
+                });
         }
     }
 
@@ -30,6 +58,9 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, commonApi, ko
         registerFormModel: registerFormModel,
         success: success,
         error: error,
-        processRegistration: processRegistration
+        errorTitle: errorTitle,
+        processRegistration: processRegistration,
+        isRegistering: isRegistering,
+        registrationSuccessful: registrationSuccessful
     };
-}(MICROCREDENTIALS.agencyModel, MICROCREDENTIALS.commonApi, ko));
+}(MICROCREDENTIALS.agencyModel, MICROCREDENTIALS.microCredentialContract, MICROCREDENTIALS.commonApi, ko));

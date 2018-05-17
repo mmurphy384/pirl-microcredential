@@ -12,6 +12,7 @@ MICROCREDENTIALS.userModel = (function (ko) {
         self.id = ko.observable(data.id);
         self.firstName = ko.observable(data.firstName);
         self.lastName = ko.observable(data.lastName);
+        self.email = ko.observable(data.email);
 
         self.id.fullName = ko.computed(function () {
             return self.lastName() + ", " + self.firstName();
@@ -21,6 +22,7 @@ MICROCREDENTIALS.userModel = (function (ko) {
             self.id(updateData.id);
             self.firstName(data.firstName);
             self.lastName(data.lastName);
+            self.email(data.email);
         };
 
         self.toJson = function () {

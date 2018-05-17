@@ -4,16 +4,20 @@ namespace Pirl.MicroCredentials.Core.Models
 {
     public class Agency : BaseDomainModel<int>
     {
-        public Agency(int id, string name, string contactFirstName, string contactLastName)
+        public Agency(int id, string agencyName, string firstName, string lastName, string email, string website)
             : base(id)
         {
-            Name = name;
-            ContactFirstName = contactFirstName;
-            ContactLastName = contactLastName;
+            AgencyName = agencyName;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Website = website;
         }
 
-        public string Name { get; private set; }
-        public string ContactFirstName { get; private set; }
-        public string ContactLastName { get; private set; }
+        public string AgencyName { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Email { get; private set; }
+        public string Website { get; private set; }
     }
 }

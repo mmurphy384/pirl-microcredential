@@ -11,7 +11,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
     {
         public string GetContractAddress()
         {
-            return "0x12890d2cce102216644c59daE5baed380d84830c";
+            return "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
         }
 
         public string GetContractAbi()
@@ -53,26 +53,63 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'name',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'url',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'isActive',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'fee',
+                              'name': 'id',
                               'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'firstName',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'lastName',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'email',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'userAddress',
+                              'type': 'address'
                             }
                           ],
                           'name': 'NewUser',
+                          'type': 'event'
+                        },
+                        {
+                          'anonymous': false,
+                          'inputs': [
+                            {
+                              'indexed': false,
+                              'name': 'id',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'firstName',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'lastName',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'email',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'userAddress',
+                              'type': 'address'
+                            }
+                          ],
+                          'name': 'UpdateUser',
                           'type': 'event'
                         },
                         {
@@ -101,6 +138,28 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': false,
                           'inputs': [
                             {
+                              'name': '_firstName',
+                              'type': 'string'
+                            },
+                            {
+                              'name': '_lastName',
+                              'type': 'string'
+                            },
+                            {
+                              'name': '_email',
+                              'type': 'string'
+                            }
+                          ],
+                          'name': 'updateUser',
+                          'outputs': [],
+                          'payable': false,
+                          'stateMutability': 'nonpayable',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
                               'name': '_email',
                               'type': 'string'
                             }
@@ -113,11 +172,11 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             }
                           ],
                           'payable': false,
-                          'stateMutability': 'nonpayable',
+                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {
-                          'constant': false,
+                          'constant': true,
                           'inputs': [
                             {
                               'name': '_address',
@@ -132,11 +191,11 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             }
                           ],
                           'payable': false,
-                          'stateMutability': 'nonpayable',
+                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {
-                          'constant': false,
+                          'constant': true,
                           'inputs': [],
                           'name': 'getMyId',
                           'outputs': [
@@ -146,7 +205,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             }
                           ],
                           'payable': false,
-                          'stateMutability': 'nonpayable',
+                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {

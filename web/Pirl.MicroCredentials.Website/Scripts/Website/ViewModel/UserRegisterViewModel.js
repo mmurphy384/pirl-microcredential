@@ -2,14 +2,17 @@
 
 var MICROCREDENTIALS = this.MICROCREDENTIALS || {};
 
-MICROCREDENTIALS.userRegisterViewModel = (function (userModel, commonApi, ko) {
+MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, commonApi, ko) {
     "use strict";
 
     //Varibles
     var registerFormModel = ko.observable(new userModel.User()),
         success = ko.observable(undefined),
         error = ko.observable(undefined),
-        metaMaskInstalled = ko.observable(false);
+        errorTitle = ko.observable(undefined),
+        metaMaskInstalled = ko.observable(false),
+        isRegistering = ko.observable(false),
+        registrationSuccessful = ko.observable(false);
 
     //Public Functions
     function metaMaskActive() {
@@ -20,7 +23,32 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, commonApi, ko) {
         var formVaild = commonApi.validateForm("#UserRegistrationForm");
 
         if (formVaild) {
-            alert("Call Contract");
+            isRegistering(true);
+
+            var user = registerFormModel();
+            var endUserContract = web3.eth.contract(userContract.userContractAbi).at(userContract.userContractAddress);
+
+            endUserContract.addUser.estimateGas(user.firstName(), user.lastName(), user.email(),
+                function (errorMessage, result) {
+                    if (!errorMessage) {
+                        endUserContract.addUser(user.firstName(), user.lastName(), user.email(),
+                            function (errorMessage, result) {
+                                if (!errorMessage) {
+                                    registrationSuccessful(true);
+                                } else {
+                                    errorTitle("Error Registering User");
+                                    error("There was an error registering, please confirm that your accepted the MetaMask transaction and had enough PIRL to cover the transaction fees.");
+
+                                    isRegistering(false);
+                                }
+                            });
+                    } else {
+                        errorTitle("Error Registering User");
+                        error("There was an error registering, please confirm your logged into MetaMask with your account.");
+
+                        isRegistering(false);
+                    }
+                });
         }
     }
 
@@ -30,6 +58,9 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, commonApi, ko) {
         registerFormModel: registerFormModel,
         success: success,
         error: error,
-        processRegistration: processRegistration
+        errorTitle: errorTitle,
+        processRegistration: processRegistration,
+        isRegistering: isRegistering,
+        registrationSuccessful: registrationSuccessful
     };
-}(MICROCREDENTIALS.userModel, MICROCREDENTIALS.commonApi, ko));
+}(MICROCREDENTIALS.userModel, MICROCREDENTIALS.userContract, MICROCREDENTIALS.commonApi, ko));

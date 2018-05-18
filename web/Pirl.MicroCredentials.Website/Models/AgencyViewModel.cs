@@ -12,15 +12,21 @@ namespace Pirl.MicroCredentials.Models
         public int? Id { get; set; }
 
         [Required]
-        [DisplayName("Name")]
-        public string Name { get; set; }
+        [DisplayName("Agency Name")]
+        public string AgencyName { get; set; }
 
         [Required]
         [DisplayName("First Name")]
-        public string ContactFirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
         [DisplayName("Last Name")]
-        public string ContactLastName { get; set; }
+        public string LastName { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
+
+        [DisplayName("Website")]
+        public string Website { get; set; }
     }
 }

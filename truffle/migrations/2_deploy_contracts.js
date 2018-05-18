@@ -5,8 +5,8 @@ var Users = artifacts.require("./Users.sol");
 
 
 module.exports = function(deployer) {
-  deployer.deploy(MicroCredential,web3.eth.accounts[9]);
-  deployer.deploy(MyUtils,web3.eth.accounts[9]);
-  deployer.deploy(Credentials,web3.eth.accounts[9]);
-  deployer.deploy(Users,web3.eth.accounts[9]);
+  deployer.deploy(MicroCredential);
+  deployer.deploy(MyUtils);
+  deployer.deploy(Credentials);
+  deployer.deploy(Users);
 };

@@ -25,6 +25,13 @@ contract('MicroCredential', function(accounts) {
 		"lastName":"Murphy",
 		"email":"mmurphy384@yahoo.com"
 	}
+	var _agency2 = {
+		"name":"SomeOther Place",
+		"website":"www.micro-credentials-r-us.io",
+		"firstName":"Larry",
+		"lastName":"Johnson",
+		"email":"ljohnson@yahoo.com"
+	}
 
 	 it("should create a contract, add an agency and verify it was added, set it inactive", function() {
 		 return MicroCredential.deployed().then(function(instance) {
@@ -32,7 +39,7 @@ contract('MicroCredential', function(accounts) {
 			 console.log('######### Log: Starting Tests for MicroCredential');
 	 		return _instance.registerAgency(_agency.name, _agency.website, _agency.firstName, _agency.lastName, _agency.email, {from:accounts[1]});
 		}).then(function (result) {
-			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
+			//console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
@@ -52,7 +59,7 @@ contract('MicroCredential', function(accounts) {
 			assert.equal(toAscii(result[4]),_agency.email,"The agency email is correct");
 			return _instance.updateAgencyInfo(_agency.name,'https://pirl.io', _agency.firstName, _agency.lastName, _agency.email,{from:accounts[1]});
 		}).then(function (result) {
-			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
+			//console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
@@ -60,7 +67,7 @@ contract('MicroCredential', function(accounts) {
 			assert.equal(toAscii(result[1]),'https://pirl.io',"The agency website is correct");
 			return _instance.setAgencyInactive({from:accounts[1]})
 		}).then(function (result) {
-			console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
+			//console.log('######### Log: receipt.gasUsed = ' + result.receipt.gasUsed);
 			assert.isBelow(result.receipt.gasUsed,900000,'Gas did not exceed 900000');
 			return _instance.getAgencyInfo.call(_agency.name);
 		}).then(function (result) {
@@ -86,7 +93,7 @@ contract('MicroCredential', function(accounts) {
 			balanceStart = web3.fromWei(web3.eth.getBalance(accounts[9]),'ether').toNumber();
 			return _instance.sendTransaction({from:accounts[9], value:amountToSend});
 		}).then(function (result) {
-			console.log('######### Log02: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
+			//console.log('######### Log02: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 			console.log('######### Log03: getBalance after Send = ' + result.toNumber());
@@ -96,7 +103,7 @@ contract('MicroCredential', function(accounts) {
 			balanceStart = currentBalance;
 			return _instance.withdraw(amountToWithDraw);
 		}).then(function (result) {
-			console.log('######### Log04: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
+			//console.log('######### Log04: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
 			return _instance.getContractBalance();
 		}).then(function (result) {
 	 		console.log('######### Log05: getBalance after Withdrawal = ' + result.toNumber());
@@ -105,12 +112,11 @@ contract('MicroCredential', function(accounts) {
 	 		assert.equal(result.toNumber(),amountToSend-amountToWithDraw,"The contract balance is correct after withdrawal");
 	 		return _instance.destroy();
 		 }).then(function (result) {
-		 	console.log('######### Log06: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
-		 	return _instance.getContractBalance();			
+		 	//console.log('######### Log06: SendTransaction receipt.gasUsed = ' + result.receipt.gasUsed);
+		 	return _instance.getContractBalance();
 		 }).then(function (result) {
 		 	console.log('######### Log07: getBalance after Destroy = ' + result.toNumber());
 	 		assert.equal(result.toNumber(),0,"The contract is inactive and all Pirl has been withdrawn");
 		});
 	});
-
 })

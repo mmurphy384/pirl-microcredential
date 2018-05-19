@@ -1,8 +1,8 @@
 pragma solidity ^0.4.23;
 
 import "./Ownable.sol";
-import "./Credentials.sol";
 import "./Users.sol";
+import "./Credentials.sol";
 
 contract MicroCredential is Ownable,Credentials,Users {
 
@@ -39,7 +39,7 @@ contract MicroCredential is Ownable,Credentials,Users {
     constructor() public {
         registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
         addUser("root","user","mmurphy384@yahoo.com");
-        addCredential("root credential", "http://pirl.io", 100); 
+        addCredential("root credential", "http://pirl.io", 100,0);
     }
 
     // Purpose  : Fallback Function
@@ -58,20 +58,6 @@ contract MicroCredential is Ownable,Credentials,Users {
         address(msg.sender).transfer(_amount);
         emit Withdraw(msg.sender, _amount);
         emit Balance(address(this).balance);
-    }
-
-    // Purpose  : Set the agency basic info.  Can only by done by the agency owner 
-    function updateAgencyInfo(string _agencyName, string _website, string _firstName, string _lastName, string _email) 
-        public onlyAgencyOwner {
-        require(utfStringLength(_agencyName) > 2);
-        uint id = agencyIdByAddress[msg.sender];
-        require(agencies[id].agencyName.length > 1);
-        agencies[id].agencyName = stringToBytes32(_agencyName);
-        agencies[id].website = stringToBytes32(_website);
-        agencies[id].firstName = stringToBytes32(_firstName);
-        agencies[id].lastName = stringToBytes32(_lastName);
-        agencies[id].email = stringToBytes32(_email);
-        agencies[id].isActive = true;
     }
 
     // Purpose  : Need an 'iniitalize' because the first time, because it's public and payable.
@@ -96,26 +82,40 @@ contract MicroCredential is Ownable,Credentials,Users {
         agencyIdByAddress[msg.sender] = id;
     }
 
+    // Purpose  : Set the agency basic info.  Can only by done by the agency owner 
+    function updateAgencyInfo(string _agencyName, string _website, string _firstName, string _lastName, string _email) 
+        public onlyAgencyOwner {
+        require(utfStringLength(_agencyName) > 2);
+        uint id = agencyIdByAddress[msg.sender];
+        require(agencies[id].agencyName.length > 1);
+        agencies[id].agencyName = stringToBytes32(_agencyName);
+        agencies[id].website = stringToBytes32(_website);
+        agencies[id].firstName = stringToBytes32(_firstName);
+        agencies[id].lastName = stringToBytes32(_lastName);
+        agencies[id].email = stringToBytes32(_email);
+        agencies[id].isActive = true;
+    }
+
     // Purpose  : Get the agency basic info
     function getAgencyCount() view public returns (uint) {
         return numAgencies;
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool) {
+    function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
         require(utfStringLength(_agencyName) > 0);
         uint id = agencyIdByName[stringToBytes32(_agencyName)];
         return getAgencyInfoById(id);
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool) {
+    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
         uint id = agencyIdByAddress[_address];
         return getAgencyInfoById(id);
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfoById(uint _id) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool) {
+    function getAgencyInfoById(uint _id) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
         require(agencies[_id].agencyName.length > 1);
         return (
             agencies[_id].agencyName, 
@@ -123,7 +123,8 @@ contract MicroCredential is Ownable,Credentials,Users {
             agencies[_id].firstName, 
             agencies[_id].lastName, 
             agencies[_id].email, 
-            agencies[_id].isActive);
+            agencies[_id].isActive,
+            _id);
     }
 
     // Purpose  : Get the agency basic info

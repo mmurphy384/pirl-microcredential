@@ -1,4 +1,6 @@
-﻿namespace Pirl.MicroCredentials.Interactor.Queries.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Pirl.MicroCredentials.Interactor.Queries.Interfaces
 {
     public interface IQueryHandler { }
 

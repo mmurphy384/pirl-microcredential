@@ -1,14 +1,14 @@
 {
   "contractName": "MyUtils",
   "abi": [],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820013d615b5d0535899ed21ac7e7357f8d17d388cc6dae372588c6e9d9e7c51bc60029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820013d615b5d0535899ed21ac7e7357f8d17d388cc6dae372588c6e9d9e7c51bc60029",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058207e56927063c8bdadf5a760922578adb0aa0fbfe3aeb706c1b8e5ebdd0334beb30029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058207e56927063c8bdadf5a760922578adb0aa0fbfe3aeb706c1b8e5ebdd0334beb30029",
   "sourceMap": "30:2843:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;30:2843:0;;;;;;;",
   "deployedSourceMap": "30:2843:0:-;;;;;",
   "source": "pragma solidity ^0.4.19;\r\n\r\n\r\ncontract MyUtils {\r\n    \r\n    // Public Functions\r\n    function uint2str(uint i) internal pure returns (string) {\r\n        if (i == 0) return \"0\";\r\n        uint j = i;\r\n        uint length;\r\n        while (j != 0){\r\n            length++;\r\n            j /= 10;\r\n        }\r\n        bytes memory bstr = new bytes(length);\r\n        uint k = length - 1;\r\n        while (i != 0){\r\n            bstr[k--] = byte(48 + i % 10);\r\n            i /= 10;\r\n        }\r\n        return string(bstr);\r\n    }\r\n\r\n    function bytes32ToString(bytes32 x) internal pure returns (string) {\r\n        bytes memory bytesString = new bytes(32);\r\n        uint charCount = 0;\r\n        for (uint j = 0; j < 32; j++) {\r\n            byte char = byte(bytes32(uint(x) * 2 ** (8 * j)));\r\n            if (char != 0) {\r\n                bytesString[charCount] = char;\r\n                charCount++;\r\n            }\r\n        }\r\n        bytes memory bytesStringTrimmed = new bytes(charCount);\r\n        for (j = 0; j < charCount; j++) {\r\n            bytesStringTrimmed[j] = bytesString[j];\r\n        }\r\n        return string(bytesStringTrimmed);\r\n    }\r\n\r\n    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {\r\n        bytes memory tempEmptyStringTest = bytes(source);\r\n        if (tempEmptyStringTest.length == 0) {\r\n            return 0x0;\r\n        }\r\n        assembly {result := mload(add(source, 32))}\r\n    }\r\n\r\n    function strConcat(string _a, string _b, string _c, string _d, string _e) internal pure returns (string){\r\n        bytes memory _ba = bytes(_a);\r\n        bytes memory _bb = bytes(_b);\r\n        bytes memory _bc = bytes(_c);\r\n        bytes memory _bd = bytes(_d);\r\n        bytes memory _be = bytes(_e);\r\n        string memory abcde = new string(_ba.length + _bb.length + _bc.length + _bd.length + _be.length);\r\n        bytes memory babcde = bytes(abcde);\r\n        uint k = 0;\r\n        for (uint i = 0; i < _ba.length; i++) babcde[k++] = _ba[i];\r\n        for (i = 0; i < _bb.length; i++) babcde[k++] = _bb[i];\r\n        for (i = 0; i < _bc.length; i++) babcde[k++] = _bc[i];\r\n        for (i = 0; i < _bd.length; i++) babcde[k++] = _bd[i];\r\n        for (i = 0; i < _be.length; i++) babcde[k++] = _be[i];\r\n        return string(babcde);\r\n    }\r\n    \r\n    function utfStringLength(string str) pure internal\r\n    returns (uint length)\r\n    {\r\n        uint i=0;\r\n        bytes memory string_rep = bytes(str);\r\n\r\n        while (i<string_rep.length)\r\n        {\r\n            if (string_rep[i]>>7==0)\r\n                i+=1;\r\n            else if (string_rep[i]>>5==0x6)\r\n                i+=2;\r\n            else if (string_rep[i]>>4==0xE)\r\n                i+=3;\r\n            else if (string_rep[i]>>3==0x1E)\r\n                i+=4;\r\n            else\r\n                //For safety\r\n                i+=1;\r\n\r\n            length++;\r\n        }\r\n    }\r\n}",
-  "sourcePath": "D:\\GitHub\\pirl-project01\\truffle\\contracts\\MyUtils.sol",
+  "sourcePath": "C:\\Development\\PIRL\\MicroCredentials\\truffle\\contracts\\MyUtils.sol",
   "ast": {
-    "absolutePath": "/D/GitHub/pirl-project01/truffle/contracts/MyUtils.sol",
+    "absolutePath": "/C/Development/PIRL/MicroCredentials/truffle/contracts/MyUtils.sol",
     "exportedSymbols": {
       "MyUtils": [
         454
@@ -6088,7 +6088,7 @@
     "src": "0:2873:0"
   },
   "legacyAST": {
-    "absolutePath": "/D/GitHub/pirl-project01/truffle/contracts/MyUtils.sol",
+    "absolutePath": "/C/Development/PIRL/MicroCredentials/truffle/contracts/MyUtils.sol",
     "exportedSymbols": {
       "MyUtils": [
         454
@@ -12171,7 +12171,14 @@
     "name": "solc",
     "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1526487972518": {
+      "events": {},
+      "links": {},
+      "address": "0x630589690929e9cdefdef0734717a9ef3ec7fcfe",
+      "transactionHash": "0xd59f0c385dfb4f60ab42b2a29c50985e8f269ee1be924078fe4b2be0db4e3ee8"
+    }
+  },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-19T00:12:20.352Z"
+  "updatedAt": "2018-05-19T02:03:04.574Z"
 }

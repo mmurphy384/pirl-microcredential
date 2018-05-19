@@ -6,6 +6,7 @@ using Pirl.MicroCredentials.Core.Contracts.Interfaces;
 using Pirl.MicroCredentials.Core.Models;
 using Pirl.MicroCredentials.Core.Models.Interfaces;
 using Pirl.MicroCredentials.Core.Repositories.Interfaces;
+using Pirl.MicroCredentials.DbRead.DataModels;
 using Pirl.MicroCredentials.DbRead.Repositories;
 using Pirl.MicroCredentials.Interactor.Mappings;
 using Pirl.MicroCredentials.Interactor.Mappings.Interfaces;
@@ -33,10 +34,14 @@ namespace Pirl.MicroCredentials
         private static IUnityContainer BuildUnityContainer()
         {
             var container = new UnityContainer();
+            var web3 = new Nethereum.Web3.Web3("http://localhost:8545");
 
             //Service Locator
             var serviceLocator = new UnityServiceLocator(container);
             container.RegisterInstance<IServiceLocator>(serviceLocator);
+
+            //Web3 Object
+            container.RegisterInstance(web3);
 
             //Contracts
             container.RegisterType<IMicroCredentialContract, MicroCredentialContract>();
@@ -45,6 +50,10 @@ namespace Pirl.MicroCredentials
             //Repositories
             container.RegisterType<IAgencyRepository, AgencyRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
+
+            //DataModels
+            container.RegisterInstance<IMappingHandler<AgencyDataModel, Agency>>(new GenericMapping<AgencyDataModel, Agency>());
+            container.RegisterInstance<IMappingHandler<UserDataModel, User>>(new GenericMapping<UserDataModel, User>());
 
             //Processors
             container.RegisterType<IQueryProcessor, QueryProcessor>();
@@ -57,8 +66,8 @@ namespace Pirl.MicroCredentials
             container.RegisterType<IQueryHandler<GetUsersQuery, User[]>, GetUsersQueryHandler>();
 
             //Mappings
-            container.RegisterInstance<IMappingHandler<AgencyViewModel, Agency>>(new GenericMapping<AgencyViewModel, Agency>());
-            container.RegisterInstance<IMappingHandler<UserViewModel, User>>(new GenericMapping<UserViewModel, User>());
+            container.RegisterInstance<IMappingHandler<Agency, AgencyViewModel>>(new GenericMapping<Agency, AgencyViewModel>());
+            container.RegisterInstance<IMappingHandler<User, UserViewModel>>(new GenericMapping<User, UserViewModel>());
 
             return container;
         }

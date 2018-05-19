@@ -11,11 +11,13 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, microCredenti
         error = ko.observable(undefined),
         errorTitle = ko.observable(undefined),
         metaMaskInstalled = ko.observable(false),
+        metaMaskAddress = ko.observable(undefined),
         isRegistering = ko.observable(false),
         registrationSuccessful = ko.observable(false);
 
     //Public Functions
-    function metaMaskActive() {
+    function metaMaskActive(address) {
+        metaMaskAddress(address);
         metaMaskInstalled(true);
     }
 
@@ -53,6 +55,7 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, microCredenti
     }
 
     return {
+        metaMaskAddress: metaMaskAddress,
         metaMaskInstalled: metaMaskInstalled,
         metaMaskActive: metaMaskActive,
         registerFormModel: registerFormModel,

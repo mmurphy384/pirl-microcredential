@@ -1,0 +1,83 @@
+﻿@model Pirl.MicroCredentials.Models.AgencyViewModel
+
+@{
+    ViewBag.Title = "Agency Registration";
+}
+
+<div class="container">
+    <h4>
+        MicroCredentials - Agency Dashboard
+    </h4>
+    
+    <div data-bind="visible: metaMaskInstalled()" style="display: none;">
+        <br />
+        <div class="bs-callout bs-callout-danger" style="display: none;" data-bind="visible: error() != undefined">
+            <h4 data-bind="text: errorTitle"></h4>
+            <p id="ErrorMessage" data-bind="text: error"></p>
+        </div>
+        <div data-bind="with: agencyFormModel">
+            <div class="row">
+                <div class="col-2">Id:</div>
+                <div class="col-10"><span data-bind="text: id"></span></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Name:</div>
+                <div class="col-10"><span data-bind="text: agencyName"></span></div>
+            </div>
+            <div class="row">
+                <div class="col-2">First Name:</div>
+                <div class="col-10"><span data-bind="text: firstName"></span></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Last Name:</div>
+                <div class="col-10"><span data-bind="text: lastName"></span></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Email:</div>
+                <div class="col-10"><span data-bind="text: email"></span></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Website:</div>
+                <div class="col-10"><span data-bind="text: website"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
+        To use MicroCredentials you require the MetaMask chrome extension to be installed.
+    </p>
+</div>
+
+
+<br />
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/AgencyApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Contract/MicroCredentialContract.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Model/AgencyModel.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/AgencyDashboardViewModel.js")"></script>
+
+    <script>
+        $(function (viewModel) {
+            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+            if (typeof web3 !== 'undefined') {
+                // Use Mist/MetaMask's provider
+                web3 = new Web3(web3.currentProvider);
+                viewModel.metaMaskActive(web3.eth.accounts[0]);
+
+                viewModel.retrieveAgency()
+                    .done(function () {
+
+                        ko.applyBindings(viewModel);
+                    });
+
+            } else {
+                console.log('No web3? You should consider trying MetaMask!');
+            }
+        }(MICROCREDENTIALS.agencyDashboardViewModel));
+    </script>
+}
+
+

@@ -10,12 +10,14 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, com
         success = ko.observable(undefined),
         error = ko.observable(undefined),
         errorTitle = ko.observable(undefined),
+        metaMaskAddress = ko.observable(undefined),
         metaMaskInstalled = ko.observable(false),
         isRegistering = ko.observable(false),
         registrationSuccessful = ko.observable(false);
 
     //Public Functions
-    function metaMaskActive() {
+    function metaMaskActive(address) {
+        metaMaskAddress(address);
         metaMaskInstalled(true);
     }
 
@@ -53,6 +55,7 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, com
     }
 
     return {
+        metaMaskAddress: metaMaskAddress,
         metaMaskInstalled: metaMaskInstalled,
         metaMaskActive: metaMaskActive,
         registerFormModel: registerFormModel,

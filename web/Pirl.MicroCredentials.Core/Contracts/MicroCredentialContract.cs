@@ -11,7 +11,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
     {
         public string GetContractAddress()
         {
-            return "0x5b1869d9a4c187f2eaa108f3062412ecf0526b24";
+            return "0x26b4afb60d6c903165150c6f0aa14f8016be4aec";
         }
 
         public string GetContractAbi()
@@ -80,6 +80,10 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '_fee',
                               'type': 'uint256'
+                            },
+                            {
+                              'name': '_agencyId',
+                              'type': 'uint256'
                             }
                           ],
                           'name': 'addCredential',
@@ -143,11 +147,23 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'bytes32'
                             },
                             {
+                              'name': 'firstName',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'lastName',
+                              'type': 'bytes32'
+                            },
+                            {
                               'name': 'email',
                               'type': 'bytes32'
                             },
                             {
                               'name': 'isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'name': 'exists',
                               'type': 'bool'
                             }
                           ],
@@ -202,6 +218,25 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'outputs': [],
                           'payable': false,
                           'stateMutability': 'nonpayable',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_address',
+                              'type': 'address'
+                            }
+                          ],
+                          'name': 'getCredentialListByAgencyAddress',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bytes32[]'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {
@@ -377,6 +412,25 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'address'
                             }
                           ],
+                          'name': 'addressIsUser',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bool'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_address',
+                              'type': 'address'
+                            }
+                          ],
                           'name': 'getIdByAddress',
                           'outputs': [
                             {
@@ -459,6 +513,12 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'payable': false,
                           'stateMutability': 'nonpayable',
                           'type': 'function'
+                        },
+                        {
+                          'inputs': [],
+                          'payable': false,
+                          'stateMutability': 'nonpayable',
+                          'type': 'constructor'
                         },
                         {
                           'payable': true,
@@ -657,10 +717,10 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'string'
                             }
                           ],
-                          'name': 'updateAgencyInfo',
+                          'name': 'registerAgency',
                           'outputs': [],
-                          'payable': false,
-                          'stateMutability': 'nonpayable',
+                          'payable': true,
+                          'stateMutability': 'payable',
                           'type': 'function'
                         },
                         {
@@ -687,10 +747,24 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'string'
                             }
                           ],
-                          'name': 'registerAgency',
+                          'name': 'updateAgencyInfo',
                           'outputs': [],
-                          'payable': true,
-                          'stateMutability': 'payable',
+                          'payable': false,
+                          'stateMutability': 'nonpayable',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [],
+                          'name': 'getAgencyCount',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {
@@ -717,7 +791,19 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             },
                             {
                               'name': '',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': '',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': '',
                               'type': 'bool'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256'
                             }
                           ],
                           'payable': false,
@@ -735,6 +821,57 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'name': 'getAgencyInfoByAddress',
                           'outputs': [
                             {
+                              'name': 'agencyName',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'website',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'firstName',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'lastName',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'email',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'name': 'id',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_id',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'name': 'getAgencyInfoById',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': '',
+                              'type': 'bytes32'
+                            },
+                            {
                               'name': '',
                               'type': 'bytes32'
                             },
@@ -749,6 +886,29 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'bool'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_address',
+                              'type': 'address'
+                            }
+                          ],
+                          'name': 'getAgencyIdByAddress',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'uint256'
                             }
                           ],
                           'payable': false,
@@ -781,6 +941,43 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'uint256'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_address',
+                              'type': 'address'
+                            }
+                          ],
+                          'name': 'addressIsAgency',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bool'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [],
+                          'name': 'getAgencies',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bytes32[]'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256[]'
                             }
                           ],
                           'payable': false,

@@ -35,7 +35,7 @@ namespace Pirl.MicroCredentials.Controllers.Api
         }
 
         // GET Api/AgencyApi/1
-        public AgencyViewModel GetAgency(int id)
+        public AgencyViewModel GetAgency(string id)
         {
             var getAgencyQuery = new GetAgencyQuery
             {

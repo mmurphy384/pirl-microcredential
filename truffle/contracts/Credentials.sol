@@ -1,8 +1,7 @@
 pragma solidity ^0.4.19;
 
-import "./myutils.sol";
 
-contract Credentials is MyUtils {
+contract Credentials {
 
     // Events
     event NewCredential(bytes32 name, bytes32 url,  bytes32 isActive, uint fee);
@@ -13,18 +12,20 @@ contract Credentials is MyUtils {
         bytes32 url;
         bool isActive;
         uint fee;
+        uint agencyId;
     }
 
     Credential[] public credentials;
     mapping(bytes32 => uint) internal credentialIdByName;
+    mapping(uint => uint) internal credentialCountByAgencyId;
 
     // Purpose  : To hold add a credential to the list of available credentials
-    function addCredential(string _name, string _url, uint _fee) public returns (uint) {
+    function addCredential(string _name, string _url, uint _fee, uint _agencyId) public {
         require(credentialIdByName[stringToBytes32(_name)] == 0);
         uint id = 0;
-        id = credentials.push(Credential(stringToBytes32(_name), stringToBytes32(_url),true,_fee))-1;
+        id = credentials.push(Credential(stringToBytes32(_name), stringToBytes32(_url),true,_fee, _agencyId))-1;
         credentialIdByName[stringToBytes32(_name)] = id;
-        return id;
+        credentialCountByAgencyId[_agencyId] = credentialCountByAgencyId[_agencyId] += 1;
     }
 
     // Purpose  : To retrieve a credential by the id
@@ -33,20 +34,18 @@ contract Credentials is MyUtils {
         return (credentials[_id].name, credentials[_id].url, credentials[_id].fee); 
     }
 
-    function getCredentialByName(string _name) public view returns (bytes32 name, bytes32 url, uint fee) {
-        uint _id = credentialIdByName[stringToBytes32(_name)];
-        require(credentials[_id].name.length > 0);
-        require(_id < credentials.length);
-        return (credentials[_id].name, credentials[_id].url, credentials[_id].fee); 
-    }
-
-    function getCredentialList() public view returns (bytes32[]) {
-        require(credentials.length >= 0);
-        bytes32[] memory  names = new bytes32[](credentials.length);
+    function getCredentialListByAgencyId(uint _agencyId) public view returns (bytes32[], uint[]) {
+        bytes32[] memory  names = new bytes32[](credentialCountByAgencyId[_agencyId]);
+        uint[] memory  ids = new uint[](credentialCountByAgencyId[_agencyId]);
+        uint index = 0;
         for (uint i = 0; i <= credentials.length-1; i++) {
-            names[i] = credentials[i].name;
+            if (credentials[i].agencyId == _agencyId) {
+                names[index] = credentials[i].name;
+                ids[index] = i;
+                index += 1;
+            }
         }
-        return (names);
+        return (names,ids);
     }
 
     function stringToBytes32(string memory source) internal pure returns (bytes32 result) {

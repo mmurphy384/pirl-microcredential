@@ -5,7 +5,7 @@ import "./Users.sol";
 import "./Credentials.sol";
 import "./Files.sol";
 
-contract MicroCredential is Ownable,Credentials,Users,Files {
+contract MicroCredential is Ownable,Credentials,Users, Files {
 
     // Events
     event Deposit(address _from, uint value);

@@ -18,12 +18,12 @@ namespace Pirl.MicroCredentials.DbRead.Repositories
             _userContract = userContract;
         }
 
-        public User GetById(int id)
+        User IRepository<User, int>.GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
+        IEnumerable<User> IRepository<User, int>.GetAll()
         {
             throw new NotImplementedException();
         }

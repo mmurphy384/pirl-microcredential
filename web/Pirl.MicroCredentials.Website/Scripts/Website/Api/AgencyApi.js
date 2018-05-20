@@ -10,8 +10,8 @@ MICROCREDENTIALS.agencyApi = (function (commonApi, ko) {
         return "/Api/AgencyApi";
     }
 
-    function getAgencyUrl(id) {
-        return getBaseUrl() + "/" + id;
+    function getAgencyUrl(address) {
+        return getBaseUrl() + "/" + address;
     }
 
     //Api Methods
@@ -19,8 +19,8 @@ MICROCREDENTIALS.agencyApi = (function (commonApi, ko) {
         return commonApi.ajaxRequest("get", getBaseUrl());
     }
 
-    function retrieveAgency(id) {
-        return commonApi.ajaxRequest("get", getAgencyUrl(id));
+    function retrieveAgency(address) {
+        return commonApi.ajaxRequest("get", getAgencyUrl(address));
     }
 
     //Expose Api Methods

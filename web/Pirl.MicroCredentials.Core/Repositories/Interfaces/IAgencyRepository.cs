@@ -9,5 +9,6 @@ namespace Pirl.MicroCredentials.Core.Repositories.Interfaces
 {
     public interface IAgencyRepository : IRepository<Agency, int>
     {
+        Agency GetByAddress(string address);
     }
 }

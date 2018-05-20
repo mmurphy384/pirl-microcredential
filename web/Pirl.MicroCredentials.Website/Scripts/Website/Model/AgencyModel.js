@@ -22,11 +22,11 @@ MICROCREDENTIALS.agencyModel = (function (ko) {
 
         self.updateModel = function (updateData) {
             self.id(updateData.id);
-            self.agencyName(data.agencyName);
-            self.firstName(data.firstName);
-            self.lastName(data.lastName);
-            self.email(data.email);
-            self.website(data.website);
+            self.agencyName(updateData.agencyName);
+            self.firstName(updateData.firstName);
+            self.lastName(updateData.lastName);
+            self.email(updateData.email);
+            self.website(updateData.website);
         };
 
         self.toJson = function () {

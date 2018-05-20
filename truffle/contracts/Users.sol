@@ -45,7 +45,7 @@ contract Users is MyUtils {
     function updateUser(string _firstName, string _lastName, string _email) onlyUserOwner public {
         require(userIdByAddress[msg.sender] > 0);
         require(utfStringLength(_email) > 4);
-        uint id = getIdByAddress(msg.sender);
+        uint id = userIdByAddress[msg.sender];
         users[id].firstName = stringToBytes32(_firstName);
         users[id].lastName = stringToBytes32(_lastName);
         users[id].email = stringToBytes32(_email);

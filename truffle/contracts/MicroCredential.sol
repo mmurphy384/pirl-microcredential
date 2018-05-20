@@ -3,8 +3,9 @@ pragma solidity ^0.4.23;
 import "./Ownable.sol";
 import "./Users.sol";
 import "./Credentials.sol";
+import "./Files.sol";
 
-contract MicroCredential is Ownable,Credentials,Users {
+contract MicroCredential is Ownable,Credentials,Users, Files {
 
     // Events
     event Deposit(address _from, uint value);
@@ -30,6 +31,7 @@ contract MicroCredential is Ownable,Credentials,Users {
     }
 
     // Mappings and Variables
+    uint version = 1;
     Agency[] public agencies;
     mapping(bytes32 => uint) internal agencyIdByName;
     mapping(address => uint) internal agencyIdByAddress;
@@ -40,6 +42,7 @@ contract MicroCredential is Ownable,Credentials,Users {
         registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
         addUser("root","user","mmurphy384@yahoo.com");
         addCredential("root credential", "http://pirl.io", 100,0);
+        addFile("root file name", "http://pirl.io","",0,0);
     }
 
     // Purpose  : Fallback Function
@@ -109,10 +112,10 @@ contract MicroCredential is Ownable,Credentials,Users {
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
-        uint id = agencyIdByAddress[_address];
-        return getAgencyInfoById(id);
-    }
+    // function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
+    //     uint id = agencyIdByAddress[_address];
+    //     return getAgencyInfoById(id);
+    // }
 
     // Purpose  : Get the agency basic info
     function getAgencyInfoById(uint _id) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
@@ -128,9 +131,9 @@ contract MicroCredential is Ownable,Credentials,Users {
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyIdByAddress(address _address) view public returns (uint) {
-        return agencyIdByAddress[_address];
-    }
+    // function getAgencyIdByAddress(address _address) view public returns (uint) {
+    //     return agencyIdByAddress[_address];
+    // }
 
     // Purpose  : To Make the contract inactive and return funds to owner
     function setAgencyInactive() public onlyAgencyOwner {

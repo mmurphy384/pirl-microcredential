@@ -15,6 +15,7 @@ namespace Pirl.MicroCredentials
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BootstrapperConfig.Initialise();
         }
     }
 }

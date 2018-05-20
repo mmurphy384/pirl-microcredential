@@ -12,7 +12,7 @@ namespace Pirl.MicroCredentials.Interactor.Queries
 {
     public class GetAgencyQuery : IQuery<Agency>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 
     public class GetAgencyQueryHandler : IQueryHandler<GetAgencyQuery, Agency>
@@ -26,7 +26,7 @@ namespace Pirl.MicroCredentials.Interactor.Queries
 
         public Agency Retrieve(GetAgencyQuery query)
         {
-            return _agencyRepository.GetById(query.Id);
+            return _agencyRepository.GetByAddress(query.Id);
         }
     }
 }

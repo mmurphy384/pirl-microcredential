@@ -105,17 +105,17 @@ contract MicroCredential is Ownable,Credentials,Users, Files {
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
-        require(utfStringLength(_agencyName) > 0);
-        uint id = agencyIdByName[stringToBytes32(_agencyName)];
-        return getAgencyInfoById(id);
-    }
-
-    // Purpose  : Get the agency basic info
-    // function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
-    //     uint id = agencyIdByAddress[_address];
+    // function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
+    //     require(utfStringLength(_agencyName) > 0);
+    //     uint id = agencyIdByName[stringToBytes32(_agencyName)];
     //     return getAgencyInfoById(id);
     // }
+
+    //Purpose  : Get the agency basic info
+    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
+        uint id = agencyIdByAddress[_address];
+        return getAgencyInfoById(id);
+    }
 
     // Purpose  : Get the agency basic info
     function getAgencyInfoById(uint _id) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {

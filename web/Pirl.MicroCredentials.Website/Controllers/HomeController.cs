@@ -26,5 +26,10 @@ namespace Pirl.MicroCredentials.Controllers
         {
             return View();
         }
+
+        public ActionResult UserDashboard()
+        {
+            return View();
+        }
     }
 }

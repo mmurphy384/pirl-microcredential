@@ -9,5 +9,6 @@ namespace Pirl.MicroCredentials.Core.Repositories.Interfaces
 {
     public interface IUserRepository : IRepository<User, int>
     {
+        User GetByAddress(string address);
     }
 }

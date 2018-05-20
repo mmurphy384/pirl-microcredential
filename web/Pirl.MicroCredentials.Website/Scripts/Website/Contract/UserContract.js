@@ -6,7 +6,7 @@ MICROCREDENTIALS.userContract = (function (web3) {
     "use strict";
 
     //Private Contract Details
-    var userContractAddress = "0xdb56f2e9369e0d7bd191099125a3f6c370f8ed15";
+    var userContractAddress = "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
     var userContractAbi = [
                             {
                                 "constant": true,
@@ -351,8 +351,8 @@ MICROCREDENTIALS.userContract = (function (web3) {
                             }
                         ];
 
-    return {
-        userContractAddress: userContractAddress,
-        userContractAbi: userContractAbi
-    };
-}(web3));
+                        return {
+                            userContractAddress: userContractAddress,
+                            userContractAbi: userContractAbi
+                        };
+                    }(web3));

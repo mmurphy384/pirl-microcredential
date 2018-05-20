@@ -10,23 +10,23 @@ using Pirl.MicroCredentials.Interactor.Queries.Interfaces;
 
 namespace Pirl.MicroCredentials.Interactor.Queries
 {
-    public class GetAgencyQuery : IQuery<Agency>
+    public class GetAgencyByAddressQuery : IQuery<Agency>
     {
-        public string Id { get; set; }
+        public string Address { get; set; }
     }
 
-    public class GetAgencyQueryHandler : IQueryHandler<GetAgencyQuery, Agency>
+    public class GetAgencyByAddressQueryHandler : IQueryHandler<GetAgencyByAddressQuery, Agency>
     {
         private readonly IAgencyRepository _agencyRepository;
 
-        public GetAgencyQueryHandler(IAgencyRepository agencyRepository)
+        public GetAgencyByAddressQueryHandler(IAgencyRepository agencyRepository)
         {
             _agencyRepository = agencyRepository;
         }
 
-        public Agency Retrieve(GetAgencyQuery query)
+        public Agency Retrieve(GetAgencyByAddressQuery query)
         {
-            return _agencyRepository.GetByAddress(query.Id);
+            return _agencyRepository.GetByAddress(query.Address);
         }
     }
 }

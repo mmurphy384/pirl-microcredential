@@ -54,6 +54,10 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, microCredenti
         }
     }
 
+    function routeToDashboard() {
+        commonApi.redirect("/Home/AgencyDashboard");
+    }
+
     return {
         metaMaskAddress: metaMaskAddress,
         metaMaskInstalled: metaMaskInstalled,
@@ -64,6 +68,7 @@ MICROCREDENTIALS.agencyRegisterViewModel = (function (agencyModel, microCredenti
         errorTitle: errorTitle,
         processRegistration: processRegistration,
         isRegistering: isRegistering,
-        registrationSuccessful: registrationSuccessful
+        registrationSuccessful: registrationSuccessful,
+        routeToDashboard: routeToDashboard
     };
 }(MICROCREDENTIALS.agencyModel, MICROCREDENTIALS.microCredentialContract, MICROCREDENTIALS.commonApi, ko));

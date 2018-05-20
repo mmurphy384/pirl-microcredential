@@ -60,9 +60,9 @@ namespace Pirl.MicroCredentials
             container.RegisterType<IMappingProcessor, MappingProcessor>();
 
             //Queries
-            container.RegisterType<IQueryHandler<GetAgencyQuery, Agency>, GetAgencyQueryHandler>();
+            container.RegisterType<IQueryHandler<GetAgencyByAddressQuery, Agency>, GetAgencyByAddressQueryHandler>();
             container.RegisterType<IQueryHandler<GetAgenciesQuery, Agency[]>, GetAgenciesQueryHandler>();
-            container.RegisterType<IQueryHandler<GetUserQuery, User>, GetUserQueryHandler>();
+            container.RegisterType<IQueryHandler<GetUserByAddressQuery, User>, GetUserByAddressQueryHandler>();
             container.RegisterType<IQueryHandler<GetUsersQuery, User[]>, GetUsersQueryHandler>();
 
             //Mappings

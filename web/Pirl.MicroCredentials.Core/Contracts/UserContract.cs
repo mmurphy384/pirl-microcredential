@@ -11,7 +11,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
     {
         public string GetContractAddress()
         {
-            return "0xdb56f2e9369e0d7bd191099125a3f6c370f8ed15";
+            return "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
         }
 
         public string GetContractAbi()
@@ -289,23 +289,23 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'name': 'getUserByAddress',
                           'outputs': [
                             {
-                              'name': '',
+                              'name': 'firstName',
                               'type': 'bytes32'
                             },
                             {
-                              'name': '',
+                              'name': 'lastName',
                               'type': 'bytes32'
                             },
                             {
-                              'name': '',
+                              'name': 'email',
                               'type': 'bytes32'
                             },
                             {
-                              'name': '',
+                              'name': 'isActive',
                               'type': 'bool'
                             },
                             {
-                              'name': '',
+                              'name': 'id',
                               'type': 'uint256'
                             }
                           ],

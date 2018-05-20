@@ -112,10 +112,10 @@ contract MicroCredential is Ownable,Credentials,Users, Files {
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
-        uint id = agencyIdByAddress[_address];
-        return getAgencyInfoById(id);
-    }
+    // function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
+    //     uint id = agencyIdByAddress[_address];
+    //     return getAgencyInfoById(id);
+    // }
 
     // Purpose  : Get the agency basic info
     function getAgencyInfoById(uint _id) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
@@ -131,9 +131,9 @@ contract MicroCredential is Ownable,Credentials,Users, Files {
     }
 
     // Purpose  : Get the agency basic info
-    function getAgencyIdByAddress(address _address) view public returns (uint) {
-        return agencyIdByAddress[_address];
-    }
+    // function getAgencyIdByAddress(address _address) view public returns (uint) {
+    //     return agencyIdByAddress[_address];
+    // }
 
     // Purpose  : To Make the contract inactive and return funds to owner
     function setAgencyInactive() public onlyAgencyOwner {

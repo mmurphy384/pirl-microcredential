@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import "./myutils.sol";
+import "./MyUtils.sol";
 
 contract Users is MyUtils {
 
@@ -28,12 +28,6 @@ contract Users is MyUtils {
     mapping(bytes32 => uint) internal userIdByEmail;
     mapping(address => uint) internal userIdByAddress;
     uint userCount = 0;
-    // Purpose  : Add a root user to solve the issue when
-    //            the mapping resolves to 0 when it can't
-    //            find a value.
-    //constructor() internal {
-    //    addUser("root","user","mmurphy384@yahoo.com");
-   // }
 
     // Purpose  : User adds their own account
     function addUser(string _firstName, string _lastName, string _email) public {
@@ -50,8 +44,8 @@ contract Users is MyUtils {
     // Purpose  : To update user about a person
     function updateUser(string _firstName, string _lastName, string _email) onlyUserOwner public {
         require(userIdByAddress[msg.sender] > 0);
-        //require(_email.length > 4);
-        uint id = getIdByAddress(msg.sender);
+        require(utfStringLength(_email) > 4);
+        uint id = userIdByAddress[msg.sender];
         users[id].firstName = stringToBytes32(_firstName);
         users[id].lastName = stringToBytes32(_lastName);
         users[id].email = stringToBytes32(_email);
@@ -61,8 +55,8 @@ contract Users is MyUtils {
 
     // Purpose  : To retrieve a users id via email
     function getIdByEmail(string _email) public view returns (uint) {
-        //require(_email.length > 0);
-        //require(userIdByEmail[stringToBytes32(_email)] > 0);
+        require(utfStringLength(_email) > 0);
+        require(userIdByEmail[stringToBytes32(_email)] > 0);
         return userIdByEmail[stringToBytes32(_email)];
     }
 

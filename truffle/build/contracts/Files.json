@@ -2752,10 +2752,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2640:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2915,10 +2915,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2697:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -3188,10 +3188,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2745:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -4926,10 +4926,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "3919:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -9099,7 +9099,7 @@
             "scope": 984,
             "src": "5910:290:1",
             "stateMutability": "pure",
-            "superFunction": 1873,
+            "superFunction": 1816,
             "visibility": "internal"
           },
           {
@@ -10167,7 +10167,7 @@
             "scope": 984,
             "src": "6208:580:1",
             "stateMutability": "pure",
-            "superFunction": 2137,
+            "superFunction": 2080,
             "visibility": "internal"
           }
         ],
@@ -12610,10 +12610,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2640:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -12773,10 +12773,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2697:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -13046,10 +13046,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "2745:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -14784,10 +14784,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3314,
-                        3315
+                        3429,
+                        3430
                       ],
-                      "referencedDeclaration": 3314,
+                      "referencedDeclaration": 3429,
                       "src": "3919:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -18957,7 +18957,7 @@
             "scope": 984,
             "src": "5910:290:1",
             "stateMutability": "pure",
-            "superFunction": 1873,
+            "superFunction": 1816,
             "visibility": "internal"
           },
           {
@@ -20025,7 +20025,7 @@
             "scope": 984,
             "src": "6208:580:1",
             "stateMutability": "pure",
-            "superFunction": 2137,
+            "superFunction": 2080,
             "visibility": "internal"
           }
         ],
@@ -20039,7 +20039,14 @@
     "name": "solc",
     "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1526828280215": {
+      "events": {},
+      "links": {},
+      "address": "0x68731c006e8a7fa45c6eab579f8f7507b10f5571",
+      "transactionHash": "0xb0b59d0fd2b7daa7d61872fb04cb5e6534b410b6f5ab9f997e1baa4c418be080"
+    }
+  },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-20T14:59:01.578Z"
+  "updatedAt": "2018-05-21T01:15:39.464Z"
 }

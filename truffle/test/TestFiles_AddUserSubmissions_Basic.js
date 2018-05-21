@@ -133,7 +133,7 @@ var userSubmissions = [
 		"agencyId":1,
 		"credentialId":1,
 		"fileIds":"1,2",
-		"status":"submitted",
+		"status":"submitted0111",
 		"account":6
 	},
 	{
@@ -142,7 +142,7 @@ var userSubmissions = [
 		"agencyId":1,
 		"credentialId":2,
 		"fileIds":"9,10",
-		"status":"submitted",
+		"status":"submitted1112",
 		"account":6
 	},
 	{
@@ -151,7 +151,7 @@ var userSubmissions = [
 		"agencyId":1,
 		"credentialId":1,
 		"fileIds":"11,12",
-		"status":"submitted",
+		"status":"submitted2211",
 		"account":7
 	},
 	{
@@ -160,7 +160,7 @@ var userSubmissions = [
 		"agencyId":1,
 		"credentialId":2,
 		"fileIds":"",
-		"status":"submitted",
+		"status":"submitted3212",
 		"account":7
 	},
 	{
@@ -169,7 +169,7 @@ var userSubmissions = [
 		"agencyId":2,
 		"credentialId":1,
 		"fileIds":"12,14",
-		"status":"submitted",
+		"status":"submitted4121",
 		"account":6
 	},
 	{
@@ -178,7 +178,7 @@ var userSubmissions = [
 		"agencyId":2,
 		"credentialId":2,
 		"fileIds":"15,16",
-		"status":"submitted",
+		"status":"submitted5122",
 		"account":6
 	},
 	{
@@ -187,7 +187,7 @@ var userSubmissions = [
 		"agencyId":2,
 		"credentialId":2,
 		"fileIds":"17",
-		"status":"submitted",
+		"status":"submitted6222",
 		"account":7
 	},
 	{
@@ -196,7 +196,7 @@ var userSubmissions = [
 		"agencyId":1,
 		"credentialId":1,
 		"fileIds":"17",
-		"status":"submitted",
+		"status":"submitted7111",
 		"account":7
 	},
 	{
@@ -205,7 +205,7 @@ var userSubmissions = [
 		"agencyId":2,
 		"credentialId":2,
 		"fileIds":"17",
-		"status":"submitted",
+		"status":"approved8122",
 		"account":7
 	},
 ]
@@ -224,35 +224,49 @@ var userSubmissions = [
 		 		_instance.addSubmission(userSubmissions[5].userId, userSubmissions[5].agencyId, userSubmissions[5].credentialId,userSubmissions[5].fileIds, userSubmissions[5].status,{from:accounts[userSubmissions[5].account],gas: 19612388}),
 		 		_instance.addSubmission(userSubmissions[6].userId, userSubmissions[6].agencyId, userSubmissions[6].credentialId,userSubmissions[6].fileIds, userSubmissions[6].status,{from:accounts[userSubmissions[6].account],gas: 19612388}),
 		 		_instance.addSubmission(userSubmissions[7].userId, userSubmissions[7].agencyId, userSubmissions[7].credentialId,userSubmissions[7].fileIds, userSubmissions[7].status,{from:accounts[userSubmissions[7].account],gas: 19612388}),
+		 		_instance.addSubmission(userSubmissions[8].userId, userSubmissions[8].agencyId, userSubmissions[8].credentialId,userSubmissions[8].fileIds, userSubmissions[8].status,{from:accounts[userSubmissions[8].account],gas: 19612388}),
 		 	]);
 		 }).then(function (results) {
 		 	console.log('######### Log: 6 user submissions created.  GasUsed = ' + results[1].receipt.gasUsed);
-		 	return _instance.getSubmissionById.call(userSubmissions[0].submissionId);
-		 }).then(function (results) {
-		 	console.log('######### Log: User 1 should have agency1, cred1, files12');
-		 	console.log('######### Log: user = ' + results[0].toNumber());
-		 	console.log('######### Log: agency = ' + results[1].toNumber());
-		 	console.log('######### Log: credential = ' + results[2].toNumber());
-		 	console.log('######### Log: fileIds = ' + toAscii(results[3]));
-		 	console.log('######### Log: statis = ' + toAscii(results[4]));
-
-		 	assert.equal(results[0].toNumber(),userSubmissions[0].userId);
-		 	assert.equal(results[1].toNumber(),userSubmissions[0].agencyId);
-		 	assert.equal(results[2].toNumber(),userSubmissions[0].credentialId);
-		 	assert.equal(toAscii(results[3]),userSubmissions[0].fileIds);
-		 	assert.equal(toAscii(results[4]),userSubmissions[0].status);
-		// 	return _instance.getFileListByUserId.call(files[2].userId);
-		// }).then(function (results) {
-		// 	console.log('######### Log: Should have 2 files for user 2');
-		// 	for (var i = 0; i < results[0].length; i++) {
-		// 		console.log(results[1][i].toNumber() + ' : ' + toAscii(results[0][i]));
-		// 	}
-		// 	assert.equal(toAscii(results[0][0]),files[2].name);
-		// 	assert.equal(toAscii(results[0][1]),files[3].name);
-		// 	return _instance.getFileById(5)
-		//  }).then(function (results) {
-		//  	console.log('######### Log: Should return User 1 File 3 : ' + toAscii(results[0]));
-		//  	assert.equal(toAscii(results[0]),files[5].name);
+		 	return _instance.getSubmissionById.call(userSubmissions[1].submissionId);
+		}).then(function (results) {
+			console.log('######### Log: User 1 should have agency1, cred1, files12');
+			console.log('######### Log: user = ' + results[0].toNumber());
+			console.log('######### Log: agency = ' + results[1].toNumber());
+			console.log('######### Log: credential = ' + results[2].toNumber());
+			console.log('######### Log: fileIds = ' + toAscii(results[3]));
+			console.log('######### Log: statis = ' + toAscii(results[4]));
+			assert.equal(results[0].toNumber(),userSubmissions[1].userId);
+			assert.equal(results[1].toNumber(),userSubmissions[1].agencyId);
+			assert.equal(results[2].toNumber(),userSubmissions[1].credentialId);
+			assert.equal(toAscii(results[3]),userSubmissions[1].fileIds);
+			assert.equal(toAscii(results[4]),userSubmissions[1].status);
+			return Promise.all([
+				_instance.updateStatus(1,'in-progress',{from:accounts[userSubmissions[1].account]}),
+				_instance.updateStatus(3,'in-progress',{from:accounts[userSubmissions[3].account]})
+			]); 
+		}).then(function (results) {
+			console.log('######### Log: 6 Updated Status.  GasUsed = ' + results[1].receipt.gasUsed);
+			return _instance.getSubmissionById.call(userSubmissions[1].submissionId);
+		}).then(function (results) {
+			console.log('######### Log: statis = ' + toAscii(results[4]));
+			assert.equal(toAscii(results[4]),'in-progress', 'The statsus of UserSubmission 1 is now set to in-progress');
+			return _instance.getSubmissionListByAgencyId.call(2);
+		}).then(function (results) {
+			console.log('######### Log: Files for agency 1 include.  Should see 4');
+			for (var i =0; i < results[0].length; i++){
+				console.log('######### Log: UserSubmissionIds = ' + results[1][i].toNumber() + ' and Status=' + toAscii(results[0][i]));
+			}
+			assert.equal(results[1][3].toNumber(),userSubmissions[8].submissionId,'User Submission Id is accurate')
+			assert.equal(toAscii(results[0][3]),userSubmissions[8].status,' status is accurate')
+			return _instance.getSubmissionListByUserId.call(2);
+		}).then(function (results) {
+			console.log('######### Log: Files for user 2 include.  Should see 3');
+			for (var i =0; i < results[0].length; i++){
+				console.log('######### Log: UserSubmissionIds = ' + results[1][i].toNumber() + ' and Status=' + toAscii(results[0][i]));
+			}
+			assert.equal(results[1][2].toNumber(),userSubmissions[6].submissionId,'User Submission Id is accurate')
+			assert.equal(toAscii(results[0][2]),userSubmissions[6].status,' status is accurate')
 		});
 	});
 	

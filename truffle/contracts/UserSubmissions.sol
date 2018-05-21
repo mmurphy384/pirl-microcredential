@@ -115,47 +115,33 @@ contract UserSubmissions {
         ); 
     }
 
-    // function getFileListByAgencyId(uint _agencyId) public view returns (bytes32[], uint[]) {
-    //     bytes32[] memory  names = new bytes32[](fileCountByAgencyId[_agencyId]);
-    //     uint[] memory  ids = new uint[](fileCountByAgencyId[_agencyId]);
-    //     uint index = 0;
-    //     for (uint i = 0; i <= files.length-1; i++) {
-    //         if (files[i].agencyId == _agencyId) {
-    //             names[index] = files[i].name;
-    //             ids[index] = i;
-    //             index += 1;
-    //         }
-    //     }
-    //     return (names,ids);
-    // }
+    function getSubmissionListByAgencyId(uint _agencyId) public view returns (bytes32[],  uint[]) {
+        bytes32[] memory  statuses = new bytes32[](submissionCountByAgencyId[_agencyId]);
+        uint[] memory  submissionIds = new uint[](submissionCountByAgencyId[_agencyId]);
+        uint index = 0;
+        for (uint i = 0; i <= submissions.length-1; i++) {
+            if (submissions[i].agencyId == _agencyId) {
+                statuses[index] = submissions[i].status;
+                submissionIds[index] = i;
+                index += 1;
+            }
+        }
+        return (statuses, submissionIds);
+    }
 
-    // function getFileListByUserId(uint _userId) public view returns (bytes32[], uint[]) {
-    //     bytes32[] memory  names = new bytes32[](fileCountByUserId[_userId]);
-    //     uint[] memory  ids = new uint[](fileCountByUserId[_userId]);
-    //     uint index = 0;
-    //     for (uint i = 0; i <= files.length-1; i++) {
-    //         if (files[i].userId == _userId) {
-    //             names[index] = files[i].name;
-    //             ids[index] = i;
-    //             index += 1;
-    //         }
-    //     }
-    //     return (names,ids);
-    // }
-
-    // function getFileListByUserSubmissionId(uint _userSubmissionId) public view returns (bytes32[], uint[]) {
-    //     bytes32[] memory  names = new bytes32[](fileCountByUserSubmissionId[_userSubmissionId]);
-    //     uint[] memory  ids = new uint[](fileCountByUserSubmissionId[_userSubmissionId]);
-    //     uint index = 0;
-    //     for (uint i = 0; i <= files.length-1; i++) {
-    //         if (files[i].userId == _userSubmissionId) {
-    //             names[index] = files[i].name;
-    //             ids[index] = i;
-    //             index += 1;
-    //         }
-    //     }
-    //     return (names,ids);
-    // }
+    function getSubmissionListByUserId(uint _userId) public view returns (bytes32[],  uint[]) {
+        bytes32[] memory  statuses = new bytes32[](submissionCountByUserId[_userId]);
+        uint[] memory  submissionIds = new uint[](submissionCountByUserId[_userId]);
+        uint index = 0;
+        for (uint i = 0; i <= submissions.length-1; i++) {
+            if (submissions[i].userId == _userId) {
+                statuses[index] = submissions[i].status;
+                submissionIds[index] = i;
+                index += 1;
+            }
+        }
+        return (statuses, submissionIds);
+    }
 
     function bytes32ToString(bytes32 x) internal pure returns (string) {
         bytes memory bytesString = new bytes(32);

@@ -18,5 +18,8 @@ namespace Pirl.MicroCredentials.Models
         [Required]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
     }
 }

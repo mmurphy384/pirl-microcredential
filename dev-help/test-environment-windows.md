@@ -26,7 +26,7 @@ c:\SomeFolder> npm install -g ganache-cli
 
 Next, run ganache-cli
 ```
-$ ganach-cli -e 100000 -l 4712388 -d --noVMErrorsOnRPCResponse
+$ ganache-cli -e 100000 -l 0xfffffffffff -g 100 -d --noVMErrorsOnRPCResponse 
 
 Some useful notes:
 -e to give the accounts more eth, test with pirl's 20k deposit

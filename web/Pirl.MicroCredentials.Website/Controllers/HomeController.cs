@@ -11,5 +11,25 @@ namespace Pirl.MicroCredentials.Controllers
         {
             return View();
         }
+
+        public ActionResult AgencyRegister()
+        {
+            return View();
+        }
+
+        public ActionResult AgencyDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult UserRegister()
+        {
+            return View();
+        }
+
+        public ActionResult UserDashboard()
+        {
+            return View();
+        }
     }
 }

@@ -1,11 +1,9 @@
 pragma solidity ^0.4.23;
 
 import "./Ownable.sol";
-import "./Users.sol";
-import "./Credentials.sol";
-import "./Files.sol";
+import "./MyUtils.sol";
 
-contract MicroCredential is Ownable,Credentials,Users, Files {
+contract MicroCredential is Ownable, MyUtils {
 
     // Events
     event Deposit(address _from, uint value);
@@ -39,10 +37,10 @@ contract MicroCredential is Ownable,Credentials,Users, Files {
 
     // What would I do in a constructor.  
     constructor() public {
-        registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
-        addUser("root","user","mmurphy384@yahoo.com");
-        addCredential("root credential", "http://pirl.io", 100,0);
-        addFile("root file name", "http://pirl.io","",0,0);
+        //registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
+        //addUser("root","user","mmurphy384@yahoo.com");
+        //addCredential("root credential", "http://pirl.io", 100,0);
+        //addFile("root file name", "http://pirl.io","",0,0);
     }
 
     // Purpose  : Fallback Function
@@ -131,20 +129,20 @@ contract MicroCredential is Ownable,Credentials,Users, Files {
     }
 
     // Purpose  : Get the agency basic info
-    // function getAgencyIdByAddress(address _address) view public returns (uint) {
-    //     return agencyIdByAddress[_address];
-    // }
+    function getAgencyIdByAddress(address _address) view public returns (uint) {
+        return agencyIdByAddress[_address];
+    }
 
-    // Purpose  : To Make the contract inactive and return funds to owner
+    // // Purpose  : To Make the contract inactive and return funds to owner
     function setAgencyInactive() public onlyAgencyOwner {
         uint id = agencyIdByAddress[msg.sender];
         require(agencies[id].agencyName.length > 1);
         agencies[id].isActive = false;
     }
 
-    // Purpose  : Used when an agency becomes active again
-    // To Do    : This will probably have to clear some queues, 
-    //            reset credential statii, etc.
+    // // Purpose  : Used when an agency becomes active again
+    // // To Do    : This will probably have to clear some queues, 
+    // //            reset credential statii, etc.
     function setAgencyActive() public onlyAgencyOwner {
         uint id = agencyIdByAddress[msg.sender];
         require(agencies[id].agencyName.length > 1);

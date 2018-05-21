@@ -54,6 +54,10 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, com
         }
     }
 
+    function routeToDashboard() {
+        commonApi.redirect("/Home/UserDashboard");
+    }
+
     return {
         metaMaskAddress: metaMaskAddress,
         metaMaskInstalled: metaMaskInstalled,
@@ -64,6 +68,7 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, com
         errorTitle: errorTitle,
         processRegistration: processRegistration,
         isRegistering: isRegistering,
-        registrationSuccessful: registrationSuccessful
+        registrationSuccessful: registrationSuccessful,
+        routeToDashboard: routeToDashboard
     };
 }(MICROCREDENTIALS.userModel, MICROCREDENTIALS.userContract, MICROCREDENTIALS.commonApi, ko));

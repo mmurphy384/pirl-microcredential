@@ -35,14 +35,14 @@ namespace Pirl.MicroCredentials.Controllers.Api
         }
 
         // GET Api/AgencyApi/1
-        public AgencyViewModel GetAgency(string id)
+        public AgencyViewModel GetAgencyByAddress(string id)
         {
-            var getAgencyQuery = new GetAgencyQuery
+            var getAgencyByAddressQuery = new GetAgencyByAddressQuery
             {
-                Id = id
+                Address = id
             };
 
-            var agency = _queryProcessor.Retrieve<GetAgencyQuery, Agency>(getAgencyQuery);
+            var agency = _queryProcessor.Retrieve<GetAgencyByAddressQuery, Agency>(getAgencyByAddressQuery);
 
             return _mappingProcessor.Map<Agency, AgencyViewModel>(agency);
         }

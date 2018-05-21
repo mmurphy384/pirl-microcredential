@@ -35,14 +35,14 @@ namespace Pirl.MicroCredentials.Controllers.Api
         }
 
         // GET Api/UserApi/1
-        public UserViewModel GetUser(int id)
+        public UserViewModel GetUserByAddress(string id)
         {
-            var getUserQuery = new GetUserQuery
+            var getUserByAddressQuery = new GetUserByAddressQuery
             {
-                Id = id
+                Address = id
             };
 
-            var user = _queryProcessor.Retrieve<GetUserQuery, User>(getUserQuery);
+            var user = _queryProcessor.Retrieve<GetUserByAddressQuery, User>(getUserByAddressQuery);
 
             return _mappingProcessor.Map<User, UserViewModel>(user);
         }

@@ -10,8 +10,8 @@ MICROCREDENTIALS.userApi = (function (commonApi, ko) {
         return "/Api/UserApi";
     }
 
-    function getUserUrl(id) {
-        return getBaseUrl() + "/" + id;
+    function getUserUrl(address) {
+        return getBaseUrl() + "/" + address;
     }
 
     //Api Methods
@@ -19,8 +19,8 @@ MICROCREDENTIALS.userApi = (function (commonApi, ko) {
         return commonApi.ajaxRequest("get", getBaseUrl());
     }
 
-    function retrieveUser(id) {
-        return commonApi.ajaxRequest("get", getUserUrl(id));
+    function retrieveUser(address) {
+        return commonApi.ajaxRequest("get", getUserUrl(address));
     }
 
     //Expose Api Methods

@@ -11,7 +11,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
     {
         public string GetContractAddress()
         {
-            return "0x26b4afb60d6c903165150c6f0aa14f8016be4aec";
+            return "0x5b1869d9a4c187f2eaa108f3062412ecf0526b24";
         }
 
         public string GetContractAbi()

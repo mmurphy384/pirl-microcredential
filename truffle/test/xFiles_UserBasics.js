@@ -19,114 +19,96 @@ contract('Files', function(accounts) {
 
 	var _instance;
 	var _agencyId;
-	var agencies = [{
-		"name":"Acme MicroCredentials",
-		"website":"www.micro-credentials-r-us.io",
-		"firstName":"Mike",
-		"lastName":"Murphy",
-		"email":"mmurphy384@yahoo.com",
-		"account":5
-	},
-	{
-		"name":"SomeOther Place",
-		"website":"www.micro-credentials-r-us.io",
-		"firstName":"Larry",
-		"lastName":"Johnson",
-		"email":"ljohnson@yahoo.com",
-		"account":6
-	},
-	{
-		"name":"NYSUT Teachers Union",
-		"website":"www.micro-credentials-r-us.io",
-		"firstName":"Larry",
-		"lastName":"Johnson",
-		"email":"ljohnson@yahoo.com",
-		"account":7
-	}
-];
 
-var files = [
-	{
-		"name":"Agency or User 1 File 1",
-		"url":"https://www.acme.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":1,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-	{
-		"name":"Agency or User 1 File 2",
-		"url":"https://www.acme.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":1,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-	{
-		"name":"Agency or User 2 File 1",
-		"url":"https://www.acme.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":2,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-	{
-		"name":"Agency or User 2 File 2",
-		"url":"https://www.SomeSite.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":2,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-	{
-		"name":"Agency or User 3 File 1",
-		"url":"https://www.SomeSite.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":3,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-	{
-		"name":"Agency or User 1 File 3",
-		"url":"https://www.SomeSite.com/Creds1",
-		"pirlFileHash":"",
-		"isActive":true,
-		"userId":1,
-		"userSubmissionId":0,
-		"agencyId":0
-	},
-]
 
-var users = [
-	{
-		"firstName":"Patrick",
-		"lastName":"Ewing",
-		"email":"P.ewing@yahoo.com",
-		"userId":1,
-		"account":6
-	},
-	{
-		"firstName":"John",
-		"lastName":"Starks",
-		"email":"J.Starks@yahoo.com",
-		"userId":2,
-		"account":7
-	},
-	{
-		"firstName":"Latrelle",
-		"lastName":"Sprewell",
-		"email":"L.Spreewell@yahoo.com",
-		"userId":3,
-		"account":8
-	}
-]
+	var files = [
+		{
+			"id":1,
+			"name":"Agency or User 1 File 1",
+			"url":"https://www.acme.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":1,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+		{
+			"id":2,
+			"name":"Agency or User 1 File 2",
+			"url":"https://www.acme.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":1,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+		{
+			"id":3,
+			"name":"Agency or User 2 File 1",
+			"url":"https://www.acme.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":2,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+		{
+			"id":4,
+			"name":"Agency or User 2 File 2",
+			"url":"https://www.SomeSite.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":2,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+		{
+			"id":5,
+			"name":"Agency or User 3 File 1",
+			"url":"https://www.SomeSite.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":3,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+		{
+			"id":6,
+			"name":"Agency or User 1 File 3",
+			"url":"https://www.SomeSite.com/Creds1",
+			"pirlFileHash":"",
+			"isActive":true,
+			"userId":1,
+			"userSubmissionId":0,
+			"agencyId":0
+		},
+	]
 
-	it("should create a contract, add 3 agencies, 6, files, retrieve files by agency, retrieve both.", function() {
+	var users = [
+		{
+			"firstName":"Patrick",
+			"lastName":"Ewing",
+			"email":"P.ewing@yahoo.com",
+			"userId":1,
+			"account":6
+		},
+		{
+			"firstName":"John",
+			"lastName":"Starks",
+			"email":"J.Starks@yahoo.com",
+			"userId":2,
+			"account":7
+		},
+		{
+			"firstName":"Latrelle",
+			"lastName":"Sprewell",
+			"email":"L.Spreewell@yahoo.com",
+			"userId":3,
+			"account":8
+		}
+	]
+
+	it("should create a 6 files, retrieve files by userid.", function() {
 		return Files.deployed().then(function(instance) {
 			console.log("#########################  Getting Instance");
 			_instance = Files.at(instance.address);
@@ -157,10 +139,10 @@ var users = [
 			}
 			assert.equal(toAscii(results[0][0]),files[2].name);
 			assert.equal(toAscii(results[0][1]),files[3].name);
-			return _instance.getFileById(5)
+			return _instance.getFileById(files[3].id)
 		 }).then(function (results) {
-		 	console.log('######### Log: Should return User 1 File 3 : ' + toAscii(results[0]));
-		 	assert.equal(toAscii(results[0]),files[5].name);
+		 	console.log('######### Log: Should return User 2 File 1 : ' + toAscii(results[0]));
+		 	assert.equal(toAscii(results[0]),files[3].name);
 		});
 	});
 	

@@ -1,6 +1,6 @@
 pragma solidity ^0.4.23;
 
-contract UserSubmissions {
+contract UserSubmissions  {
 
     //Events
     event NewSubmission(
@@ -19,6 +19,10 @@ contract UserSubmissions {
     string fileIds,
     string status);
 
+    event DepositUserSubmissions(address _from, uint value);
+    event WithdrawUserSubmissions(address _to, uint _amount);
+    event BalanceUserSubmissions(uint _remainingBalance);
+
     // Structs
     struct Submission {
         uint userId; 
@@ -28,11 +32,40 @@ contract UserSubmissions {
         bytes32 status;
     }
 
+    address public owner;
     Submission[] public submissions;
 
     mapping(uint => uint) internal submissionCountByUserId;
     mapping(uint => uint) internal submissionCountByAgencyId;
     mapping(uint => uint) internal submissionCountByCredentialId;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    constructor() public {
+        owner = msg.sender;
+        addSubmission(0,0,0,"","root");
+    }
+
+    // Purpose  : Fallback Function
+    function() public payable {
+        if (msg.value > 0) {
+            emit DepositUserSubmissions(msg.sender, msg.value);
+            emit BalanceUserSubmissions(address(this).balance);
+        }
+    }
+
+    // Purpose  : For the owner to withdraw some funds.
+    function withdraw(uint _amount) public onlyOwner {
+        require(address(this).balance > 0);
+        require(_amount > 0);
+        require(address(this).balance >= _amount);
+        address(msg.sender).transfer(_amount);
+        emit WithdrawUserSubmissions(msg.sender, _amount);
+        emit BalanceUserSubmissions(address(this).balance);
+    }
 
     // Purpose  : To create a submission.  Files can be attached afterward.
     function addSubmission(
@@ -43,19 +76,17 @@ contract UserSubmissions {
         string _status) 
         public payable {
 
-        require(_agencyId > 0);
-        require(_userId > 0);
-        require(_credentialId > 0);
+        //require(_agencyId > 0);
+        //require(_userId > 0);
+        //require(_credentialId > 0);
 
-        submissions.push(Submission(
+        uint _id = submissions.push(Submission(
             _userId,
             _agencyId, 
             _credentialId,
             stringToBytes32(_fileIds),
             stringToBytes32(_status)
             ))-1;
-
-        uint _id = submissions.length-1;
 
         submissionCountByUserId[_userId] = submissionCountByUserId[_userId] += 1;
         submissionCountByAgencyId[_agencyId] = submissionCountByAgencyId[_agencyId] += 1;
@@ -70,7 +101,7 @@ contract UserSubmissions {
         uint _submissionId, 
         string _status) public {
         
-        require(_submissionId > 0);
+        //require(_submissionId > 0);
         //require(submissions[submissionId].userId > 0);
 
         submissions[_submissionId].status = stringToBytes32(_status);
@@ -89,9 +120,9 @@ contract UserSubmissions {
     function updateFileIds(
         uint _submissionId, 
         string _fileIds) public {
-        require(utfStringLength(_fileIds) > 0);
-        require(_submissionId > 0);
-        require(submissions[_submissionId].userId > 0);
+        //require(utfStringLength(_fileIds) > 0);
+        //require(_submissionId > 0);
+        //require(submissions[_submissionId].userId > 0);
 
         submissions[_submissionId].fileIds = stringToBytes32(_fileIds);
 
@@ -106,7 +137,7 @@ contract UserSubmissions {
 
     // Purpose  : To retrieve a credential by the id
     function getSubmissionById(uint _submissionId) public view returns (uint, uint, uint, bytes32, bytes32) {
-        require(_submissionId < submissions.length);
+        //require(_submissionId < submissions.length);
         return (submissions[_submissionId].userId, 
             submissions[_submissionId].agencyId, 
             submissions[_submissionId].credentialId, 
@@ -119,7 +150,7 @@ contract UserSubmissions {
         bytes32[] memory  statuses = new bytes32[](submissionCountByAgencyId[_agencyId]);
         uint[] memory  submissionIds = new uint[](submissionCountByAgencyId[_agencyId]);
         uint index = 0;
-        for (uint i = 0; i <= submissions.length-1; i++) {
+        for (uint i = 0; i < submissions.length; i++) {
             if (submissions[i].agencyId == _agencyId) {
                 statuses[index] = submissions[i].status;
                 submissionIds[index] = i;
@@ -168,28 +199,33 @@ contract UserSubmissions {
         assembly {result := mload(add(source, 32))}
     }
 
-    function utfStringLength(string str) pure internal
-    returns (uint length)
-    {
-        uint i=0;
-        bytes memory string_rep = bytes(str);
+    // function utfStringLength(string str) pure internal
+    // returns (uint length)
+    // {
+    //     uint i=0;
+    //     bytes memory string_rep = bytes(str);
 
-        while (i<string_rep.length)
-        {
-            if (string_rep[i]>>7==0)
-                i+=1;
-            else if (string_rep[i]>>5==0x6)
-                i+=2;
-            else if (string_rep[i]>>4==0xE)
-                i+=3;
-            else if (string_rep[i]>>3==0x1E)
-                i+=4;
-            else
-                //For safety
-                i+=1;
+    //     while (i<string_rep.length)
+    //     {
+    //         if (string_rep[i]>>7==0)
+    //             i+=1;
+    //         else if (string_rep[i]>>5==0x6)
+    //             i+=2;
+    //         else if (string_rep[i]>>4==0xE)
+    //             i+=3;
+    //         else if (string_rep[i]>>3==0x1E)
+    //             i+=4;
+    //         else
+    //             //For safety
+    //             i+=1;
 
-            length++;
-        }
+    //         length++;
+    //     }
+    // }
+
+    // Purpose  : Owners with draw all pirl from contract.  Shutting contract down.
+    function destroy() public onlyOwner {
+        withdraw(address(this).balance);
     }
 
 }

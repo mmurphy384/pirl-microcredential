@@ -1,14 +1,12 @@
 pragma solidity ^0.4.23;
 
-import "./Ownable.sol";
-import "./MyUtils.sol";
 
-contract MicroCredential is Ownable, MyUtils {
+contract MicroCredential {
 
     // Events
-    event Deposit(address _from, uint value);
-    event Withdraw(address _to, uint _amount);
-    event Balance(uint _remainingBalance);
+    event DepositMicroCredential(address _from, uint value);
+    event WithdrawMicroCredential(address _to, uint _amount);
+    event BalanceMicroCredential(uint _remainingBalance);
 
     //  Make sure the address resolves a valid contract
     modifier onlyAgencyOwner() {
@@ -29,25 +27,29 @@ contract MicroCredential is Ownable, MyUtils {
     }
 
     // Mappings and Variables
+    address owner;
     uint version = 1;
     Agency[] public agencies;
     mapping(bytes32 => uint) internal agencyIdByName;
     mapping(address => uint) internal agencyIdByAddress;
     uint numAgencies = 0;
 
-    // What would I do in a constructor.  
+    // Register a root agency
     constructor() public {
-        //registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
-        //addUser("root","user","mmurphy384@yahoo.com");
-        //addCredential("root credential", "http://pirl.io", 100,0);
-        //addFile("root file name", "http://pirl.io","",0,0);
+        owner = msg.sender;
+        registerAgency("Root Agency","http://pirl.io","Mike","Murphy","mmurphy384@yahoo.com");
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
     }
 
     // Purpose  : Fallback Function
     function() public payable {
         if (msg.value > 0) {
-            emit Deposit(msg.sender, msg.value);
-            emit Balance(address(this).balance);
+            emit DepositMicroCredential(msg.sender, msg.value);
+            emit BalanceMicroCredential(address(this).balance);
         }
     }
 
@@ -57,8 +59,8 @@ contract MicroCredential is Ownable, MyUtils {
         require(_amount > 0);
         require(address(this).balance >= _amount);
         address(msg.sender).transfer(_amount);
-        emit Withdraw(msg.sender, _amount);
-        emit Balance(address(this).balance);
+        emit WithdrawMicroCredential(msg.sender, _amount);
+        emit BalanceMicroCredential(address(this).balance);
     }
 
     // Purpose  : Need an 'iniitalize' because the first time, because it's public and payable.
@@ -101,13 +103,6 @@ contract MicroCredential is Ownable, MyUtils {
     function getAgencyCount() view public returns (uint) {
         return numAgencies;
     }
-
-    // Purpose  : Get the agency basic info
-    // function getAgencyInfo(string _agencyName) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
-    //     require(utfStringLength(_agencyName) > 0);
-    //     uint id = agencyIdByName[stringToBytes32(_agencyName)];
-    //     return getAgencyInfoById(id);
-    // }
 
     //Purpose  : Get the agency basic info
     function getAgencyInfoByAddress(address _address) view public returns (bytes32, bytes32, bytes32, bytes32, bytes32, bool, uint) {
@@ -169,6 +164,38 @@ contract MicroCredential is Ownable, MyUtils {
             ids[i] = agencyIdByName[agencies[i].agencyName];
         }
         return (agencyNames, ids);
+    }
+
+    function utfStringLength(string str) pure internal
+    returns (uint length)
+    {
+        uint i=0;
+        bytes memory string_rep = bytes(str);
+
+        while (i<string_rep.length)
+        {
+            if (string_rep[i]>>7==0)
+                i+=1;
+            else if (string_rep[i]>>5==0x6)
+                i+=2;
+            else if (string_rep[i]>>4==0xE)
+                i+=3;
+            else if (string_rep[i]>>3==0x1E)
+                i+=4;
+            else
+                //For safety
+                i+=1;
+
+            length++;
+        }
+    }
+
+    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+        assembly {result := mload(add(source, 32))}
     }
 
     // Purpsoe  : Owners with draw all pirl from contract.  Shutting contract down.

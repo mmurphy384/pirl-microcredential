@@ -32,18 +32,24 @@
                 <div class="col-2">Email:</div>
                 <div class="col-10"><span data-bind="text: email"></span></div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-bind="click: $root.editUser">Edit User</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
         To use MicroCredentials you require the MetaMask chrome extension to be installed.
     </p>
+    
+    <div data-bind="template: { name: 'editUserTemplate', data: $data }"></div>
 </div>
 
-
-<br />
-
 @section Scripts {
+    @Html.Partial("~/Views/Home/User/_EditUser.cshtml")
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/UserApi.js")"></script>
@@ -61,7 +67,6 @@
 
                 viewModel.retrieveUser()
                     .done(function () {
-
                         ko.applyBindings(viewModel);
                     });
 

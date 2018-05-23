@@ -16,7 +16,7 @@
                 <h4 data-bind="text: errorTitle"></h4>
                 <p id="ErrorMessage" data-bind="text: error"></p>
             </div>
-            <form id="UserRegistrationForm" data-bind="with: registerFormModel">
+            <form id="userRegistrationForm" data-bind="with: registerFormModel">
                 <div class="form-group">
                     @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3" })
                     @Html.TextBoxFor(m => m.FirstName, new { data_bind = "value: firstName", @class = "form-control" })

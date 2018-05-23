@@ -22,7 +22,7 @@ MICROCREDENTIALS.userRegisterViewModel = (function (userModel, userContract, com
     }
 
     function processRegistration() {
-        var formVaild = commonApi.validateForm("#UserRegistrationForm");
+        var formVaild = commonApi.validateForm("#userRegistrationForm");
 
         if (formVaild) {
             isRegistering(true);

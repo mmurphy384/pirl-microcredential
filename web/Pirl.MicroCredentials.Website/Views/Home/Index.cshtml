@@ -34,13 +34,21 @@
     <script>
         $(function (viewModel) {
             // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-            if (typeof web3 !== 'undefined') {
-                // Use Mist/MetaMask's provider
-                web3js = new Web3(web3.currentProvider);
-                viewModel.metaMaskActive();
-            } else {
-                console.log('No web3? You should consider trying MetaMask!');
-            }
+            var metaMaskCheckCount = 0;
+            var metaMaskInterval = setInterval(function () {
+                if (typeof web3 !== 'undefined') {
+                    clearInterval(metaMaskInterval);
+
+                    // Use Mist/MetaMask's provider
+                    web3js = new Web3(web3.currentProvider);
+                    viewModel.metaMaskActive();
+                } else if (metaMaskCheckCount === 5) {
+                    console.log('No web3? You should consider trying MetaMask!');
+                    clearInterval(metaMaskInterval);
+                }
+
+                metaMaskCheckCount++;
+            }, 100);
 
             ko.applyBindings(viewModel);
         }(MICROCREDENTIALS.homeViewModel));

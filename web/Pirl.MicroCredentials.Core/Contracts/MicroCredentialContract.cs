@@ -216,31 +216,31 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'name': 'getAgencyInfoByAddress',
                           'outputs': [
                             {
-                              'name': 'agencyName',
+                              'name': '',
                               'type': 'bytes32'
                             },
                             {
-                              'name': 'firstName',
+                              'name': '',
                               'type': 'bytes32'
                             },
                             {
-                              'name': 'lastName',
+                              'name': '',
                               'type': 'bytes32'
                             },
                             {
-                              'name': 'website',
+                              'name': '',
                               'type': 'bytes32'
                             },
                             {
-                              'name': 'email',
+                              'name': '',
                               'type': 'bytes32'
                             },
                             {
-                              'name': 'isActive',
+                              'name': '',
                               'type': 'bool'
                             },
                             {
-                              'name': 'id',
+                              'name': '',
                               'type': 'uint256'
                             }
                           ],

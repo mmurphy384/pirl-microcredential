@@ -5,17 +5,17 @@ namespace Pirl.MicroCredentials.DbRead.DataModels
     [FunctionOutput]
     public class AgencyDataModel
     {
-        [Parameter("uint", "id", 7)]
+        [Parameter("uint256", 7)]
         public int Id { get; set; }
-        [Parameter("bytes32", "agencyName", 1)]
+        [Parameter("bytes32", 1)]
         public string AgencyName { get; set; }
-        [Parameter("bytes32", "firstName", 3)]
+        [Parameter("bytes32", 3)]
         public string FirstName { get; set; }
-        [Parameter("bytes32", "lastName", 4)]
+        [Parameter("bytes32", 4)]
         public string LastName { get; set; }
-        [Parameter("bytes32", "email", 5)]
+        [Parameter("bytes32", 5)]
         public string Email { get; set; }
-        [Parameter("bytes32", "website", 2)]
+        [Parameter("bytes32", 2)]
         public string Website { get; set; }
     }
 }

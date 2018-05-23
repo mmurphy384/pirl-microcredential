@@ -311,23 +311,23 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "name": "getUserByAddress",
                                 "outputs": [
                                     {
-                                        "name": "firstName",
+                                        "name": "",
                                         "type": "bytes32"
                                     },
                                     {
-                                        "name": "lastName",
+                                        "name": "",
                                         "type": "bytes32"
                                     },
                                     {
-                                        "name": "email",
+                                        "name": "",
                                         "type": "bytes32"
                                     },
                                     {
-                                        "name": "isActive",
+                                        "name": "",
                                         "type": "bool"
                                     },
                                     {
-                                        "name": "id",
+                                        "name": "",
                                         "type": "uint256"
                                     }
                                 ],
@@ -365,8 +365,8 @@ MICROCREDENTIALS.userContract = (function (web3) {
                             }
                         ];
 
-                                            return {
-                                                userContractAddress: userContractAddress,
-                                                userContractAbi: userContractAbi
-                                            };
-                                        }(web3));
+                                                                return {
+                                                                    userContractAddress: userContractAddress,
+                                                                    userContractAbi: userContractAbi
+                                                                };
+                                                            }(web3));

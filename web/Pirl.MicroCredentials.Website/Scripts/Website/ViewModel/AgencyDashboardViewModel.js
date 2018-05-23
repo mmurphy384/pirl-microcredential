@@ -42,7 +42,7 @@ MICROCREDENTIALS.agencyDashboardViewModel = (function (agencyModel, agencyApi, m
         var formVaild = commonApi.validateForm("#agencyDialogForm");
 
         if (formVaild) {
-            var agency = agencyFormModel();
+            var agency = agencyModalFormModel();
             var agencyContract = web3.eth.contract(microCredentialContract.microCredentialContractAbi).at(microCredentialContract.microCredentialContractAddress);
 
             agencyContract.updateAgencyInfo.estimateGas(agency.agencyName(), agency.website(), agency.firstName(), agency.lastName(), agency.email(),

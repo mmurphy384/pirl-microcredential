@@ -42,7 +42,7 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
         var formVaild = commonApi.validateForm("#userDialogForm");
 
         if (formVaild) {
-            var user = userFormModel();
+            var user = userModalFormModel();
             var endUserContract = web3.eth.contract(userContract.userContractAbi).at(userContract.userContractAddress);
 
             endUserContract.updateUser.estimateGas(user.firstName(), user.lastName(), user.email(),

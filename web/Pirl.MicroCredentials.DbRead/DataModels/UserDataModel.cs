@@ -5,13 +5,13 @@ namespace Pirl.MicroCredentials.DbRead.DataModels
     [FunctionOutput]
     public class UserDataModel
     {
-        [Parameter("uint", "id", 5)]
+        [Parameter("uint256", 5)]
         public int Id { get; set; }
-        [Parameter("bytes32", "firstName")]
+        [Parameter("bytes32",  1)]
         public string FirstName { get; set; }
-        [Parameter("bytes32", "lastName", 2)]
+        [Parameter("bytes32",  2)]
         public string LastName { get; set; }
-        [Parameter("bytes32", "email", 3)]
+        [Parameter("bytes32",  3)]
         public string Email { get; set; }
     }
 }

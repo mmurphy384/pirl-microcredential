@@ -1,5 +1,6 @@
 pragma solidity ^0.4.23;
 
+
 contract Files {
 
     //Events
@@ -21,6 +22,10 @@ contract Files {
     uint userSubmissionId,
     uint agencyId);
 
+    event DepositFiles(address _from, uint value);
+    event WithdrawFiles(address _to, uint _amount);
+    event BalanceFiles(uint _remainingBalance);
+
     // Structs
     struct File {
         bytes32 name;
@@ -32,12 +37,42 @@ contract Files {
         uint agencyId;
     }
 
+    address public owner;
     File[] public files;
     mapping(bytes32 => uint) internal fileIdByHash;
     mapping(uint => bytes32) internal fileNameById;
     mapping(uint => uint) internal fileCountByUserId;
     mapping(uint => uint) internal fileCountByAgencyId;
     mapping(uint => uint) internal fileCountByUserSubmissionId;
+
+    // Register a root file
+    constructor() public {
+        owner = msg.sender;
+        addFile("Root File","www.SomeUrl.Com","",0,0);
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    // Purpose  : Fallback Function
+    function() public payable {
+        if (msg.value > 0) {
+            emit DepositFiles(msg.sender, msg.value);
+            emit BalanceFiles(address(this).balance);
+        }
+    }
+
+    // Purpose  : For the owner to withdraw some funds.
+    function withdraw(uint _amount) public onlyOwner {
+        require(address(this).balance > 0);
+        require(_amount > 0);
+        require(address(this).balance >= _amount);
+        address(msg.sender).transfer(_amount);
+        emit WithdrawFiles(msg.sender, _amount);
+        emit BalanceFiles(address(this).balance);
+    }
 
     // Purpose  : To hold add a credential to the list of available credentials
     // Note     : Only agencies and users can upload files.  The file can be updated to
@@ -99,7 +134,6 @@ contract Files {
         files[_fileId].isActive = _isActive;
         files[_fileId].userId = _userId;
         files[_fileId].userSubmissionId = _userSubmissionId;
-        files[_fileId].agencyId = _agencyId;
 
         if (utfStringLength(_pirlFileHash) > 1)
            fileIdByHash[stringToBytes32(_pirlFileHash)] = _fileId;
@@ -169,14 +203,6 @@ contract Files {
         return (names,ids);
     }
 
-    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
-        bytes memory tempEmptyStringTest = bytes(source);
-        if (tempEmptyStringTest.length == 0) {
-            return 0x0;
-        }
-        assembly {result := mload(add(source, 32))}
-    }
-
     function utfStringLength(string str) pure internal
     returns (uint length)
     {
@@ -199,6 +225,19 @@ contract Files {
 
             length++;
         }
+    }
+
+    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+        assembly {result := mload(add(source, 32))}
+    }
+
+    // Purpsoe  : Owners with draw all pirl from contract.  Shutting contract down.
+    function destroy() public onlyOwner {
+        withdraw(address(this).balance);
     }
 
 }

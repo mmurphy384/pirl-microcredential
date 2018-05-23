@@ -1,6 +1,1 @@
-truffle/build/contracts/Credentials.json
-truffle/build/contracts/MicroCredential.json
-truffle/build/contracts/Migrations.json
-truffle/build/contracts/MyUtils.json
-truffle/build/contracts/Ownable.json
-truffle/build/contracts/Users.json
+truffle/build/contracts/*

@@ -15,6 +15,10 @@
             <h4 data-bind="text: errorTitle"></h4>
             <p id="ErrorMessage" data-bind="text: error"></p>
         </div>
+        <div class="bs-callout bs-callout-success" style="display: none;" data-bind="visible: success() != undefined">
+            <h4 data-bind="text: successTitle"></h4>
+            <p id="SuccessMessage" data-bind="text: success"></p>
+        </div>
         <div data-bind="with: userFormModel">
             <div class="row">
                 <div class="col-2">Id:</div>
@@ -44,7 +48,7 @@
         To use MicroCredentials you require the MetaMask chrome extension to be installed.
     </p>
     
-    <div data-bind="template: { name: 'editUserTemplate', data: $data }"></div>
+    <div data-bind="template: { name: 'userModalTemplate', data: $data }"></div>
 </div>
 
 @section Scripts {

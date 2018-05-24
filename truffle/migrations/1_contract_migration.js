@@ -1,5 +1,7 @@
-var Migrations = artifacts.require("./MicroCredential.sol");
+var MicroCredential = artifacts.require("./MicroCredential.sol");
+var Users = artifacts.require("./Users.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Migrations);
+  deployer.deploy(MicroCredential);
+  deployer.deploy(Users);
 };

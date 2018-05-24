@@ -76,6 +76,7 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
         userFormModel: userFormModel,
         userModalFormModel: userModalFormModel,
         success: success,
+        successTitle: successTitle,
         error: error,
         errorTitle: errorTitle,
         popupError: popupError,

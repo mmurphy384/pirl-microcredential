@@ -6,7 +6,7 @@ MICROCREDENTIALS.userContract = (function (web3) {
     "use strict";
 
     //Private Contract Details
-    var userContractAddress = "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
+    var userContractAddress = "0xcfeb869f69431e42cdb54a4f4f105c19c080a601";
     var userContractAbi = [
                             {
                                 "constant": true,

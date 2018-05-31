@@ -381,8 +381,8 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                         }
                                     ];
 
-                                                                    return {
-                                                                        microCredentialContractAddress: microCredentialContractAddress,
-                                                                        microCredentialContractAbi: microCredentialContractAbi
-                                                                    };
-                                                                }(web3));
+    return {
+        microCredentialContractAddress: microCredentialContractAddress,
+        microCredentialContractAbi: microCredentialContractAbi
+    };
+}(web3));

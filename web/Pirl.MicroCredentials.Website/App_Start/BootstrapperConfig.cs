@@ -46,14 +46,17 @@ namespace Pirl.MicroCredentials
             //Contracts
             container.RegisterType<IMicroCredentialContract, MicroCredentialContract>();
             container.RegisterType<IUserContract, UserContract>();
+            container.RegisterType<ICredentialsContract, CredentialsContract>();
 
             //Repositories
             container.RegisterType<IAgencyRepository, AgencyRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<ICredentialsRepository, CredentialsRepository>();
 
             //DataModels
             container.RegisterInstance<IMappingHandler<AgencyDataModel, Agency>>(new GenericMapping<AgencyDataModel, Agency>());
             container.RegisterInstance<IMappingHandler<UserDataModel, User>>(new GenericMapping<UserDataModel, User>());
+            container.RegisterInstance<IMappingHandler<CredentialViewModel, Credential>>(new GenericMapping<CredentialViewModel, Credential>());
 
             //Processors
             container.RegisterType<IQueryProcessor, QueryProcessor>();
@@ -64,10 +67,12 @@ namespace Pirl.MicroCredentials
             container.RegisterType<IQueryHandler<GetAgenciesQuery, Agency[]>, GetAgenciesQueryHandler>();
             container.RegisterType<IQueryHandler<GetUserByAddressQuery, User>, GetUserByAddressQueryHandler>();
             container.RegisterType<IQueryHandler<GetUsersQuery, User[]>, GetUsersQueryHandler>();
+            container.RegisterType<IQueryHandler<GetCredentialsByAgencyQuery, Credential[]>, GetCredentialsByAgencyQueryHandler>();
 
             //Mappings
             container.RegisterInstance<IMappingHandler<Agency, AgencyViewModel>>(new GenericMapping<Agency, AgencyViewModel>());
             container.RegisterInstance<IMappingHandler<User, UserViewModel>>(new GenericMapping<User, UserViewModel>());
+            container.RegisterInstance<IMappingHandler<Credential, CredentialViewModel>>(new GenericMapping<Credential, CredentialViewModel>());
 
             return container;
         }

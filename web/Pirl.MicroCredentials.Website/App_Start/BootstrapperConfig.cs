@@ -47,16 +47,22 @@ namespace Pirl.MicroCredentials
             container.RegisterType<IMicroCredentialContract, MicroCredentialContract>();
             container.RegisterType<IUserContract, UserContract>();
             container.RegisterType<ICredentialsContract, CredentialsContract>();
+            container.RegisterType<IFilesContract, FilesContract>();
+            container.RegisterType<IUserSubmissionsContract, UserSubmissionsContract>();
 
             //Repositories
             container.RegisterType<IAgencyRepository, AgencyRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<ICredentialsRepository, CredentialsRepository>();
+            container.RegisterType<IFileRepository, FileRepository>();
+            container.RegisterType<IUserSubmissionRepository, UserSubmissionRepository>();
 
             //DataModels
             container.RegisterInstance<IMappingHandler<AgencyDataModel, Agency>>(new GenericMapping<AgencyDataModel, Agency>());
             container.RegisterInstance<IMappingHandler<UserDataModel, User>>(new GenericMapping<UserDataModel, User>());
             container.RegisterInstance<IMappingHandler<CredentialViewModel, Credential>>(new GenericMapping<CredentialViewModel, Credential>());
+            container.RegisterInstance<IMappingHandler<FileDataModel, File>>(new GenericMapping<FileDataModel, File>());
+            container.RegisterInstance<IMappingHandler<UserSubmissionDataModel, UserSubmission>>(new GenericMapping<UserSubmissionDataModel, UserSubmission>());
 
             //Processors
             container.RegisterType<IQueryProcessor, QueryProcessor>();
@@ -68,11 +74,15 @@ namespace Pirl.MicroCredentials
             container.RegisterType<IQueryHandler<GetUserByAddressQuery, User>, GetUserByAddressQueryHandler>();
             container.RegisterType<IQueryHandler<GetUsersQuery, User[]>, GetUsersQueryHandler>();
             container.RegisterType<IQueryHandler<GetCredentialsByAgencyQuery, Credential[]>, GetCredentialsByAgencyQueryHandler>();
+            container.RegisterType<IQueryHandler<GetFileByIdQuery, File>, GetFileByIdQueryHandler>();
+            container.RegisterType<IQueryHandler<GetSubmissionByIdQuery, UserSubmission>, GetSubmissionByIdQueryHandler>();
 
             //Mappings
             container.RegisterInstance<IMappingHandler<Agency, AgencyViewModel>>(new GenericMapping<Agency, AgencyViewModel>());
             container.RegisterInstance<IMappingHandler<User, UserViewModel>>(new GenericMapping<User, UserViewModel>());
             container.RegisterInstance<IMappingHandler<Credential, CredentialViewModel>>(new GenericMapping<Credential, CredentialViewModel>());
+            container.RegisterInstance<IMappingHandler<File, FileViewModel>>(new GenericMapping<File, FileViewModel>());
+            container.RegisterInstance<IMappingHandler<UserSubmission, UserSubmissionViewModel>>(new GenericMapping<UserSubmission, UserSubmissionViewModel>());
 
             return container;
         }

@@ -1,0 +1,102 @@
+﻿@model Pirl.MicroCredentials.Models.AgencyViewModel
+
+@{
+    ViewBag.Title = "User Dashboard";
+}
+
+<div class="container">
+        <div data-bind="visible: metaMaskInstalled()" style="display: none;">
+            <br />
+            <div class="bs-callout bs-callout-danger" style="display: none;" data-bind="visible: error() != undefined">
+                <h4 data-bind="text: errorTitle"></h4>
+                <p id="ErrorMessage" data-bind="text: error"></p>
+            </div>
+            <div class="bs-callout bs-callout-success" style="display: none;" data-bind="visible: success() != undefined">
+                <h4 data-bind="text: successTitle"></h4>
+                <p id="SuccessMessage" data-bind="text: success"></p>
+            </div>
+            <div class="container-fluid bg-3 text-center">
+                <div class="row">
+                    <div class="col-sm-10">
+
+                        <p>To apply for a MicroCredential, browse the list below to understand the requirements.</p>
+                        <p>When ready, upload your supporting files and submit the application.</p>
+                        <p>Part of me feels this could be in a jumbo tron.</p>
+                        <br />
+                        <hr />
+                        <p class="alert-light">This is obviously ridiculous, but I don't want to have to create another page that shows this crap.  <br />If we wanted, we would have a button point to /AgencyCredentials</p>
+                        <table>
+                            <thead>
+                                <th class="col-10 text-sm-left">Agency</th>
+                                <th class="text-sm-left">Credential</th>
+                            </thead>
+                            <tbody>
+                                <tr><td class="col-10 text-sm-left">Eduction Testing Specialists</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">Classroom Management</button></td></tr>
+                                <tr><td class="col-10 text-sm-left">Eduction Testing Specialists</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">Differentiated Instruction</button></td><td class="text-sm-left"></tr>
+                                <tr><td class="col-10 text-sm-left">Eduction Testing Specialists</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">ELA - Primary Education</button></td><td class="text-sm-left"></tr>
+                                <tr><td class="col-10 text-sm-left">Eduction Testing Specialists</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">ELA - Secondary Education</button></td><td class="text-sm-left"></tr>
+                                <tr><td class="col-10 text-sm-left">NSDC</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">Special Education - Grade 1</button></td></tr>
+                                <tr><td class="col-10 text-sm-left">NSDC</td><td class="text-sm-left"><button type="button" class="btn btn-link" title="Clicking this will show the details of the credential.  /Credential/id/Show">Guidance Counselor - College Planning</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm  float-right bg-light text-sm-right">
+                        <button type="button" class="btn btn-link" title="Clicking this will let me edit my account. /UserRegistration popup.">Michael Murphy</button>
+                        <br />
+                        <button type="button" class="btn btn-link" title="Clicking this will show the Files page which will let me upload a file. /MyFiles popup.">0 Files</button>
+                        <br />
+                        <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are any state but completed. UserSubmissions/InProgress">0 Under Review</button>
+                        <br />
+                        <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are COMPLETED. UserSubmissions/Completed">0 Badges</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
+            To use MicroCredentials you require the MetaMask chrome extension to be installed.
+        </p>
+
+        <div data-bind="template: { name: 'userModalTemplate', data: $data }"></div>
+    </div>
+
+@section Scripts {
+    @Html.Partial("~/Views/Home/User/_EditUser.cshtml")
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/UserApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Contract/UserContract.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Model/UserModel.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/UserDashboardViewModel.js")"></script>
+
+    <script>
+        $(function (viewModel) {
+            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+            var metaMaskCheckCount = 0;
+            var metaMaskInterval = setInterval(function () {
+                if (typeof web3 !== 'undefined') {
+                    clearInterval(metaMaskInterval);
+
+                    // Use Mist/MetaMask's provider
+                    web3 = new Web3(web3.currentProvider);
+                    viewModel.metaMaskActive(web3.eth.accounts[0]);
+
+                    viewModel.retrieveUser()
+                        .done(function () {
+                            ko.applyBindings(viewModel);
+                        });
+                } else if (metaMaskCheckCount === 5) {
+                    console.log('No web3? You should consider trying MetaMask!');
+                    clearInterval(metaMaskInterval);
+                }
+
+                metaMaskCheckCount++;
+            }, 100);
+        }(MICROCREDENTIALS.userDashboardViewModel));
+    </script>
+}
+
+
+
+

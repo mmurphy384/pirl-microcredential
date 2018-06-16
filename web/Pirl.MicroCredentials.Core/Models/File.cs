@@ -21,4 +21,7 @@
         public int UserId { get; private set; }
         public int UserSubmissionId { get; private set; }
         public int AgencyId { get; private set; }
+
+
+    }
 }

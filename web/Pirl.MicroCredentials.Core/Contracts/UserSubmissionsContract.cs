@@ -7,47 +7,16 @@ using Pirl.MicroCredentials.Core.Contracts.Interfaces;
 
 namespace Pirl.MicroCredentials.Core.Contracts
 {
-    public class UserContract : IUserContract
+    public class UserSubmissionsContract : IUserSubmissionsContract
     {
         public string GetContractAddress()
         {
-            return "0xcfeb869f69431e42cdb54a4f4f105c19c080a601";
+            return "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
         }
 
         public string GetContractAbi()
         {
             return @"[
-                        {
-                          'constant': true,
-                          'inputs': [
-                            {
-                              'name': '',
-                              'type': 'uint256'
-                            }
-                          ],
-                          'name': 'users',
-                          'outputs': [
-                            {
-                              'name': 'firstName',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'lastName',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'email',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'isActive',
-                              'type': 'bool'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
                         {
                           'constant': true,
                           'inputs': [],
@@ -56,6 +25,41 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'address'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'name': 'submissions',
+                          'outputs': [
+                            {
+                              'name': 'userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': 'agencyId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': 'credentialId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': 'fileIds',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'status',
+                              'type': 'bytes32'
                             }
                           ],
                           'payable': false,
@@ -78,31 +82,36 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'id',
+                              'name': 'userSubmissionId',
                               'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'firstName',
+                              'name': 'userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'agencyId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'credentialId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'fileIds',
                               'type': 'string'
                             },
                             {
                               'indexed': false,
-                              'name': 'lastName',
+                              'name': 'status',
                               'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'email',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'userAddress',
-                              'type': 'address'
                             }
                           ],
-                          'name': 'NewUser',
+                          'name': 'NewSubmission',
                           'type': 'event'
                         },
                         {
@@ -110,31 +119,36 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'id',
+                              'name': 'userSubmissionId',
                               'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'firstName',
+                              'name': 'userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'agencyId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'credentialId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'fileIds',
                               'type': 'string'
                             },
                             {
                               'indexed': false,
-                              'name': 'lastName',
+                              'name': 'status',
                               'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'email',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'userAddress',
-                              'type': 'address'
                             }
                           ],
-                          'name': 'UpdateUser',
+                          'name': 'UpdateSubmission',
                           'type': 'event'
                         },
                         {
@@ -142,7 +156,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'from',
+                              'name': '_from',
                               'type': 'address'
                             },
                             {
@@ -151,7 +165,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'DepositUsers',
+                          'name': 'DepositUserSubmissions',
                           'type': 'event'
                         },
                         {
@@ -159,16 +173,16 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'to',
+                              'name': '_to',
                               'type': 'address'
                             },
                             {
                               'indexed': false,
-                              'name': 'amount',
+                              'name': '_amount',
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'WithdrawUsers',
+                          'name': 'WithdrawUserSubmissions',
                           'type': 'event'
                         },
                         {
@@ -176,11 +190,11 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'remainingBalance',
+                              'name': '_remainingBalance',
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'BalanceUsers',
+                          'name': 'BalanceUserSubmissions',
                           'type': 'event'
                         },
                         {
@@ -201,19 +215,45 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': false,
                           'inputs': [
                             {
-                              'name': '_firstName',
+                              'name': '_userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_agencyId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_credentialId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_fileIds',
                               'type': 'string'
                             },
                             {
-                              'name': '_lastName',
-                              'type': 'string'
-                            },
-                            {
-                              'name': '_email',
+                              'name': '_status',
                               'type': 'string'
                             }
                           ],
-                          'name': 'addUser',
+                          'name': 'addSubmission',
+                          'outputs': [],
+                          'payable': true,
+                          'stateMutability': 'payable',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': false,
+                          'inputs': [
+                            {
+                              'name': '_submissionId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_status',
+                              'type': 'string'
+                            }
+                          ],
+                          'name': 'updateStatus',
                           'outputs': [],
                           'payable': false,
                           'stateMutability': 'nonpayable',
@@ -223,19 +263,15 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': false,
                           'inputs': [
                             {
-                              'name': '_firstName',
-                              'type': 'string'
+                              'name': '_submissionId',
+                              'type': 'uint256'
                             },
                             {
-                              'name': '_lastName',
-                              'type': 'string'
-                            },
-                            {
-                              'name': '_email',
+                              'name': '_fileIds',
                               'type': 'string'
                             }
                           ],
-                          'name': 'updateUser',
+                          'name': 'updateFileIds',
                           'outputs': [],
                           'payable': false,
                           'stateMutability': 'nonpayable',
@@ -245,48 +281,23 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': true,
                           'inputs': [
                             {
-                              'name': '_address',
-                              'type': 'address'
+                              'name': '_submissionId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'getIdByAddress',
+                          'name': 'getSubmissionById',
                           'outputs': [
                             {
                               'name': '',
                               'type': 'uint256'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
-                        {
-                          'constant': true,
-                          'inputs': [],
-                          'name': 'getMyId',
-                          'outputs': [
+                            },
                             {
                               'name': '',
                               'type': 'uint256'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
-                        {
-                          'constant': true,
-                          'inputs': [
-                            {
-                              'name': '_id',
-                              'type': 'uint256'
-                            }
-                          ],
-                          'name': 'getUserById',
-                          'outputs': [
+                            },
                             {
                               'name': '',
-                              'type': 'bytes32'
+                              'type': 'uint256'
                             },
                             {
                               'name': '',
@@ -295,14 +306,6 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'bytes32'
-                            },
-                            {
-                              'name': '',
-                              'type': 'bool'
-                            },
-                            {
-                              'name': '',
-                              'type': 'uint256'
                             }
                           ],
                           'payable': false,
@@ -313,31 +316,19 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': true,
                           'inputs': [
                             {
-                              'name': '_address',
-                              'type': 'address'
+                              'name': '_agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'getUserByAddress',
+                          'name': 'getSubmissionListByAgencyId',
                           'outputs': [
                             {
                               'name': '',
-                              'type': 'bytes32'
+                              'type': 'bytes32[]'
                             },
                             {
                               'name': '',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': '',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': '',
-                              'type': 'bool'
-                            },
-                            {
-                              'name': '',
-                              'type': 'uint256'
+                              'type': 'uint256[]'
                             }
                           ],
                           'payable': false,
@@ -348,15 +339,19 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': true,
                           'inputs': [
                             {
-                              'name': '_address',
-                              'type': 'address'
+                              'name': '_userId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'addressIsUser',
+                          'name': 'getSubmissionListByUserId',
                           'outputs': [
                             {
                               'name': '',
-                              'type': 'bool'
+                              'type': 'bytes32[]'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256[]'
                             }
                           ],
                           'payable': false,

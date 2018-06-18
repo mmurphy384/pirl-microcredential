@@ -7,47 +7,16 @@ using Pirl.MicroCredentials.Core.Contracts.Interfaces;
 
 namespace Pirl.MicroCredentials.Core.Contracts
 {
-    public class UserContract : IUserContract
+    public class FilesContract : IFilesContract
     {
         public string GetContractAddress()
         {
-            return "0xcfeb869f69431e42cdb54a4f4f105c19c080a601";
+            return "0x254dffcd3277c0b1660f6d42efbb754edababc2b";
         }
 
         public string GetContractAbi()
         {
             return @"[
-                        {
-                          'constant': true,
-                          'inputs': [
-                            {
-                              'name': '',
-                              'type': 'uint256'
-                            }
-                          ],
-                          'name': 'users',
-                          'outputs': [
-                            {
-                              'name': 'firstName',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'lastName',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'email',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': 'isActive',
-                              'type': 'bool'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
                         {
                           'constant': true,
                           'inputs': [],
@@ -56,6 +25,49 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'address'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'name': 'files',
+                          'outputs': [
+                            {
+                              'name': 'name',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'url',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'pirlFileHash',
+                              'type': 'bytes32'
+                            },
+                            {
+                              'name': 'isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'name': 'userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': 'userSubmissionId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': 'agencyId',
+                              'type': 'uint256'
                             }
                           ],
                           'payable': false,
@@ -78,31 +90,41 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'id',
+                              'name': 'name',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'url',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'pirlFileHash',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'userId',
                               'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'firstName',
-                              'type': 'string'
+                              'name': 'userSubmissionId',
+                              'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'lastName',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'email',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'userAddress',
-                              'type': 'address'
+                              'name': 'agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'NewUser',
+                          'name': 'NewFile',
                           'type': 'event'
                         },
                         {
@@ -110,31 +132,41 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'id',
+                              'name': 'name',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'url',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'pirlFileHash',
+                              'type': 'string'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'indexed': false,
+                              'name': 'userId',
                               'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'firstName',
-                              'type': 'string'
+                              'name': 'userSubmissionId',
+                              'type': 'uint256'
                             },
                             {
                               'indexed': false,
-                              'name': 'lastName',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'email',
-                              'type': 'string'
-                            },
-                            {
-                              'indexed': false,
-                              'name': 'userAddress',
-                              'type': 'address'
+                              'name': 'agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'UpdateUser',
+                          'name': 'UpdateFile',
                           'type': 'event'
                         },
                         {
@@ -142,7 +174,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'from',
+                              'name': '_from',
                               'type': 'address'
                             },
                             {
@@ -151,7 +183,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'DepositUsers',
+                          'name': 'DepositFiles',
                           'type': 'event'
                         },
                         {
@@ -159,16 +191,16 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'to',
+                              'name': '_to',
                               'type': 'address'
                             },
                             {
                               'indexed': false,
-                              'name': 'amount',
+                              'name': '_amount',
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'WithdrawUsers',
+                          'name': 'WithdrawFiles',
                           'type': 'event'
                         },
                         {
@@ -176,11 +208,11 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'inputs': [
                             {
                               'indexed': false,
-                              'name': 'remainingBalance',
+                              'name': '_remainingBalance',
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'BalanceUsers',
+                          'name': 'BalanceFiles',
                           'type': 'event'
                         },
                         {
@@ -201,19 +233,27 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': false,
                           'inputs': [
                             {
-                              'name': '_firstName',
+                              'name': '_name',
                               'type': 'string'
                             },
                             {
-                              'name': '_lastName',
+                              'name': '_url',
                               'type': 'string'
                             },
                             {
-                              'name': '_email',
+                              'name': '_pirlFileHash',
                               'type': 'string'
+                            },
+                            {
+                              'name': '_userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'addUser',
+                          'name': 'addFile',
                           'outputs': [],
                           'payable': false,
                           'stateMutability': 'nonpayable',
@@ -223,55 +263,42 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': false,
                           'inputs': [
                             {
-                              'name': '_firstName',
+                              'name': '_fileId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_name',
                               'type': 'string'
                             },
                             {
-                              'name': '_lastName',
+                              'name': '_url',
                               'type': 'string'
                             },
                             {
-                              'name': '_email',
+                              'name': '_pirlFileHash',
                               'type': 'string'
+                            },
+                            {
+                              'name': '_isActive',
+                              'type': 'bool'
+                            },
+                            {
+                              'name': '_userId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_userSubmissionId',
+                              'type': 'uint256'
+                            },
+                            {
+                              'name': '_agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'updateUser',
+                          'name': 'updateFileById',
                           'outputs': [],
                           'payable': false,
                           'stateMutability': 'nonpayable',
-                          'type': 'function'
-                        },
-                        {
-                          'constant': true,
-                          'inputs': [
-                            {
-                              'name': '_address',
-                              'type': 'address'
-                            }
-                          ],
-                          'name': 'getIdByAddress',
-                          'outputs': [
-                            {
-                              'name': '',
-                              'type': 'uint256'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
-                        {
-                          'constant': true,
-                          'inputs': [],
-                          'name': 'getMyId',
-                          'outputs': [
-                            {
-                              'name': '',
-                              'type': 'uint256'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
                           'type': 'function'
                         },
                         {
@@ -282,7 +309,7 @@ namespace Pirl.MicroCredentials.Core.Contracts
                               'type': 'uint256'
                             }
                           ],
-                          'name': 'getUserById',
+                          'name': 'getFileById',
                           'outputs': [
                             {
                               'name': '',
@@ -303,37 +330,10 @@ namespace Pirl.MicroCredentials.Core.Contracts
                             {
                               'name': '',
                               'type': 'uint256'
-                            }
-                          ],
-                          'payable': false,
-                          'stateMutability': 'view',
-                          'type': 'function'
-                        },
-                        {
-                          'constant': true,
-                          'inputs': [
-                            {
-                              'name': '_address',
-                              'type': 'address'
-                            }
-                          ],
-                          'name': 'getUserByAddress',
-                          'outputs': [
-                            {
-                              'name': '',
-                              'type': 'bytes32'
                             },
                             {
                               'name': '',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': '',
-                              'type': 'bytes32'
-                            },
-                            {
-                              'name': '',
-                              'type': 'bool'
+                              'type': 'uint256'
                             },
                             {
                               'name': '',
@@ -348,15 +348,65 @@ namespace Pirl.MicroCredentials.Core.Contracts
                           'constant': true,
                           'inputs': [
                             {
-                              'name': '_address',
-                              'type': 'address'
+                              'name': '_agencyId',
+                              'type': 'uint256'
                             }
                           ],
-                          'name': 'addressIsUser',
+                          'name': 'getFileListByAgencyId',
                           'outputs': [
                             {
                               'name': '',
-                              'type': 'bool'
+                              'type': 'bytes32[]'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256[]'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_userId',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'name': 'getFileListByUserId',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bytes32[]'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256[]'
+                            }
+                          ],
+                          'payable': false,
+                          'stateMutability': 'view',
+                          'type': 'function'
+                        },
+                        {
+                          'constant': true,
+                          'inputs': [
+                            {
+                              'name': '_userSubmissionId',
+                              'type': 'uint256'
+                            }
+                          ],
+                          'name': 'getFileListByUserSubmissionId',
+                          'outputs': [
+                            {
+                              'name': '',
+                              'type': 'bytes32[]'
+                            },
+                            {
+                              'name': '',
+                              'type': 'uint256[]'
                             }
                           ],
                           'payable': false,

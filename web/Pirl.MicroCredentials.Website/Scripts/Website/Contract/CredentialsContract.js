@@ -2,43 +2,12 @@
 
 var MICROCREDENTIALS = this.MICROCREDENTIALS || {};
 
-MICROCREDENTIALS.userContract = (function (web3) {
+MICROCREDENTIALS.credentialsContract = (function (web3) {
     "use strict";
 
     //Private Contract Details
-    var userContractAddress = "0xcfeb869f69431e42cdb54a4f4f105c19c080a601";
-    var userContractAbi = [
-                            {
-                                "constant": true,
-                                "inputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "name": "users",
-                                "outputs": [
-                                    {
-                                        "name": "firstName",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "lastName",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "email",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "isActive",
-                                        "type": "bool"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
+    var credentialsContractAddress = "0x5b1869d9a4c187f2eaa108f3062412ecf0526b24";
+    var credentialsContractAbi = [
                             {
                                 "constant": true,
                                 "inputs": [],
@@ -47,6 +16,41 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                     {
                                         "name": "",
                                         "type": "address"
+                                    }
+                                ],
+                                "payable": false,
+                                "stateMutability": "view",
+                                "type": "function"
+                            },
+                            {
+                                "constant": true,
+                                "inputs": [
+                                    {
+                                        "name": "",
+                                        "type": "uint256"
+                                    }
+                                ],
+                                "name": "credentials",
+                                "outputs": [
+                                    {
+                                        "name": "name",
+                                        "type": "bytes32"
+                                    },
+                                    {
+                                        "name": "url",
+                                        "type": "bytes32"
+                                    },
+                                    {
+                                        "name": "isActive",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "name": "fee",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "name": "agencyId",
+                                        "type": "uint256"
                                     }
                                 ],
                                 "payable": false,
@@ -69,31 +73,26 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "inputs": [
                                     {
                                         "indexed": false,
-                                        "name": "id",
+                                        "name": "name",
+                                        "type": "bytes32"
+                                    },
+                                    {
+                                        "indexed": false,
+                                        "name": "url",
+                                        "type": "bytes32"
+                                    },
+                                    {
+                                        "indexed": false,
+                                        "name": "isActive",
+                                        "type": "bytes32"
+                                    },
+                                    {
+                                        "indexed": false,
+                                        "name": "fee",
                                         "type": "uint256"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "firstName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "lastName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "email",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "userAddress",
-                                        "type": "address"
                                     }
                                 ],
-                                "name": "NewUser",
+                                "name": "NewCredential",
                                 "type": "event"
                             },
                             {
@@ -101,39 +100,7 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "inputs": [
                                     {
                                         "indexed": false,
-                                        "name": "id",
-                                        "type": "uint256"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "firstName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "lastName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "email",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "indexed": false,
-                                        "name": "userAddress",
-                                        "type": "address"
-                                    }
-                                ],
-                                "name": "UpdateUser",
-                                "type": "event"
-                            },
-                            {
-                                "anonymous": false,
-                                "inputs": [
-                                    {
-                                        "indexed": false,
-                                        "name": "from",
+                                        "name": "_from",
                                         "type": "address"
                                     },
                                     {
@@ -142,7 +109,7 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                         "type": "uint256"
                                     }
                                 ],
-                                "name": "DepositUsers",
+                                "name": "DepositCredentials",
                                 "type": "event"
                             },
                             {
@@ -150,16 +117,16 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "inputs": [
                                     {
                                         "indexed": false,
-                                        "name": "to",
+                                        "name": "_to",
                                         "type": "address"
                                     },
                                     {
                                         "indexed": false,
-                                        "name": "amount",
+                                        "name": "_amount",
                                         "type": "uint256"
                                     }
                                 ],
-                                "name": "WithdrawUsers",
+                                "name": "WithdrawCredentials",
                                 "type": "event"
                             },
                             {
@@ -167,11 +134,11 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "inputs": [
                                     {
                                         "indexed": false,
-                                        "name": "remainingBalance",
+                                        "name": "_remainingBalance",
                                         "type": "uint256"
                                     }
                                 ],
-                                "name": "BalanceUsers",
+                                "name": "BalanceCredentials",
                                 "type": "event"
                             },
                             {
@@ -192,19 +159,23 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "constant": false,
                                 "inputs": [
                                     {
-                                        "name": "_firstName",
+                                        "name": "_name",
                                         "type": "string"
                                     },
                                     {
-                                        "name": "_lastName",
+                                        "name": "_url",
                                         "type": "string"
                                     },
                                     {
-                                        "name": "_email",
-                                        "type": "string"
+                                        "name": "_fee",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "name": "_agencyId",
+                                        "type": "uint256"
                                     }
                                 ],
-                                "name": "addUser",
+                                "name": "addCredential",
                                 "outputs": [],
                                 "payable": false,
                                 "stateMutability": "nonpayable",
@@ -214,55 +185,30 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "constant": false,
                                 "inputs": [
                                     {
-                                        "name": "_firstName",
+                                        "name": "credentialId",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "name": "_name",
                                         "type": "string"
                                     },
                                     {
-                                        "name": "_lastName",
+                                        "name": "_url",
                                         "type": "string"
                                     },
                                     {
-                                        "name": "_email",
-                                        "type": "string"
+                                        "name": "_fee",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "name": "_isActive",
+                                        "type": "bool"
                                     }
                                 ],
-                                "name": "updateUser",
+                                "name": "updateCredentialById",
                                 "outputs": [],
                                 "payable": false,
                                 "stateMutability": "nonpayable",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [
-                                    {
-                                        "name": "_address",
-                                        "type": "address"
-                                    }
-                                ],
-                                "name": "getIdByAddress",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [],
-                                "name": "getMyId",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "uint256"
-                                    }
-                                ],
-                                "payable": false,
-                                "stateMutability": "view",
                                 "type": "function"
                             },
                             {
@@ -273,26 +219,18 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                         "type": "uint256"
                                     }
                                 ],
-                                "name": "getUserById",
+                                "name": "getCredentialById",
                                 "outputs": [
                                     {
-                                        "name": "",
+                                        "name": "name",
                                         "type": "bytes32"
                                     },
                                     {
-                                        "name": "",
+                                        "name": "url",
                                         "type": "bytes32"
                                     },
                                     {
-                                        "name": "",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "name": "",
+                                        "name": "fee",
                                         "type": "uint256"
                                     }
                                 ],
@@ -304,50 +242,19 @@ MICROCREDENTIALS.userContract = (function (web3) {
                                 "constant": true,
                                 "inputs": [
                                     {
-                                        "name": "_address",
-                                        "type": "address"
-                                    }
-                                ],
-                                "name": "getUserByAddress",
-                                "outputs": [
-                                    {
-                                        "name": "",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "",
-                                        "type": "bytes32"
-                                    },
-                                    {
-                                        "name": "",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "name": "",
+                                        "name": "_agencyId",
                                         "type": "uint256"
                                     }
                                 ],
-                                "payable": false,
-                                "stateMutability": "view",
-                                "type": "function"
-                            },
-                            {
-                                "constant": true,
-                                "inputs": [
-                                    {
-                                        "name": "_address",
-                                        "type": "address"
-                                    }
-                                ],
-                                "name": "addressIsUser",
+                                "name": "getCredentialListByAgencyId",
                                 "outputs": [
                                     {
                                         "name": "",
-                                        "type": "bool"
+                                        "type": "bytes32[]"
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "uint256[]"
                                     }
                                 ],
                                 "payable": false,
@@ -365,8 +272,8 @@ MICROCREDENTIALS.userContract = (function (web3) {
                             }
                         ];
 
-                                                                return {
-                                                                    userContractAddress: userContractAddress,
-                                                                    userContractAbi: userContractAbi
-                                                                };
-                                                            }(web3));
+    return {
+        credentialsContractAddress: credentialsContractAddress,
+        credentialsContractAbi: credentialsContractAbi
+    };
+}(web3));

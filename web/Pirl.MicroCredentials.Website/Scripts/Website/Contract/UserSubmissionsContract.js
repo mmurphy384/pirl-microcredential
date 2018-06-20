@@ -2,12 +2,26 @@
 
 var MICROCREDENTIALS = this.MICROCREDENTIALS || {};
 
-MICROCREDENTIALS.microCredentialContract = (function (web3) {
+MICROCREDENTIALS.userSubmissionsContract = (function (web3) {
     "use strict";
 
     //Private Contract Details
-    var microCredentialContractAddress = "0xe78a0f7e598cc8b0bb87894b0f60dd2a88d6a8ab";
-    var microCredentialContractAbi = [
+    var userSubmissionsContractAddress = "0xc89ce4735882c9f0f0fe26686c53074e09b0d550";
+    var userSubmissionsContractAbi = [
+                                        {
+                                            "constant": true,
+                                            "inputs": [],
+                                            "name": "owner",
+                                            "outputs": [
+                                                {
+                                                    "name": "",
+                                                    "type": "address"
+                                                }
+                                            ],
+                                            "payable": false,
+                                            "stateMutability": "view",
+                                            "type": "function"
+                                        },
                                         {
                                             "constant": true,
                                             "inputs": [
@@ -16,35 +30,27 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                                     "type": "uint256"
                                                 }
                                             ],
-                                            "name": "agencies",
+                                            "name": "submissions",
                                             "outputs": [
                                                 {
-                                                    "name": "agencyName",
+                                                    "name": "userId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "agencyId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "credentialId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "fileIds",
                                                     "type": "bytes32"
                                                 },
                                                 {
-                                                    "name": "website",
+                                                    "name": "status",
                                                     "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "firstName",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "lastName",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "email",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "isActive",
-                                                    "type": "bool"
-                                                },
-                                                {
-                                                    "name": "exists",
-                                                    "type": "bool"
                                                 }
                                             ],
                                             "payable": false,
@@ -67,6 +73,80 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                             "inputs": [
                                                 {
                                                     "indexed": false,
+                                                    "name": "userSubmissionId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "userId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "agencyId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "credentialId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "fileIds",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "status",
+                                                    "type": "string"
+                                                }
+                                            ],
+                                            "name": "NewSubmission",
+                                            "type": "event"
+                                        },
+                                        {
+                                            "anonymous": false,
+                                            "inputs": [
+                                                {
+                                                    "indexed": false,
+                                                    "name": "userSubmissionId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "userId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "agencyId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "credentialId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "fileIds",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "indexed": false,
+                                                    "name": "status",
+                                                    "type": "string"
+                                                }
+                                            ],
+                                            "name": "UpdateSubmission",
+                                            "type": "event"
+                                        },
+                                        {
+                                            "anonymous": false,
+                                            "inputs": [
+                                                {
+                                                    "indexed": false,
                                                     "name": "_from",
                                                     "type": "address"
                                                 },
@@ -76,7 +156,7 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                                     "type": "uint256"
                                                 }
                                             ],
-                                            "name": "DepositMicroCredential",
+                                            "name": "DepositUserSubmissions",
                                             "type": "event"
                                         },
                                         {
@@ -93,7 +173,7 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                                     "type": "uint256"
                                                 }
                                             ],
-                                            "name": "WithdrawMicroCredential",
+                                            "name": "WithdrawUserSubmissions",
                                             "type": "event"
                                         },
                                         {
@@ -105,7 +185,7 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                                     "type": "uint256"
                                                 }
                                             ],
-                                            "name": "BalanceMicroCredential",
+                                            "name": "BalanceUserSubmissions",
                                             "type": "event"
                                         },
                                         {
@@ -126,27 +206,27 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                             "constant": false,
                                             "inputs": [
                                                 {
-                                                    "name": "_agencyName",
+                                                    "name": "_userId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "_agencyId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "_credentialId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "_fileIds",
                                                     "type": "string"
                                                 },
                                                 {
-                                                    "name": "_website",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_firstName",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_lastName",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_email",
+                                                    "name": "_status",
                                                     "type": "string"
                                                 }
                                             ],
-                                            "name": "registerAgency",
+                                            "name": "addSubmission",
                                             "outputs": [],
                                             "payable": true,
                                             "stateMutability": "payable",
@@ -156,155 +236,15 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                             "constant": false,
                                             "inputs": [
                                                 {
-                                                    "name": "_agencyName",
-                                                    "type": "string"
+                                                    "name": "_submissionId",
+                                                    "type": "uint256"
                                                 },
                                                 {
-                                                    "name": "_website",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_firstName",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_lastName",
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "name": "_email",
+                                                    "name": "_status",
                                                     "type": "string"
                                                 }
                                             ],
-                                            "name": "updateAgencyInfo",
-                                            "outputs": [],
-                                            "payable": false,
-                                            "stateMutability": "nonpayable",
-                                            "type": "function"
-                                        },
-                                        {
-                                            "constant": true,
-                                            "inputs": [],
-                                            "name": "getAgencyCount",
-                                            "outputs": [
-                                                {
-                                                    "name": "",
-                                                    "type": "uint256"
-                                                }
-                                            ],
-                                            "payable": false,
-                                            "stateMutability": "view",
-                                            "type": "function"
-                                        },
-                                        {
-                                            "constant": true,
-                                            "inputs": [
-                                                {
-                                                    "name": "_address",
-                                                    "type": "address"
-                                                }
-                                            ],
-                                            "name": "getAgencyInfoByAddress",
-                                            "outputs": [
-                                                {
-                                                    "name": "agencyName",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "firstName",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "lastName",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "website",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "email",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "isActive",
-                                                    "type": "bool"
-                                                },
-                                                {
-                                                    "name": "id",
-                                                    "type": "uint256"
-                                                }
-                                            ],
-                                            "payable": false,
-                                            "stateMutability": "view",
-                                            "type": "function"
-                                        },
-                                        {
-                                            "constant": true,
-                                            "inputs": [
-                                                {
-                                                    "name": "_id",
-                                                    "type": "uint256"
-                                                }
-                                            ],
-                                            "name": "getAgencyInfoById",
-                                            "outputs": [
-                                                {
-                                                    "name": "",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "bytes32"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "bool"
-                                                },
-                                                {
-                                                    "name": "",
-                                                    "type": "uint256"
-                                                }
-                                            ],
-                                            "payable": false,
-                                            "stateMutability": "view",
-                                            "type": "function"
-                                        },
-                                        {
-                                            "constant": true,
-                                            "inputs": [
-                                                {
-                                                    "name": "_address",
-                                                    "type": "address"
-                                                }
-                                            ],
-                                            "name": "getAgencyIdByAddress",
-                                            "outputs": [
-                                                {
-                                                    "name": "",
-                                                    "type": "uint256"
-                                                }
-                                            ],
-                                            "payable": false,
-                                            "stateMutability": "view",
-                                            "type": "function"
-                                        },
-                                        {
-                                            "constant": false,
-                                            "inputs": [],
-                                            "name": "setAgencyInactive",
+                                            "name": "updateStatus",
                                             "outputs": [],
                                             "payable": false,
                                             "stateMutability": "nonpayable",
@@ -312,8 +252,17 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                         },
                                         {
                                             "constant": false,
-                                            "inputs": [],
-                                            "name": "setAgencyActive",
+                                            "inputs": [
+                                                {
+                                                    "name": "_submissionId",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "_fileIds",
+                                                    "type": "string"
+                                                }
+                                            ],
+                                            "name": "updateFileIds",
                                             "outputs": [],
                                             "payable": false,
                                             "stateMutability": "nonpayable",
@@ -321,12 +270,33 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                         },
                                         {
                                             "constant": true,
-                                            "inputs": [],
-                                            "name": "getContractBalance",
+                                            "inputs": [
+                                                {
+                                                    "name": "_submissionId",
+                                                    "type": "uint256"
+                                                }
+                                            ],
+                                            "name": "getSubmissionById",
                                             "outputs": [
                                                 {
                                                     "name": "",
                                                     "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "name": "",
+                                                    "type": "bytes32"
+                                                },
+                                                {
+                                                    "name": "",
+                                                    "type": "bytes32"
                                                 }
                                             ],
                                             "payable": false,
@@ -337,15 +307,19 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                             "constant": true,
                                             "inputs": [
                                                 {
-                                                    "name": "_address",
-                                                    "type": "address"
+                                                    "name": "_agencyId",
+                                                    "type": "uint256"
                                                 }
                                             ],
-                                            "name": "addressIsAgency",
+                                            "name": "getSubmissionListByAgencyId",
                                             "outputs": [
                                                 {
                                                     "name": "",
-                                                    "type": "bool"
+                                                    "type": "bytes32[]"
+                                                },
+                                                {
+                                                    "name": "",
+                                                    "type": "uint256[]"
                                                 }
                                             ],
                                             "payable": false,
@@ -354,8 +328,13 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                         },
                                         {
                                             "constant": true,
-                                            "inputs": [],
-                                            "name": "getAgencies",
+                                            "inputs": [
+                                                {
+                                                    "name": "_userId",
+                                                    "type": "uint256"
+                                                }
+                                            ],
+                                            "name": "getSubmissionListByUserId",
                                             "outputs": [
                                                 {
                                                     "name": "",
@@ -382,7 +361,7 @@ MICROCREDENTIALS.microCredentialContract = (function (web3) {
                                     ];
 
     return {
-        microCredentialContractAddress: microCredentialContractAddress,
-        microCredentialContractAbi: microCredentialContractAbi
+        userSubmissionsContractAddress: userSubmissionsContractAddress,
+        userSubmissionsContractAbi: userSubmissionsContractAbi
     };
 }(web3));

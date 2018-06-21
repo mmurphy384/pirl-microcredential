@@ -38,6 +38,18 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
             });
     }
 
+    function routeToAgencyPicker() {
+        commonApi.redirect("/Home/AgencyPicker")
+    }
+
+    function routeToCredentialPicker() {
+        commonApi.redirect("/Home/CredentialPicker")
+    }
+
+    function routeToUserSubmission() {
+        commonApi.redirect("/Home/UserSubmission")
+    }
+
     function saveUser() {
         var formVaild = commonApi.validateForm("#userDialogForm");
 
@@ -82,6 +94,9 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
         popupError: popupError,
         retrieveUser: retrieveUser,
         editUser: editUser,
-        saveUser: saveUser
+        saveUser: saveUser,
+        routeToAgencyPicker: routeToAgencyPicker,
+        routeToCredentialPicker: routeToCredentialPicker,
+        routeToUserSubmission: routeToUserSubmission
     };
 }(MICROCREDENTIALS.userModel, MICROCREDENTIALS.userApi, MICROCREDENTIALS.userContract, MICROCREDENTIALS.commonApi, ko));

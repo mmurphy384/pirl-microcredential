@@ -24,7 +24,6 @@ MICROCREDENTIALS.homeViewModel = (function (commonApi, ko) {
     return {
         metaMaskInstalled: metaMaskInstalled,
         metaMaskActive: metaMaskActive,
-        routeToAgencyRegister: routeToAgencyRegister,
         routeToUserRegister: routeToUserRegister
     };
 }(MICROCREDENTIALS.commonApi, ko));

@@ -32,9 +32,25 @@ namespace Pirl.MicroCredentials.Controllers
             return View();
         }
 
+        public ActionResult UserSubmission()
+        {
+            return View();
+        }
+
         public ActionResult UserDashboardMock()
         {
             return View();
         }
+
+        public ActionResult AgencyPicker()
+        {
+            return View("AgencyPicker");
+        }
+
+        public ActionResult CredentialPicker()
+        {
+            return View("CredentialPicker");
+        }
+
     }
 }

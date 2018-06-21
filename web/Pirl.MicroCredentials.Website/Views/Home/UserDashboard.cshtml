@@ -5,10 +5,6 @@
 }
 
 <div class="container">
-    <h4>
-        MicroCredentials - User Dashboard
-    </h4>
-    
     <div data-bind="visible: metaMaskInstalled()" style="display: none;">
         <br />
         <div class="bs-callout bs-callout-danger" style="display: none;" data-bind="visible: error() != undefined">
@@ -19,73 +15,73 @@
             <h4 data-bind="text: successTitle"></h4>
             <p id="SuccessMessage" data-bind="text: success"></p>
         </div>
-        <div data-bind="with: userFormModel">
-            <div class="row">
-                <div class="col-2">Id:</div>
-                <div class="col-10"><span data-bind="text: id"></span></div>
-            </div>
-            <div class="row">
-                <div class="col-2">First Name:</div>
-                <div class="col-10"><span data-bind="text: firstName"></span></div>
-            </div>
-            <div class="row">
-                <div class="col-2">Last Name:</div>
-                <div class="col-10"><span data-bind="text: lastName"></span></div>
-            </div>
-            <div class="row">
-                <div class="col-2">Email:</div>
-                <div class="col-10"><span data-bind="text: email"></span></div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-primary" data-bind="click: $root.editUser">Edit User</button>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="jumbotron">
+                    <h1 class="display-4">No Micro Credentials on File</h1>
+                    <p class="lead">
+                        A Micro Credential is a certified acknowledgement that you have mastered a small skill in a particular discipline.
+                        Click Next to view the list of available Micro Credentials you may apply for.
+                    </p>
+                    <hr class="my-4">
+                    <button type="button" class="btn btn-primary btn-lg" data-bind="click: routeToAgencyPicker">Next</button>
                 </div>
             </div>
+            <div class="col-sm  float-right bg-transparent text-sm-right">
+                <button type="button" class="btn btn-link" title="Clicking this will let me edit my account. /UserRegistration popup.">Michael Murphy</button>
+                <br />
+                <button type="button" class="btn btn-link" title="Clicking this will show the Files page which will let me upload a file. /MyFiles popup.">0 Files</button>
+                <br />
+                <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are any state but completed. UserSubmissions/InProgress">0 Under Review</button>
+                <br />
+                <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are COMPLETED. UserSubmissions/Completed">0 Badges</button>
+            </div>
         </div>
+
+        <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
+            To use MicroCredentials you require the MetaMask chrome extension to be installed.
+        </p>
+
+        <div data-bind="template: { name: 'userModalTemplate', data: $data }"></div>
     </div>
 
-    <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
-        To use MicroCredentials you require the MetaMask chrome extension to be installed.
-    </p>
-    
-    <div data-bind="template: { name: 'userModalTemplate', data: $data }"></div>
-</div>
+    @section Scripts {
+        @Html.Partial("~/Views/Home/User/_EditUser.cshtml")
 
-@section Scripts {
-    @Html.Partial("~/Views/Home/User/_EditUser.cshtml")
+        <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
+        <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
+        <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/UserApi.js")"></script>
+        <script type="text/javascript" src="@Url.Content("/Scripts/Website/Contract/UserContract.js")"></script>
+        <script type="text/javascript" src="@Url.Content("/Scripts/Website/Model/UserModel.js")"></script>
+        <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/UserDashboardViewModel.js")"></script>
 
-    <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/UserApi.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Contract/UserContract.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Model/UserModel.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/UserDashboardViewModel.js")"></script>
+        <script>
+                $(function (viewModel) {
+                    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+                    var metaMaskCheckCount = 0;
+                    var metaMaskInterval = setInterval(function () {
+                        if (typeof web3 !== 'undefined') {
+                            clearInterval(metaMaskInterval);
 
-    <script>
-        $(function (viewModel) {
-            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-            var metaMaskCheckCount = 0;
-            var metaMaskInterval = setInterval(function () {
-                if (typeof web3 !== 'undefined') {
-                    clearInterval(metaMaskInterval);
+                            // Use Mist/MetaMask's provider
+                            web3 = new Web3(web3.currentProvider);
+                            viewModel.metaMaskActive(web3.eth.accounts[0]);
 
-                    // Use Mist/MetaMask's provider
-                    web3 = new Web3(web3.currentProvider);
-                    viewModel.metaMaskActive(web3.eth.accounts[0]);
+                            viewModel.retrieveUser()
+                                .done(function () {
+                                    ko.applyBindings(viewModel);
+                                });
+                        } else if (metaMaskCheckCount === 5) {
+                            console.log('No web3? You should consider trying MetaMask!');
+                            clearInterval(metaMaskInterval);
+                        }
 
-                    viewModel.retrieveUser()
-                        .done(function () {
-                            ko.applyBindings(viewModel);
-                        });
-                } else if (metaMaskCheckCount === 5) {
-                    console.log('No web3? You should consider trying MetaMask!');
-                    clearInterval(metaMaskInterval);
-                }
+                        metaMaskCheckCount++;
+                    }, 100);
+                }(MICROCREDENTIALS.userDashboardViewModel));
+        </script>
+    }
 
-                metaMaskCheckCount++;
-            }, 100);
-        }(MICROCREDENTIALS.userDashboardViewModel));
-    </script>
-}
+
 
 

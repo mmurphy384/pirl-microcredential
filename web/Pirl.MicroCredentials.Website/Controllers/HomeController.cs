@@ -37,6 +37,11 @@ namespace Pirl.MicroCredentials.Controllers
             return View();
         }
 
+        public ActionResult UserSubmissionFiles()
+        {
+            return View();
+        }
+
         public ActionResult UserDashboardMock()
         {
             return View();

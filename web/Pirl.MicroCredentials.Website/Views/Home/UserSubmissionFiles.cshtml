@@ -18,23 +18,33 @@
         <div class="row">
             <div class="col-sm-10">
                 <div class="jumbotron">
+                    <hr class="my-4">
                     <div class="panel panel-default">
-                        <h1 class="display-4">Step 3: Submit Application</h1>
-                        <hr class="my-4">
+                        <h1 class="display-4">Step 4: Add Supporting Files</h1>
                         <div class="panel-heading float-left"><strong>Credential #X Title</strong></div>
                         <div class="panel-heading float-right"><strong>75 Pirl</strong></div>
                         <br />
                         <div class="panel-body">
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, 
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
                             ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo
                         </div>
                         <br />
                         <button type="button" class="btn-link" title="Clicking this will download file id from /Files/id">Requirements</button>
-                        <hr class="my-4">
                     </div>
-                    
-                    <p>If you feel you have met the requirement for this Micro Credential and have assembled the necessary documentation and files, Start the application (fees apply)</p>
-                    <button type="button" class="btn btn-primary" title="Clicking this will show a popup of this agencies credentials/description, etc. /Credential/id/Show" data-bind="click: routeToUserSubmissionFiles">Start Application</button>
+                    <hr class="my-4">
+                    <p>Upload the files as requested in the Micro Credential Requirements</p>
+                    <ul class="list-group">
+                        @for (var i = 0; i < 3; i++)
+                        {
+                            <li class="list-group-item"><button type="button" class="btn btn-link" title="Clicking this will show a popup of this agencies credentials/description, etc. /files/id">File Name @i</button></li>
+                        }
+                    </ul>
+                    <br />
+                    <button type="button" class="btn btn-secondary btn-sm">Add Files</button>
+                    <hr class="my-4">
+                    <br />
+                    <button type="button" class="btn btn-primary btn-lg">Finish Application</button>
+
                 </div>
             </div>
             <div class="col-sm  float-right bg-transparent text-sm-right">

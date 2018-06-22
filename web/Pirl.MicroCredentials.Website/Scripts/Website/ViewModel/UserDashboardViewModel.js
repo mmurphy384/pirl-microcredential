@@ -50,6 +50,10 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
         commonApi.redirect("/Home/UserSubmission")
     }
 
+    function routeToUserSubmissionFiles() {
+        commonApi.redirect("/Home/UserSubmissionFiles")
+    }
+
     function saveUser() {
         var formVaild = commonApi.validateForm("#userDialogForm");
 
@@ -97,6 +101,7 @@ MICROCREDENTIALS.userDashboardViewModel = (function (userModel, userApi, userCon
         saveUser: saveUser,
         routeToAgencyPicker: routeToAgencyPicker,
         routeToCredentialPicker: routeToCredentialPicker,
-        routeToUserSubmission: routeToUserSubmission
+        routeToUserSubmission: routeToUserSubmission,
+        routeToUserSubmissionFiles: routeToUserSubmissionFiles
     };
 }(MICROCREDENTIALS.userModel, MICROCREDENTIALS.userApi, MICROCREDENTIALS.userContract, MICROCREDENTIALS.commonApi, ko));

@@ -46,5 +46,6 @@ namespace Pirl.MicroCredentials.Controllers.Api
 
             return _mappingProcessor.Map<Agency, AgencyViewModel>(agency);
         }
+
     }
 }

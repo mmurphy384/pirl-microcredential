@@ -1,4 +1,4 @@
-﻿@model Pirl.MicroCredentials.Models.AgencyViewModel
+﻿@model Pirl.MicroCredentials.Models.UserViewModel
 
 @{
     ViewBag.Title = "User Dashboard";
@@ -27,18 +27,16 @@
                     <button type="button" class="btn btn-primary btn-lg" data-bind="click: routeToAgencyPicker">Next</button>
                 </div>
             </div>
-            <div class="col-sm  float-right bg-transparent text-sm-right">
-                <button type="button" class="btn btn-link" title="Clicking this will let me edit my account. /UserRegistration popup.">Michael Murphy</button>
-                <br />
-                <button type="button" class="btn btn-link" title="Clicking this will show the Files page which will let me upload a file. /MyFiles popup.">0 Files</button>
-                <br />
-                <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are any state but completed. UserSubmissions/InProgress">0 Under Review</button>
-                <br />
+            <div class="col-sm  float-right bg-transparent text-sm-right" data-bind="with: userFormModel">
+                <button type="button" class="btn btn-link" data-bind="click: $root.editUser">
+                    <label data-bind="text: firstName"></label> <label data-bind="text: lastName"></label>
+                </button>
                 <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are COMPLETED. UserSubmissions/Completed">0 Badges</button>
             </div>
         </div>
 
         <p data-bind="visible: !metaMaskInstalled()" style="display: none;">
+            
             To use MicroCredentials you require the MetaMask chrome extension to be installed.
         </p>
 
@@ -51,6 +49,7 @@
         <script type="text/javascript" src="@Url.Content("~/Scripts/Website/Constants.js")"></script>
         <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/CommonApi.js")"></script>
         <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/UserApi.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/Website/Api/AgencyApi.js")"></script>
         <script type="text/javascript" src="@Url.Content("/Scripts/Website/Contract/UserContract.js")"></script>
         <script type="text/javascript" src="@Url.Content("/Scripts/Website/Model/UserModel.js")"></script>
         <script type="text/javascript" src="@Url.Content("/Scripts/Website/ViewModel/UserDashboardViewModel.js")"></script>

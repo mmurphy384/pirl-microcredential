@@ -21,21 +21,20 @@
                     <h1 class="display-4">Step 1: Pick an Agency</h1>
                     <p>Each agency will have it's own list of credentials they offer and the associated requirements and fees</p>
                     <hr class="my-4">
-                    <ul>
-                    @for (var i = 0; i < 3; i++)
-                    {
-                        <li><button type="button" class="btn btn-link" title="Clicking this will show a popup of this agencies credentials/description, etc. /Credential/id/Show"  data-bind="click: routeToCredentialPicker">Agency @i</button></li>
-                    }
-                    </ul>
+                    <div data-bind="with: agencyListModel">
+                        <ul>
+                            @for (var i = 0; i < 3; i++)
+                            {
+                                <li><button type="button" class="btn btn-link" title="Clicking this will show a popup of this agencies credentials/description, etc. /Credential/id/Show" data-bind="click: routeToCredentialPicker">Agency @i</button></li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm  float-right bg-transparent text-sm-right">
-                <button type="button" class="btn btn-link" title="Clicking this will let me edit my account. /UserRegistration popup.">Michael Murphy</button>
-                <br />
-                <button type="button" class="btn btn-link" title="Clicking this will show the Files page which will let me upload a file. /MyFiles popup.">0 Files</button>
-                <br />
-                <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are any state but completed. UserSubmissions/InProgress">0 Under Review</button>
-                <br />
+            <div class="col-sm  float-right bg-transparent text-sm-right" data-bind="with: userFormModel">
+                <button type="button" class="btn btn-link" data-bind="click: $root.editUser">
+                    <label data-bind="text: firstName"></label> <label data-bind="text: lastName"></label>
+                </button>
                 <button type="button" class="btn btn-link" title="Clicking this will show the user-submissions that are COMPLETED. UserSubmissions/Completed">0 Badges</button>
             </div>
         </div>
